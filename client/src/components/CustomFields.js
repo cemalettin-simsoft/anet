@@ -115,12 +115,13 @@ const TextField = fieldProps => {
 }
 
 const ReadonlyTextField = fieldProps => {
-  const { name, label, vertical } = fieldProps
+  const { name, label, vertical, printStyle } = fieldProps
   return (
     <FastField
       name={name}
       label={label}
       vertical={vertical}
+      printStyle={printStyle}
       component={FieldHelper.ReadonlyField}
     />
   )
@@ -139,12 +140,13 @@ const DateField = fieldProps => {
 }
 
 const ReadonlyDateField = fieldProps => {
-  const { name, label, vertical, withTime } = fieldProps
+  const { name, label, vertical, printStyle, withTime } = fieldProps
   return (
     <FastField
       name={name}
       label={label}
       vertical={vertical}
+      printStyle={printStyle}
       component={FieldHelper.ReadonlyField}
       humanValue={fieldVal =>
         fieldVal &&
@@ -228,13 +230,14 @@ const enumHumanValue = (choices, fieldVal) => {
 }
 
 const ReadonlyEnumField = fieldProps => {
-  const { name, label, vertical, values, choices } = fieldProps
+  const { name, label, vertical, values, printStyle, choices } = fieldProps
   return (
     <FastField
       name={name}
       label={label}
       vertical={vertical}
       values={values}
+      printStyle={printStyle}
       component={FieldHelper.ReadonlyField}
       humanValue={fieldVal => enumHumanValue(choices, fieldVal)}
     />
@@ -360,27 +363,43 @@ const addObject = (objDefault, arrayHelpers) => {
 }
 
 const ReadonlyArrayOfObjectsField = fieldProps => {
-  const { name, fieldConfig, values, vertical } = fieldProps
+  const { name, fieldConfig, values, printStyle, vertical } = fieldProps
   const value = useMemo(() => getArrayObjectValue(values, name), [values, name])
   const fieldsetTitle = fieldConfig.label || ""
   return (
-    <Fieldset title={fieldsetTitle}>
+    <Fieldset title={fieldsetTitle} printStyle={printStyle}>
       <FieldArray
         name={name}
-        render={arrayHelpers => (
-          <div>
-            {value.map((obj, index) => (
-              <ReadonlyArrayObject
-                key={index}
-                fieldName={name}
-                fieldConfig={fieldConfig}
-                values={values}
-                index={index}
-                vertical={vertical}
-              />
-            ))}
-          </div>
-        )}
+        render={arrayHelpers =>
+          printStyle ? (
+            <>
+              {value.map((obj, index) => (
+                <ReadonlyArrayObject
+                  key={index}
+                  fieldName={name}
+                  fieldConfig={fieldConfig}
+                  values={values}
+                  printStyle={printStyle}
+                  index={index}
+                  vertical={vertical}
+                />
+              ))}
+            </>
+          ) : (
+            <div>
+              {value.map((obj, index) => (
+                <ReadonlyArrayObject
+                  key={index}
+                  fieldName={name}
+                  fieldConfig={fieldConfig}
+                  values={values}
+                  printStyle={printStyle}
+                  index={index}
+                  vertical={vertical}
+                />
+              ))}
+            </div>
+          )}
       />
     </Fieldset>
   )
@@ -391,15 +410,17 @@ const ReadonlyArrayObject = ({
   fieldConfig,
   values,
   vertical,
-  index
+  index,
+  printStyle
 }) => {
   const objLabel = _upperFirst(fieldConfig.objectLabel || "item")
   return (
-    <Fieldset title={`${objLabel} ${index + 1}`}>
+    <Fieldset title={`${objLabel} ${index + 1}`} printStyle={printStyle}>
       <ReadonlyCustomFields
         fieldsConfig={fieldConfig.objectFields}
         parentFieldName={`${fieldName}.${index}`}
         values={values}
+        printStyle={printStyle}
         vertical={vertical}
       />
     </Fieldset>
@@ -410,7 +431,8 @@ ReadonlyArrayObject.propTypes = {
   fieldConfig: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
   vertical: PropTypes.bool,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  printStyle: PropTypes.object
 }
 
 const AnetObjectField = ({
@@ -886,7 +908,8 @@ export const ReadonlyCustomFields = ({
   fieldsConfig,
   parentFieldName, // key path in the values object to get to the level of fields given by the fieldsConfig
   values,
-  vertical
+  vertical,
+  printStyle
 }) => {
   return (
     <>
@@ -908,6 +931,7 @@ export const ReadonlyCustomFields = ({
             name={fieldName}
             values={values}
             vertical={vertical}
+            printStyle={printStyle}
             {...fieldProps}
             {...extraProps}
           />
@@ -929,11 +953,13 @@ ReadonlyCustomFields.propTypes = {
   fieldsConfig: PropTypes.object,
   parentFieldName: PropTypes.string.isRequired,
   values: PropTypes.object.isRequired,
-  vertical: PropTypes.bool
+  vertical: PropTypes.bool,
+  printStyle: PropTypes.object
 }
 ReadonlyCustomFields.defaultProps = {
   parentFieldName: DEFAULT_CUSTOM_FIELDS_PARENT,
-  vertical: false
+  vertical: false,
+  printStyle: null
 }
 
 // customFields should contain the JSON of all the visible custom fields.
