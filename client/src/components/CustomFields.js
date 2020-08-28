@@ -392,6 +392,7 @@ const ReadonlyArrayOfObjectsField = fieldProps => {
     <Fieldset title={fieldsetTitle} printStyle={printStyle}>
       <FieldArray
         name={name}
+        /* div cannot be parent or child in print table, tbody, tr */
         render={arrayHelpers =>
           printStyle ? <>{arrayOfObjects}</> : <div>{arrayOfObjects}</div>}
       />
