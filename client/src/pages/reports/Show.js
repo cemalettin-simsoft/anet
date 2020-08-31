@@ -377,7 +377,7 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
               <Button onClick={toggleEmailModal}>Email report</Button>
             )}
             <Button
-              value="printView"
+              value="compactView"
               type="button"
               bsStyle="primary"
               onClick={onCompactClick}
