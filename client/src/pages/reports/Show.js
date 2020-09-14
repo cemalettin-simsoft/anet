@@ -382,7 +382,7 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
               bsStyle="primary"
               onClick={onCompactClick}
             >
-              Compact View
+              {Settings.fields.report.compactView}
             </Button>
             {canEdit && (
               <LinkTo modelType="Report" model={report} edit button="primary">
