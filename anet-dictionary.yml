@@ -202,6 +202,7 @@ dictionary:
       keyOutcomes: Key outcomes
       reportText: Key details
       compactView: Summary / Print
+      detailedView: Detailed View
       customFields:
         relatedReport:
           type: anet_object
