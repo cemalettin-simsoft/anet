@@ -68,8 +68,8 @@ public class ReportDao extends AnetBaseDao<Report, ReportSearchQuery> {
   public static final String[] minimalFields = {"uuid", "approvalStepUuid",
       "advisorOrganizationUuid", "createdAt", "updatedAt", "engagementDate", "releasedAt", "state"};
   public static final String[] additionalFields = {"duration", "intent", "exsum", "locationUuid",
-      "principalOrganizationUuid", "authorUuid", "atmosphere", "cancelledReason",
-      "atmosphereDetails", "text", "keyOutcomes", "nextSteps", "customFields"};
+      "principalOrganizationUuid", "atmosphere", "cancelledReason", "atmosphereDetails", "text",
+      "keyOutcomes", "nextSteps", "customFields"};
   public static final String[] allFields =
       ObjectArrays.concat(minimalFields, additionalFields, String.class);
   public static final String TABLE_NAME = "reports";
@@ -112,12 +112,12 @@ public class ReportDao extends AnetBaseDao<Report, ReportSearchQuery> {
     // MSSQL requires explicit CAST when a datetime2 might be NULL.
     StringBuilder sql = new StringBuilder("/* insertReport */ INSERT INTO reports "
         + "(uuid, state, \"createdAt\", \"updatedAt\", \"locationUuid\", intent, exsum, "
-        + "text, \"keyOutcomes\", \"nextSteps\", \"authorUuid\", "
+        + "text, \"keyOutcomes\", \"nextSteps\", "
         + "\"engagementDate\", \"releasedAt\", duration, atmosphere, \"cancelledReason\", "
         + "\"atmosphereDetails\", \"advisorOrganizationUuid\", "
         + "\"principalOrganizationUuid\", \"customFields\") VALUES "
         + "(:uuid, :state, :createdAt, :updatedAt, :locationUuid, :intent, "
-        + ":exsum, :reportText, :keyOutcomes, :nextSteps, :authorUuid, ");
+        + ":exsum, :reportText, :keyOutcomes, :nextSteps, ");
     if (DaoUtils.isMsSql()) {
       sql.append("CAST(:engagementDate AS datetime2), CAST(:releasedAt AS datetime2), ");
     } else {
@@ -501,15 +501,17 @@ public class ReportDao extends AnetBaseDao<Report, ReportSearchQuery> {
     sql.append("%3$s");
     sql.append("%4$s");
     sql.append(" " + String.format(getWeekFormat(), "reports.\"createdAt\"") + " AS week,");
-    sql.append("COUNT(reports.\"authorUuid\") AS \"nrReportsSubmitted\"");
+    sql.append("COUNT(\"reportPeople\".\"personUuid\") AS \"nrReportsSubmitted\"");
 
     sql.append(" FROM ");
     sql.append("positions,");
     sql.append("reports,");
+    sql.append("\"reportPeople\",");
     sql.append("%5$s");
     sql.append("organizations");
 
-    sql.append(" WHERE positions.\"currentPersonUuid\" = reports.\"authorUuid\"");
+    sql.append(" WHERE positions.\"currentPersonUuid\" = \"reportPeople\".\"personUuid\"");
+    sql.append(" AND \"reportPeople\".\"reportUuid\" = reports.uuid");
     sql.append(" %6$s");
     sql.append(" AND reports.\"advisorOrganizationUuid\" = organizations.uuid");
     sql.append(" AND positions.type = :positionAdvisor");
@@ -784,12 +786,14 @@ public class ReportDao extends AnetBaseDao<Report, ReportSearchQuery> {
   public void sendApprovalNeededEmail(Report r, ApprovalStep approvalStep) {
     final AnetObjectEngine engine = AnetObjectEngine.getInstance();
     final List<Position> approvers = approvalStep.loadApprovers(engine.getContext()).join();
+    final List<ReportPerson> authors = r.loadAuthors(engine.getContext()).join();
     final AnetEmail approverEmail = new AnetEmail();
     final ApprovalNeededEmail action = new ApprovalNeededEmail();
     action.setReport(r);
     approverEmail.setAction(action);
     approverEmail.setToAddresses(approvers.stream()
-        .filter(a -> (a.getPersonUuid() != null) && !a.getPersonUuid().equals(r.getAuthorUuid()))
+        .filter(a -> (a.getPersonUuid() != null)
+            && authors.stream().noneMatch(p -> a.getPersonUuid().equals(p.getUuid())))
         .map(a -> a.loadPerson(engine.getContext()).join().getEmailAddress())
         .collect(Collectors.toList()));
     AnetEmailWorker.sendEmailAsync(approverEmail);
@@ -800,8 +804,8 @@ public class ReportDao extends AnetBaseDao<Report, ReportSearchQuery> {
     final ReportPublishedEmail action = new ReportPublishedEmail();
     action.setReport(r);
     email.setAction(action);
-    email.addToAddress(
-        r.loadAuthor(AnetObjectEngine.getInstance().getContext()).join().getEmailAddress());
+    email.setToAddresses(r.loadAuthors(AnetObjectEngine.getInstance().getContext()).join().stream()
+        .map(rp -> rp.getEmailAddress()).collect(Collectors.toList()));
     AnetEmailWorker.sendEmailAsync(email);
   }
 
@@ -828,7 +832,9 @@ public class ReportDao extends AnetBaseDao<Report, ReportSearchQuery> {
         r.setState(ReportState.APPROVED);
       }
     }
-    final int numRows = update(r, r.getAuthor());
+    final Optional<ReportPerson> firstAuthor =
+        r.loadAuthors(AnetObjectEngine.getInstance().getContext()).join().stream().findFirst();
+    final int numRows = update(r, firstAuthor.orElse(null));
     if (numRows != 0 && nextStep != null) {
       sendApprovalNeededEmail(r, nextStep);
     }
@@ -875,7 +881,9 @@ public class ReportDao extends AnetBaseDao<Report, ReportSearchQuery> {
     // Move the report to PUBLISHED state
     r.setState(ReportState.PUBLISHED);
     r.setReleasedAt(Instant.now());
-    final int numRows = update(r, r.getAuthor());
+    final Optional<ReportPerson> firstAuthor =
+        r.loadAuthors(AnetObjectEngine.getInstance().getContext()).join().stream().findFirst();
+    final int numRows = update(r, firstAuthor.orElse(null));
     if (numRows != 0) {
       sendReportPublishedEmail(r);
     }
@@ -893,8 +901,7 @@ public class ReportDao extends AnetBaseDao<Report, ReportSearchQuery> {
     StringBuilder sql = new StringBuilder();
 
     sql.append("/* getFutureToPastReports */");
-    sql.append(
-        " SELECT reports.uuid AS reports_uuid, reports.\"authorUuid\" AS \"reports_authorUuid\"");
+    sql.append(" SELECT reports.uuid AS reports_uuid");
     sql.append(" FROM reports");
     // We are not interested in draft reports, as they will remain draft.
     // We are not interested in cancelled reports, as they will remain cancelled.
