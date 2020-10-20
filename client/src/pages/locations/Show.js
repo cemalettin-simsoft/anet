@@ -21,9 +21,10 @@ import { Field, Form, Formik } from "formik"
 import { convertLatLngToMGRS } from "geoUtils"
 import _escape from "lodash/escape"
 import { Location } from "models"
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { connect } from "react-redux"
 import { useLocation, useParams } from "react-router-dom"
+import SelectLocationFormat from "../../components/SelectLocationFormat"
 import GeoLocation, { GEO_LOCATION_DISPLAY_TYPE } from "./GeoLocation"
 
 const GQL_GET_LOCATION = gql`
@@ -73,6 +74,7 @@ const LocationShow = ({ pageDispatchers }) => {
   const { currentUser } = useContext(AppContext)
   const { uuid } = useParams()
   const routerLocation = useLocation()
+  const [locationFormat, setLocationFormat] = useState(Location.locationFormat)
   const { loading, error, data } = API.useApiQuery(GQL_GET_LOCATION, {
     uuid
   })
@@ -107,16 +109,24 @@ const LocationShow = ({ pageDispatchers }) => {
             lng: location.lng
           })
         }
-        const action = canEdit && (
-          <LinkTo
-            modelType="Location"
-            model={location}
-            edit
-            button="primary"
-            id="editButton"
-          >
-            Edit
-          </LinkTo>
+        const action = (
+          <>
+            <SelectLocationFormat
+              locationFormat={locationFormat}
+              setLocationFormat={setLocationFormat}
+            />
+            {canEdit && (
+              <LinkTo
+                modelType="Location"
+                model={location}
+                edit
+                button="primary"
+                id="editButton"
+              >
+                Edit
+              </LinkTo>
+            )}
+          </>
         )
         return (
           <div>
@@ -152,6 +162,7 @@ const LocationShow = ({ pageDispatchers }) => {
                     )
                   }}
                   displayType={GEO_LOCATION_DISPLAY_TYPE.FORM_FIELD}
+                  locationFormat={locationFormat}
                 />
               </Fieldset>
 
