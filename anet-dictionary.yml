@@ -474,6 +474,12 @@ fields:
             helpText: Help text for object date field
             visibleWhen: $[?(@.colourOptions === 'GREEN')]
 
+    location:
+      formats:
+        LAT_LON: LAT_LON
+        MGRS: MGRS
+      defaultFormat: LAT_LON
+
     position:
       name: 'Position Name'
 
