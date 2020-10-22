@@ -17,7 +17,6 @@ import PropTypes from "prop-types"
 import React, { useContext, useState } from "react"
 import { Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
-import SelectLocationFormat from "../../components/SelectLocationFormat"
 import GeoLocation from "./GeoLocation"
 
 const GQL_CREATE_LOCATION = gql`
@@ -36,7 +35,6 @@ const GQL_UPDATE_LOCATION = gql`
 const LocationForm = ({ edit, title, initialValues }) => {
   const { currentUser } = useContext(AppContext)
   const history = useHistory()
-  const [locationFormat, setLocationFormat] = useState(Location.locationFormat)
   const [error, setError] = useState(null)
   const canEditName =
     (!edit && currentUser.isSuperUser()) || (edit && currentUser.isAdmin())
@@ -115,18 +113,7 @@ const LocationForm = ({ edit, title, initialValues }) => {
           })
         }
         const action = (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <SelectLocationFormat
-              locationFormat={locationFormat}
-              setLocationFormat={setLocationFormat}
-            />
+          <div>
             <Button
               key="submit"
               bsStyle="primary"
@@ -171,7 +158,6 @@ const LocationForm = ({ edit, title, initialValues }) => {
                   isSubmitting={isSubmitting}
                   setFieldValue={setFieldValue}
                   setFieldTouched={setFieldTouched}
-                  locationFormat={locationFormat}
                 />
               </Fieldset>
 
