@@ -17,7 +17,7 @@ export default class Location extends Model {
     REPORT_APPROVAL: "REPORT_APPROVAL"
   }
 
-  static LOCATION_FORMATS = Settings.fields.location.formats || {
+  static LOCATION_FORMATS = {
     LAT_LON: "LAT_LON", // default
     MGRS: "MGRS"
   }

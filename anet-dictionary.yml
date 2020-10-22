@@ -475,9 +475,6 @@ fields:
             visibleWhen: $[?(@.colourOptions === 'GREEN')]
 
     location:
-      formats:
-        LAT_LON: LAT_LON
-        MGRS: MGRS
       defaultFormat: LAT_LON
 
     position:
