@@ -360,12 +360,7 @@ CoordinateActionButtons.defaultProps = {
 
 /* ======================= AllFormatsInfo ============================ */
 
-const AllFormatsInfo = ({
-  coordinates,
-  inForm,
-  locationFormat,
-  setLocationFormat
-}) => {
+const AllFormatsInfo = ({ coordinates, inForm }) => {
   const { lat, lng } = coordinates
   if (!inForm && ((!lat && lat !== 0) || (!lng && lng !== 0))) {
     return null
@@ -386,21 +381,13 @@ const AllFormatsInfo = ({
               <tr>
                 <td style={{ whiteSpace: "nowrap" }}>{LAT_LON_LABEL}</td>
                 <td>
-                  <LatLonFormField
-                    coordinates={coordinates}
-                    locationFormat={locationFormat}
-                    setLocationFormat={setLocationFormat}
-                  />
+                  <LatLonFormField coordinates={coordinates} />
                 </td>
               </tr>
               <tr>
                 <td style={{ whiteSpace: "nowrap" }}>{MGRS_LABEL}</td>
                 <td>
-                  <MGRSFormField
-                    coordinates={coordinates}
-                    locationFormat={locationFormat}
-                    setLocationFormat={setLocationFormat}
-                  />
+                  <MGRSFormField coordinates={coordinates} />
                 </td>
               </tr>
             </tbody>
@@ -428,9 +415,7 @@ const AllFormatsInfo = ({
 
 AllFormatsInfo.propTypes = {
   coordinates: CoordinatesPropType,
-  inForm: PropTypes.bool,
-  locationFormat: PropTypes.string,
-  setLocationFormat: PropTypes.func
+  inForm: PropTypes.bool
 }
 
 AllFormatsInfo.defaultProps = {
