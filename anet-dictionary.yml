@@ -475,7 +475,7 @@ fields:
             visibleWhen: $[?(@.colourOptions === 'GREEN')]
 
     location:
-      defaultFormat: LAT_LON
+      format: LAT_LON
 
     position:
       name: 'Position Name'
