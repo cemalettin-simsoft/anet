@@ -70,12 +70,19 @@ SpecialField.propTypes = {
   formikProps: PropTypes.object
 }
 
-const ReadonlySpecialField = ({ name, widget, values, ...otherFieldProps }) => {
+const ReadonlySpecialField = ({
+  name,
+  widget,
+  values,
+  compactStyle,
+  ...otherFieldProps
+}) => {
   if (widget === SPECIAL_WIDGET_TYPES.RICH_TEXT_EDITOR) {
     const fieldValue = Object.get(values, name) || "" // name might be a path for a nested prop
     return (
       <FastField
         name={name}
+        compactStyle={compactStyle}
         component={FieldHelper.ReadonlyField}
         humanValue={parseHtmlWithLinkTo(fieldValue)}
         {...Object.without(otherFieldProps, "style")}
@@ -86,6 +93,7 @@ const ReadonlySpecialField = ({ name, widget, values, ...otherFieldProps }) => {
     return (
       <FastField
         name={name}
+        compactStyle={compactStyle}
         component={FieldHelper.SpecialField}
         widget={<WidgetComponent />}
         readonly
@@ -100,7 +108,8 @@ ReadonlySpecialField.propTypes = {
     SPECIAL_WIDGET_TYPES.LIKERT_SCALE,
     SPECIAL_WIDGET_TYPES.RICH_TEXT_EDITOR
   ]).isRequired,
-  values: PropTypes.object
+  values: PropTypes.object,
+  compactStyle: PropTypes.string
 }
 
 const TextField = fieldProps => {
@@ -115,12 +124,13 @@ const TextField = fieldProps => {
 }
 
 const ReadonlyTextField = fieldProps => {
-  const { name, label, vertical } = fieldProps
+  const { name, label, vertical, compactStyle } = fieldProps
   return (
     <FastField
       name={name}
       label={label}
       vertical={vertical}
+      compactStyle={compactStyle}
       component={FieldHelper.ReadonlyField}
     />
   )
@@ -139,12 +149,13 @@ const DateField = fieldProps => {
 }
 
 const ReadonlyDateField = fieldProps => {
-  const { name, label, vertical, withTime } = fieldProps
+  const { name, label, vertical, compactStyle, withTime } = fieldProps
   return (
     <FastField
       name={name}
       label={label}
       vertical={vertical}
+      compactStyle={compactStyle}
       component={FieldHelper.ReadonlyField}
       humanValue={fieldVal =>
         fieldVal &&
@@ -228,13 +239,14 @@ const enumHumanValue = (choices, fieldVal) => {
 }
 
 const ReadonlyEnumField = fieldProps => {
-  const { name, label, vertical, values, choices } = fieldProps
+  const { name, label, vertical, values, compactStyle, choices } = fieldProps
   return (
     <FastField
       name={name}
       label={label}
       vertical={vertical}
       values={values}
+      compactStyle={compactStyle}
       component={FieldHelper.ReadonlyField}
       humanValue={fieldVal => enumHumanValue(choices, fieldVal)}
     />
@@ -360,27 +372,29 @@ const addObject = (objDefault, arrayHelpers) => {
 }
 
 const ReadonlyArrayOfObjectsField = fieldProps => {
-  const { name, fieldConfig, values, vertical } = fieldProps
+  const { name, fieldConfig, values, compactStyle, vertical } = fieldProps
   const value = useMemo(() => getArrayObjectValue(values, name), [values, name])
   const fieldsetTitle = fieldConfig.label || ""
+
+  const arrayOfObjects = value.map((obj, index) => (
+    <ReadonlyArrayObject
+      key={index}
+      fieldName={name}
+      fieldConfig={fieldConfig}
+      values={values}
+      compactStyle={compactStyle}
+      index={index}
+      vertical={vertical}
+    />
+  ))
+
   return (
-    <Fieldset title={fieldsetTitle}>
+    <Fieldset title={fieldsetTitle} compactStyle={compactStyle}>
       <FieldArray
         name={name}
-        render={arrayHelpers => (
-          <div>
-            {value.map((obj, index) => (
-              <ReadonlyArrayObject
-                key={index}
-                fieldName={name}
-                fieldConfig={fieldConfig}
-                values={values}
-                index={index}
-                vertical={vertical}
-              />
-            ))}
-          </div>
-        )}
+        /* div cannot be parent or child in print table, tbody, tr */
+        render={arrayHelpers =>
+          compactStyle ? <>{arrayOfObjects}</> : <div>{arrayOfObjects}</div>}
       />
     </Fieldset>
   )
@@ -391,15 +405,17 @@ const ReadonlyArrayObject = ({
   fieldConfig,
   values,
   vertical,
-  index
+  index,
+  compactStyle
 }) => {
   const objLabel = _upperFirst(fieldConfig.objectLabel || "item")
   return (
-    <Fieldset title={`${objLabel} ${index + 1}`}>
+    <Fieldset title={`${objLabel} ${index + 1}`} compactStyle={compactStyle}>
       <ReadonlyCustomFields
         fieldsConfig={fieldConfig.objectFields}
         parentFieldName={`${fieldName}.${index}`}
         values={values}
+        compactStyle={compactStyle}
         vertical={vertical}
       />
     </Fieldset>
@@ -410,7 +426,8 @@ ReadonlyArrayObject.propTypes = {
   fieldConfig: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
   vertical: PropTypes.bool,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  compactStyle: PropTypes.string
 }
 
 const AnetObjectField = ({
@@ -469,13 +486,14 @@ AnetObjectField.propTypes = {
   children: PropTypes.node
 }
 
-const ReadonlyAnetObjectField = ({ name, label, values }) => {
+const ReadonlyAnetObjectField = ({ name, label, values, compactStyle }) => {
   const { type, uuid } = Object.get(values, name) || {}
   return (
     <FastField
       name={name}
       label={label}
       component={FieldHelper.ReadonlyField}
+      compactStyle={compactStyle}
       humanValue={
         type &&
         uuid && (
@@ -496,7 +514,8 @@ const ReadonlyAnetObjectField = ({ name, label, values }) => {
 ReadonlyAnetObjectField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  values: PropTypes.object.isRequired
+  values: PropTypes.object.isRequired,
+  compactStyle: PropTypes.string
 }
 
 const ArrayOfAnetObjectsField = ({
@@ -576,13 +595,19 @@ ArrayOfAnetObjectsField.propTypes = {
   children: PropTypes.node
 }
 
-const ReadonlyArrayOfAnetObjectsField = ({ name, label, values }) => {
+const ReadonlyArrayOfAnetObjectsField = ({
+  name,
+  label,
+  values,
+  compactStyle
+}) => {
   const fieldValue = Object.get(values, name) || []
   return (
     <FastField
       name={name}
       label={label}
       component={FieldHelper.ReadonlyField}
+      compactStyle={compactStyle}
       humanValue={
         !_isEmpty(fieldValue) && (
           <Table id={`${name}-value`} striped condensed hover responsive>
@@ -604,7 +629,8 @@ const ReadonlyArrayOfAnetObjectsField = ({ name, label, values }) => {
 ReadonlyArrayOfAnetObjectsField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  values: PropTypes.object.isRequired
+  values: PropTypes.object.isRequired,
+  compactStyle: PropTypes.string
 }
 
 const FIELD_COMPONENTS = {
@@ -886,7 +912,8 @@ export const ReadonlyCustomFields = ({
   fieldsConfig,
   parentFieldName, // key path in the values object to get to the level of fields given by the fieldsConfig
   values,
-  vertical
+  vertical,
+  compactStyle
 }) => {
   return (
     <>
@@ -908,6 +935,7 @@ export const ReadonlyCustomFields = ({
             name={fieldName}
             values={values}
             vertical={vertical}
+            compactStyle={compactStyle}
             {...fieldProps}
             {...extraProps}
           />
@@ -917,6 +945,7 @@ export const ReadonlyCustomFields = ({
             name={fieldName}
             label={fieldProps.label}
             vertical={fieldProps.vertical}
+            compactStyle={compactStyle}
             component={FieldHelper.ReadonlyField}
             humanValue={<i>Missing ReadonlyFieldComponent for {type}</i>}
           />
@@ -929,7 +958,8 @@ ReadonlyCustomFields.propTypes = {
   fieldsConfig: PropTypes.object,
   parentFieldName: PropTypes.string.isRequired,
   values: PropTypes.object.isRequired,
-  vertical: PropTypes.bool
+  vertical: PropTypes.bool,
+  compactStyle: PropTypes.string
 }
 ReadonlyCustomFields.defaultProps = {
   parentFieldName: DEFAULT_CUSTOM_FIELDS_PARENT,
