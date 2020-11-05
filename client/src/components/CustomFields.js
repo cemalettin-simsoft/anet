@@ -992,9 +992,8 @@ export const mapReadonlyCustomFieldsToComps = ({
   values,
   vertical
 }) => {
-  return Object.keys(fieldsConfig).reduce((accum, key) => {
+  return Object.entries(fieldsConfig).reduce((accum, [key, fieldConfig]) => {
     const fieldName = `${parentFieldName}.${key}`
-    const fieldConfig = fieldsConfig[key]
     const fieldProps = getFieldPropsFromFieldConfig(fieldConfig)
     const { type } = fieldConfig
     let extraProps = {}
