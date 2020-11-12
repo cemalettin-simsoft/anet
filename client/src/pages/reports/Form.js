@@ -461,7 +461,8 @@ const ReportForm = ({
                       "intentCharsLeft",
                       Settings.maxTextFieldLength,
                       event
-                    )}
+                    )
+                  }
                   extraColElem={
                     <>
                       <span id="intentCharsLeft">
@@ -556,7 +557,8 @@ const ReportForm = ({
                             "cancelledReason",
                             cancelledReasonOptions[0].value,
                             true
-                          )}
+                          )
+                        }
                       >
                         This engagement was cancelled
                       </Checkbox>
@@ -666,7 +668,8 @@ const ReportForm = ({
                             })
                           }
                           onChange={value =>
-                            setFieldValue("attendees", value, true)}
+                            setFieldValue("attendees", value, true)
+                          }
                           showDelete
                         />
                       }
@@ -777,7 +780,8 @@ const ReportForm = ({
                           "keyOutcomesCharsLeft",
                           Settings.maxTextFieldLength,
                           event
-                        )}
+                        )
+                      }
                       extraColElem={
                         <>
                           <span id="keyOutcomesCharsLeft">
@@ -807,7 +811,8 @@ const ReportForm = ({
                         "nextStepsCharsLeft",
                         Settings.maxTextFieldLength,
                         event
-                      )}
+                      )
+                    }
                     extraColElem={
                       <>
                         <span id="nextStepsCharsLeft">
@@ -857,7 +862,8 @@ const ReportForm = ({
                             "reportSensitiveInformation.text",
                             value || null,
                             true
-                          )}
+                          )
+                        }
                         widget={
                           <RichTextEditor
                             className="reportSensitiveInformationField"
@@ -965,7 +971,8 @@ const ReportForm = ({
                   {canDelete && (
                     <ConfirmDelete
                       onConfirmDelete={() =>
-                        onConfirmDelete(values.uuid, resetForm)}
+                        onConfirmDelete(values.uuid, resetForm)
+                      }
                       objectType="report"
                       objectDisplay={values.uuid}
                       bsStyle="warning"
@@ -978,7 +985,8 @@ const ReportForm = ({
                     bsStyle="primary"
                     type="button"
                     onClick={() =>
-                      onSubmit(values, { resetForm, setSubmitting })}
+                      onSubmit(values, { resetForm, setSubmitting })
+                    }
                     disabled={isSubmitting}
                   >
                     {submitText}
@@ -1073,7 +1081,7 @@ const ReportForm = ({
             autoSaveSettings.current.autoSaveTimeout.asMilliseconds()
           )
         })
-        /* eslint-disable handle-callback-err */
+        /* eslint-disable node/handle-callback-err */
         .catch(error => {
           // Show an error message
           autoSaveSettings.current.autoSaveTimeout.add(
@@ -1090,7 +1098,7 @@ const ReportForm = ({
             autoSaveSettings.current.autoSaveTimeout.asMilliseconds()
           )
         })
-      /* eslint-enable handle-callback-err */
+      /* eslint-enable node/handle-callback-err */
     }
   }
 
