@@ -2,9 +2,9 @@ import {
   AnchorButton,
   Popover,
   PopoverInteractionKind,
-  Position,
   Tooltip
 } from "@blueprintjs/core"
+import styled from "@emotion/styled"
 import * as FieldHelper from "components/FieldHelper"
 import SelectLocationFormat from "components/SelectLocationFormat"
 import { Field } from "formik"
@@ -49,14 +49,14 @@ const GeoLocation = ({
 
   if (!editable) {
     const humanValue = (
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <ReadonlyGeoLocation>
         <CoordinatesFormField coordinates={coordinates} />
         <AllFormatsInfo coordinates={coordinates} />
         <SelectLocationFormat
           locationFormat={locationFormat}
           setLocationFormat={setLocationFormat}
         />
-      </div>
+      </ReadonlyGeoLocation>
     )
 
     if (displayType === GEO_LOCATION_DISPLAY_TYPE.FORM_FIELD) {
@@ -88,6 +88,17 @@ const GeoLocation = ({
     />
   )
 }
+
+const ReadonlyGeoLocation = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  @media (max-width: 440px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`
 
 function fnRequiredWhenEditable(props, propName, componentName) {
   if (props.editable === true && typeof props[propName] !== "function") {
@@ -219,11 +230,11 @@ const LatLonFormField = ({
   const { lat, lng } = coordinates
   if (!editable) {
     return (
-      <>
+      <div>
         <span>{lat || lat === 0 ? lat : "?"}</span>
         <span>,&nbsp;</span>
         <span>{lng || lng === 0 ? lng : "?"}</span>
-      </>
+      </div>
     )
   }
   return (
@@ -324,7 +335,7 @@ const CoordinateActionButtons = ({
   setLocationFormat
 }) => {
   return (
-    <Col sm={3} style={{ padding: "4px 8px" }}>
+    <Col sm={5} style={{ padding: "4px 8px" }}>
       <Tooltip content="Clear coordinates">
         <AnchorButton
           minimal
@@ -406,7 +417,6 @@ const AllFormatsInfo = ({ coordinates, inForm }) => {
           />
         </Tooltip>
       }
-      position={Position.RIGHT}
       interactionKind={PopoverInteractionKind.CLICK_TARGET_ONLY}
       usePortal={false}
     />
