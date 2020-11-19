@@ -706,7 +706,7 @@ public class PositionResourceTest extends AbstractResourceTest {
     Person testPerson = new Person();
     testPerson.setName("MergePositionTest Person");
     testPerson.setRole(Role.PRINCIPAL);
-    testPerson.setStatus(PersonStatus.ACTIVE);
+    testPerson.setStatus(Person.Status.ACTIVE);
 
     String testPersonUuid = graphQLHelper.createObject(admin, "createPerson", "person",
         "PersonInput", testPerson, new TypeReference<GraphQlResponse<Person>>() {});
@@ -727,7 +727,7 @@ public class PositionResourceTest extends AbstractResourceTest {
     firstPosition.setName("MergePositionTest First Position");
     firstPosition.setType(PositionType.PRINCIPAL);
     firstPosition.setOrganization(orgs.getList().get(0));
-    firstPosition.setStatus(PositionStatus.ACTIVE);
+    firstPosition.setStatus(Position.Status.ACTIVE);
     firstPosition.setPerson(testPerson);
 
     String firstPositionUuid = graphQLHelper.createObject(admin, "createPosition", "position",
@@ -741,7 +741,7 @@ public class PositionResourceTest extends AbstractResourceTest {
     secondPosition.setName("MergePositionTest Second Position");
     secondPosition.setType(PositionType.PRINCIPAL);
     secondPosition.setOrganization(orgs.getList().get(0));
-    secondPosition.setStatus(PositionStatus.ACTIVE);
+    secondPosition.setStatus(Position.Status.ACTIVE);
 
     String secondPositionUuid = graphQLHelper.createObject(admin, "createPosition", "position",
         "PositionInput", secondPosition, new TypeReference<GraphQlResponse<Position>>() {});
