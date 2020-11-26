@@ -524,7 +524,6 @@ properties:
             enum: [LAT_LON, MGRS]
             description: Used in the UI where a location's coordinate is shown. Defaults to LAT_LON.
 
-
       position:
         type: object
         additionalProperties: false
