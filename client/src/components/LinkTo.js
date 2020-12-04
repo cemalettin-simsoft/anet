@@ -19,11 +19,6 @@ export default class LinkTo extends Component {
     showIcon: PropTypes.bool,
     showAvatar: PropTypes.bool,
     previewId: PropTypes.string, // needed for previewing same pages multiple times
-
-    // Configures this link to look like a button. Set it to true to make it a button,
-    // or pass a string to set a button type
-    button: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-
     target: PropTypes.string,
     whenUnspecified: PropTypes.string,
     modelType: PropTypes.string.isRequired,
@@ -36,7 +31,6 @@ export default class LinkTo extends Component {
     showIcon: true,
     showAvatar: true,
     previewId: null,
-    button: false,
     whenUnspecified: "Unspecified",
     modelType: null,
     model: null
@@ -46,7 +40,6 @@ export default class LinkTo extends Component {
     const {
       componentClass,
       children,
-      button,
       showIcon,
       showAvatar,
       whenUnspecified,
@@ -58,16 +51,7 @@ export default class LinkTo extends Component {
       ...componentProps
     } = this.props
 
-    if (button) {
-      componentProps.className = [
-        className,
-        "btn",
-        `btn-${button === true ? "default" : button}`
-      ].join(" ")
-    } else {
-      componentProps.className = className
-    }
-
+    componentProps.className = className
     if (_isEmpty(model)) {
       return <span>{whenUnspecified}</span>
     }
@@ -78,7 +62,7 @@ export default class LinkTo extends Component {
     const modelInstance = new ModelClass(isModel ? model : {})
 
     // Icon
-    const iconComponent = showIcon && !button && modelInstance.iconUrl() && (
+    const iconComponent = showIcon && modelInstance.iconUrl() && (
       <img
         src={modelInstance.iconUrl()}
         alt=""
@@ -88,7 +72,6 @@ export default class LinkTo extends Component {
 
     // Avatar
     const avatarComponent = showAvatar &&
-      !button &&
       Object.prototype.hasOwnProperty.call(model, "avatar") && (
         <AvatarDisplayComponent
           avatar={modelInstance.avatar}

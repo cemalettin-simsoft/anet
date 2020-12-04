@@ -946,6 +946,7 @@ export const ReadonlyCustomFields = ({
   parentFieldName, // key path in the values object to get to the level of fields given by the fieldsConfig
   values,
   vertical,
+  linkToComp,
   isCompact
 }) => {
   return (
@@ -966,6 +967,7 @@ export const ReadonlyCustomFields = ({
             key={key}
             name={fieldName}
             values={values}
+            linkToComp={linkToComp}
             vertical={vertical}
             isCompact={isCompact}
             {...fieldProps}
@@ -989,6 +991,7 @@ export const ReadonlyCustomFields = ({
 ReadonlyCustomFields.propTypes = {
   fieldsConfig: PropTypes.object,
   parentFieldName: PropTypes.string.isRequired,
+  linkToComp: PropTypes.func.isRequired,
   values: PropTypes.object.isRequired,
   vertical: PropTypes.bool,
   isCompact: PropTypes.bool
