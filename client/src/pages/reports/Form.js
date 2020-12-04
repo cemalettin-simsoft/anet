@@ -841,6 +841,7 @@ const ReportForm = ({
                       values,
                       validateForm
                     }}
+                    linkToComp={LinkTo}
                   />
                 </Fieldset>
               )}
@@ -934,6 +935,7 @@ const ReportForm = ({
                         // validation will be done by setFieldValue
                         setFieldTouched("reportText", true, false)
                       }}
+                      linkToComp={LinkTo}
                     />
                   }
                 />
@@ -981,6 +983,7 @@ const ReportForm = ({
                                 false
                               )
                             }}
+                            linkToComp={LinkTo}
                           />
                         }
                       />
