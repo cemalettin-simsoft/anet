@@ -7,10 +7,10 @@ import AssignPositionModal from "components/AssignPositionModal"
 import AvatarDisplayComponent from "components/AvatarDisplayComponent"
 import { mapReadonlyCustomFieldsToComps } from "components/CustomFields"
 import EditAssociatedPositionsModal from "components/EditAssociatedPositionsModal"
+import { parseHtmlWithLinkTo } from "components/editor/LinkAnet"
 import * as FieldHelper from "components/FieldHelper"
 import Fieldset from "components/Fieldset"
 import GuidedTour from "components/GuidedTour"
-import { parseHtmlWithLinkTo } from "components/editor/LinkAnet"
 import LinkTo from "components/LinkTo"
 import Messages from "components/Messages"
 import { DEFAULT_CUSTOM_FIELDS_PARENT } from "components/Model"
@@ -397,6 +397,9 @@ const PersonShow = ({ pageDispatchers }) => {
                 privilegedAccessedFields[key]
                   ? privilegedAccessedFields[key].accessCond
                   : true
+              ) // Also filter if somehow there is no field in both maps
+              .filter(
+                key => mappedNonCustomFields[key] || mappedCustomFields[key]
               )
               // then map it to components and keys, keys used for React list rendering
               .map(key => [
