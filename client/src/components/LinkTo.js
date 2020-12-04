@@ -18,8 +18,6 @@ export default class LinkTo extends Component {
     className: PropTypes.string,
     showIcon: PropTypes.bool,
     showAvatar: PropTypes.bool,
-    isLink: PropTypes.bool,
-    edit: PropTypes.bool,
     previewId: PropTypes.string, // needed for previewing same pages multiple times
 
     // Configures this link to look like a button. Set it to true to make it a button,
@@ -37,8 +35,6 @@ export default class LinkTo extends Component {
     componentClass: Link,
     showIcon: true,
     showAvatar: true,
-    isLink: true,
-    edit: false,
     previewId: null,
     button: false,
     whenUnspecified: "Unspecified",
@@ -50,11 +46,9 @@ export default class LinkTo extends Component {
     const {
       componentClass,
       children,
-      edit,
       button,
       showIcon,
       showAvatar,
-      isLink,
       whenUnspecified,
       className,
       modelType,
@@ -104,20 +98,9 @@ export default class LinkTo extends Component {
         />
     )
 
-    if (!isLink) {
-      return (
-        <span style={style}>
-          {avatarComponent}
-          {modelInstance.toString()}
-        </span>
-      )
-    }
-
     let to
     if (isModel) {
-      to = edit
-        ? ModelClass.pathForEdit(modelInstance)
-        : ModelClass.pathFor(modelInstance)
+      to = ModelClass.pathFor(modelInstance)
     } else if (model.indexOf("?")) {
       const components = model.split("?")
       to = { pathname: components[0], search: components[1] }
@@ -132,9 +115,8 @@ export default class LinkTo extends Component {
         uuid={modelInstance.uuid}
         previewId={previewId}
         popoverClassName="bp3-dark"
-        hoverCloseDelay={51500}
+        hoverCloseDelay={1500}
         portalClassName="linkto-model-preview-portal"
-        isEdit={edit}
       >
         <LinkToComponent to={to} style={style} {...componentProps}>
           <>

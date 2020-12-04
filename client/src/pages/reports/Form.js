@@ -20,7 +20,6 @@ import {
 } from "components/CustomFields"
 import * as FieldHelper from "components/FieldHelper"
 import Fieldset from "components/Fieldset"
-import FieldShortcuts from "components/FieldShortcuts"
 import LinkTo from "components/LinkTo"
 import Messages from "components/Messages"
 import Model, {
@@ -575,7 +574,7 @@ const ReportForm = ({
                   }
                   extraColElem={
                     <>
-                      <FieldShortcuts
+                      <FieldHelper.FieldShortcuts
                         title="Recent Locations"
                         shortcuts={recents.locations}
                         fieldName="location"
@@ -747,7 +746,7 @@ const ReportForm = ({
                   }
                   extraColElem={
                     <>
-                      <FieldShortcuts
+                      <FieldHelper.FieldShortcuts
                         title="Recent attendees"
                         shortcuts={recents.persons}
                         fieldName="reportPeople"
@@ -812,7 +811,7 @@ const ReportForm = ({
                     }
                     extraColElem={
                       <>
-                        <FieldShortcuts
+                        <FieldHelper.FieldShortcuts
                           title={`Recent ${tasksLabel}`}
                           shortcuts={recents.tasks}
                           fieldName="tasks"
@@ -1018,7 +1017,7 @@ const ReportForm = ({
                         }
                         extraColElem={
                           <>
-                            <FieldShortcuts
+                            <FieldHelper.FieldShortcuts
                               title="Recent Authorization Groups"
                               shortcuts={recents.authorizationGroups}
                               fieldName="authorizationGroups"
