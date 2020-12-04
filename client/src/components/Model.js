@@ -626,13 +626,13 @@ export default class Model {
   }
 
   static populateEntitiesNotesCustomFields(entities) {
-    entities.forEach(entity => {
+    entities?.forEach(entity => {
       Model.populateNotesCustomFields(entity)
     })
   }
 
   static populateNotesCustomFields(entity) {
-    entity.notes.forEach(
+    entity?.notes?.forEach(
       note =>
         note.type !== NOTE_TYPE.FREE_TEXT &&
         (note.customFields = utils.parseJsonSafe(note.text))

@@ -128,7 +128,7 @@ export default class LinkTo extends Component {
     const LinkToComponent = componentClass
     return (
       <ModelTooltip
-        modelClass={ModelClass}
+        modelType={modelType}
         uuid={modelInstance.uuid}
         previewId={previewId}
         popoverClassName="bp3-dark"
