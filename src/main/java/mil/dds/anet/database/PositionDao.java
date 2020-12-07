@@ -470,7 +470,6 @@ public class PositionDao extends AnetBaseDao<Position, PositionSearchQuery> {
         .bind("loserUuid", loserUuid).execute();
   }
 
-
   @InTransaction
   public int mergePositions(Position existingPos, Position mergedPosition) {
     getDbHandle().createUpdate(
