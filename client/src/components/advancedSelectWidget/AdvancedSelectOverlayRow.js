@@ -1,45 +1,45 @@
 import LinkTo from "components/LinkTo"
 import moment from "moment"
-import React from "react"
+import { Fragment } from "react"
 import Settings from "settings"
 
 export const AuthorizationGroupOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td>{item.name}</td>
     <td>{item.description}</td>
-  </React.Fragment>
+  </Fragment>
 )
 
 export const LocationOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td>
       <LinkTo modelType="Location" model={item} isLink={false} />
     </td>
-  </React.Fragment>
+  </Fragment>
 )
 
 export const OrganizationOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td className="orgShortName">
       <span>
         {item.shortName} - {item.longName} {item.identificationCode}
       </span>
     </td>
-  </React.Fragment>
+  </Fragment>
 )
 
 export const TaskSimpleOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td className="taskName">
       <span>
         {item.shortName} - {item.longName}
       </span>
     </td>
-  </React.Fragment>
+  </Fragment>
 )
 
 export const TaskDetailedOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td className="taskName">
       <LinkTo modelType="Task" model={item} isLink={false}>
         {item.shortName}
@@ -52,11 +52,11 @@ export const TaskDetailedOverlayRow = item => (
         </LinkTo>
       )}
     </td>
-  </React.Fragment>
+  </Fragment>
 )
 
 export const PositionOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td>
       <LinkTo modelType="Position" model={item} isLink={false} />
       {item.code ? `, ${item.code}` : ""}
@@ -71,19 +71,19 @@ export const PositionOverlayRow = item => (
     <td>
       <LinkTo modelType="Person" model={item.person} isLink={false} />
     </td>
-  </React.Fragment>
+  </Fragment>
 )
 
 export const PersonSimpleOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td>
       <LinkTo modelType="Person" model={item} isLink={false} />
     </td>
-  </React.Fragment>
+  </Fragment>
 )
 
 export const PersonDetailedOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td>
       <LinkTo modelType="Person" model={item} isLink={false} />
     </td>
@@ -108,30 +108,30 @@ export const PersonDetailedOverlayRow = item => (
         />
       )}
     </td>
-  </React.Fragment>
+  </Fragment>
 )
 
 export const TagOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td>
       <LinkTo modelType="Tag" model={item} isLink={false} />
     </td>
-  </React.Fragment>
+  </Fragment>
 )
 
 export const ApproverOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td>
       <LinkTo modelType="Person" model={item.person} isLink={false} />
     </td>
     <td>
       <LinkTo modelType="Position" model={item} isLink={false} />
     </td>
-  </React.Fragment>
+  </Fragment>
 )
 
 export const ReportDetailedOverlayRow = item => (
-  <React.Fragment key={item.uuid}>
+  <Fragment key={item.uuid}>
     <td>
       <LinkTo modelType="Report" model={item} isLink={false} />
     </td>
@@ -153,5 +153,5 @@ export const ReportDetailedOverlayRow = item => (
         )}
       </span>
     </td>
-  </React.Fragment>
+  </Fragment>
 )

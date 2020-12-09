@@ -1,6 +1,5 @@
 import RemoveButton from "components/RemoveButton"
 import PropTypes from "prop-types"
-import React from "react"
 import { Table } from "react-bootstrap"
 
 const AuthorizationGroupTable = ({

@@ -2,7 +2,7 @@ import { TRAFFIC_LIGHTS_LEVELS } from "components/graphs/utils"
 import * as d3 from "d3"
 import _isEmpty from "lodash/isEmpty"
 import PropTypes from "prop-types"
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import useDimensions from "react-use-dimensions"
 
 const IqrBoxPlot = ({ values, levels, width, height, whenUnspecified }) => {

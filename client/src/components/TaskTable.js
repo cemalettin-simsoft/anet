@@ -10,7 +10,7 @@ import UltimatePaginationTopDown from "components/UltimatePaginationTopDown"
 import _get from "lodash/get"
 import { Task } from "models"
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import { useState } from "react"
 import { Table } from "react-bootstrap"
 import { connect } from "react-redux"
 

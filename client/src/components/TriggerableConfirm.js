@@ -1,6 +1,5 @@
 import "components/react-confirm-bootstrap.css"
 import PropTypes from "prop-types"
-import React from "react"
 import { Button } from "react-bootstrap"
 import Confirm from "react-confirm-bootstrap"
 

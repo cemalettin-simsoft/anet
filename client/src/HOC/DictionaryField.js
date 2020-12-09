@@ -1,6 +1,5 @@
 import _isEmpty from "lodash/isEmpty"
 import PropTypes from "prop-types"
-import React from "react"
 
 const DictionaryField = WrappedComponent => ({ dictProps, ...otherProps }) => {
   // Only display field if the dictProps are defined

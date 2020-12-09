@@ -1,7 +1,6 @@
 import { IconNames } from "@blueprintjs/icons"
 import { Icon } from "@blueprintjs/core"
 import PropTypes from "prop-types"
-import React from "react"
 
 const TrendIcon = props => {
   if (props.trendValue > 0) {

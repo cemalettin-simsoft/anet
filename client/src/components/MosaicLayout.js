@@ -6,7 +6,7 @@ import classNames from "classnames"
 import _cloneDeep from "lodash/cloneDeep"
 import _dropRight from "lodash/dropRight"
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import { useState } from "react"
 import {
   Corner,
   createBalancedTreeFromLeaves,

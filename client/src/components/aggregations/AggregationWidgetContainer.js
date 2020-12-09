@@ -22,7 +22,6 @@ import LikertScale from "components/graphs/LikertScale"
 import { CUSTOM_FIELD_TYPE } from "components/Model"
 import { AssessmentPeriodPropType, PeriodPropType } from "periodUtils"
 import PropTypes from "prop-types"
-import React from "react"
 import { Col, ControlLabel, FormGroup } from "react-bootstrap"
 import utils from "utils"
 

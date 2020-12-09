@@ -24,7 +24,7 @@ import ReportCollection, {
 } from "components/ReportCollection"
 import { Field, Form, Formik } from "formik"
 import { AuthorizationGroup } from "models"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { connect } from "react-redux"
 import { useLocation, useParams } from "react-router-dom"
 

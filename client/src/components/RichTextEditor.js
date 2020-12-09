@@ -17,7 +17,7 @@ import createSideToolbarPlugin from "draft-js-side-toolbar-plugin"
 import { BLOCK_TYPE, DraftailEditor, ENTITY_TYPE, INLINE_STYLE } from "draftail"
 import _isEqual from "lodash/isEqual"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
+import { createRef, Component } from "react"
 
 import "draft-js/dist/Draft.css"
 import "draftail/dist/draftail.css"
@@ -163,7 +163,7 @@ class RichTextEditor extends Component {
       sideToolbarPlugin: createSideToolbarPlugin(),
       content: {}
     }
-    this.editorRef = React.createRef()
+    this.editorRef = createRef()
     this.focus = () => this.editorRef.current.focus()
   }
 

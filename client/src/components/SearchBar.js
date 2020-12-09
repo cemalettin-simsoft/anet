@@ -7,7 +7,7 @@ import {
 } from "components/SearchFilters"
 import _isEqual from "lodash/isEqual"
 import PropTypes from "prop-types"
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Button, Form, FormControl, InputGroup } from "react-bootstrap"
 import { connect } from "react-redux"
 import { useHistory } from "react-router-dom"

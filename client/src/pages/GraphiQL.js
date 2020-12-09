@@ -8,7 +8,6 @@ import {
 } from "components/Page"
 import GraphiQL from "graphiql"
 import "graphiql/graphiql.css"
-import React from "react"
 import { connect } from "react-redux"
 
 const GraphiQLContainer = ({ pageDispatchers }) => {

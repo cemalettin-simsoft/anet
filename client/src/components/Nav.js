@@ -5,7 +5,7 @@ import { Organization } from "models"
 import { INSIGHTS, INSIGHT_DETAILS } from "pages/insights/Show"
 import pluralize from "pluralize"
 import PropTypes from "prop-types"
-import React, { useContext, useEffect } from "react"
+import { useContext, useEffect } from "react"
 import {
   Badge,
   MenuItem,

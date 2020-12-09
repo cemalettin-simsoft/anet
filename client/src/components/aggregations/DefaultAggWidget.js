@@ -3,7 +3,7 @@ import {
   aggregationWidgetPropTypes
 } from "components/aggregations/utils"
 import _isEmpty from "lodash/isEmpty"
-import React, { useState } from "react"
+import { useState } from "react"
 import { Button, Collapse, Table } from "react-bootstrap"
 import utils from "utils"
 

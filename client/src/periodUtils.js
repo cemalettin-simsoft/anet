@@ -1,6 +1,5 @@
 import moment from "moment"
 import PropTypes from "prop-types"
-import React from "react"
 import { momentObj } from "react-moment-proptypes"
 
 const ASSESSMENT_PERIOD_DATE_FORMAT = "YYYY-MM-DD"

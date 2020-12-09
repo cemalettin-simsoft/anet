@@ -1,7 +1,6 @@
 import LinkAnetEntity from "components/editor/LinkAnetEntity"
 import parse from "html-react-parser"
 import PropTypes from "prop-types"
-import React from "react"
 import { getEntityInfoFromUrl } from "utils_links"
 
 // Enhanced HTML so that links will be converted to LinkTo components

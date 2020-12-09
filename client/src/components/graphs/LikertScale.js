@@ -2,7 +2,7 @@ import { TRAFFIC_LIGHTS_LEVELS } from "components/graphs/utils"
 import * as d3 from "d3"
 import _isEmpty from "lodash/isEmpty"
 import PropTypes from "prop-types"
-import React, { useCallback, useEffect, useRef } from "react"
+import { Fragment, useCallback, useEffect, useRef } from "react"
 import Text from "react-svg-text"
 import useDimensions from "react-use-dimensions"
 import utils from "utils"
@@ -116,7 +116,7 @@ const LikertScale = ({
         active && (activeColor = d3.hsl(level.color))
         fillColor.opacity = active ? 0.4 : 0.15
         return (
-          <React.Fragment key={`level-${index}`}>
+          <Fragment key={`level-${index}`}>
             <rect
               style={{ fill: fillColor, stroke: "gray", strokeWidth: 1 }}
               y={0}
@@ -135,7 +135,7 @@ const LikertScale = ({
             >
               {level.label}
             </Text>
-          </React.Fragment>
+          </Fragment>
         )
       })}
       {numberValues?.map((xValue, index) => (

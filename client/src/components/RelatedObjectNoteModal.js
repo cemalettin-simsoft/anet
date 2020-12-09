@@ -12,7 +12,7 @@ import RichTextEditor from "components/RichTextEditor"
 import { Field, Form, Formik } from "formik"
 import _isEmpty from "lodash/isEmpty"
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import { Fragment, useState } from "react"
 import { Button, Modal } from "react-bootstrap"
 import utils from "utils"
 import * as yup from "yup"
@@ -81,7 +81,7 @@ const RelatedObjectNoteModal = ({
                   {note.type === NOTE_TYPE.PARTNER_ASSESSMENT && (
                     <>
                       {questions.map(question => (
-                        <React.Fragment key={question.id}>
+                        <Fragment key={question.id}>
                           <p>{question.label}</p>
                           <Field
                             name={question.id}
@@ -94,7 +94,7 @@ const RelatedObjectNoteModal = ({
                           />
                           <br />
                           <br />
-                        </React.Fragment>
+                        </Fragment>
                       ))}
                     </>
                   )}

@@ -24,7 +24,7 @@ import _isEqual from "lodash/isEqual"
 import { Person } from "models"
 import pluralize from "pluralize"
 import PropTypes from "prop-types"
-import React, { useContext, useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import {
   Alert,
   Button,

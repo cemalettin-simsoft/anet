@@ -5,7 +5,6 @@ import { OrganizationOverlayRow } from "components/advancedSelectWidget/Advanced
 import AdvancedSingleSelect from "components/advancedSelectWidget/AdvancedSingleSelect"
 import { Organization } from "models"
 import PropTypes from "prop-types"
-import React from "react"
 import { ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 import ORGANIZATIONS_ICON from "resources/organizations.png"
 import { RECURSE_STRATEGY } from "searchUtils"

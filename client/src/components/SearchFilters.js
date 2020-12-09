@@ -40,7 +40,6 @@ import {
   Task
 } from "models"
 import PropTypes from "prop-types"
-import React from "react"
 import LOCATIONS_ICON from "resources/locations.png"
 import PEOPLE_ICON from "resources/people.png"
 import POSITIONS_ICON from "resources/positions.png"

@@ -3,7 +3,7 @@ import LinkTo from "components/LinkTo"
 import _cloneDeep from "lodash/cloneDeep"
 import _get from "lodash/get"
 import PropTypes from "prop-types"
-import React, { useCallback, useMemo } from "react"
+import { cloneElement, useCallback, useMemo } from "react"
 import {
   Button,
   Col,
@@ -294,7 +294,7 @@ export const SpecialField = ({
   ...otherProps
 }) => {
   const widgetElem = useMemo(
-    () => React.cloneElement(widget, { ...field, ...otherProps }),
+    () => cloneElement(widget, { ...field, ...otherProps }),
     [field, otherProps, widget]
   )
   return (

@@ -17,7 +17,7 @@ import ReportCollection, {
 import { getSearchQuery, SearchQueryPropType } from "components/SearchFilters"
 import SubNav from "components/SubNav"
 import { Report } from "models"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { Nav } from "react-bootstrap"
 import { connect } from "react-redux"
 

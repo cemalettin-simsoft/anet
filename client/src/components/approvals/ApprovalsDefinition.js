@@ -10,7 +10,7 @@ import RemoveButton from "components/RemoveButton"
 import { FastField, FieldArray } from "formik"
 import { Position } from "models"
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import { useState } from "react"
 import { Button, Checkbox, Modal, Table } from "react-bootstrap"
 import POSITIONS_ICON from "resources/positions.png"
 

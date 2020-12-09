@@ -20,7 +20,7 @@ import {
 } from "periodUtils"
 import pluralize from "pluralize"
 import PropTypes from "prop-types"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Table } from "react-bootstrap"
 import Settings from "settings"
 import utils from "utils"

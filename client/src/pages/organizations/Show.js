@@ -24,7 +24,7 @@ import { Field, Form, Formik } from "formik"
 import { Organization, Position, Report } from "models"
 import { orgTour } from "pages/HopscotchTour"
 import pluralize from "pluralize"
-import React, { useContext, useState } from "react"
+import { useContext, useState } from "react"
 import {
   Checkbox,
   ListGroup,

@@ -11,7 +11,7 @@ import {
 } from "components/Page"
 import { Person, Position } from "models"
 import PropTypes from "prop-types"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { connect } from "react-redux"
 import TOUR_SCREENSHOT from "resources/tour-screenshot.png"
 import Settings from "settings"

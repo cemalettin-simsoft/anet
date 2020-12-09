@@ -15,7 +15,6 @@ import {
 } from "dateUtils"
 import moment from "moment"
 import PropTypes from "prop-types"
-import React from "react"
 import { FormGroup } from "react-bootstrap"
 import Settings from "settings"
 

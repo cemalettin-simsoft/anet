@@ -1,6 +1,6 @@
 import AppContext from "components/AppContext"
 import * as Models from "models"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { Button, DropdownButton, MenuItem } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 

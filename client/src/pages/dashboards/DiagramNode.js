@@ -28,7 +28,6 @@ import * as Models from "models"
 import moment from "moment"
 import { PERIOD_FACTORIES, RECURRENCE_TYPE } from "periodUtils"
 import PropTypes from "prop-types"
-import * as React from "react"
 
 const ENTITY_GQL_FIELDS = {
   Report: GRAPHQL_ENTITY_FIELDS.Report,

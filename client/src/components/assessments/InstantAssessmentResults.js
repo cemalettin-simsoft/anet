@@ -4,7 +4,6 @@ import AggregationWidgetContainer, {
 import _isEmpty from "lodash/isEmpty"
 import { formatPeriodBoundary, PeriodsPropType } from "periodUtils"
 import PropTypes from "prop-types"
-import React from "react"
 
 /* The InstantAssessmentsRow component displays the results of the aggregation
  * of the assessments made on a given question (as part of the instant

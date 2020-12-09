@@ -6,7 +6,6 @@ import { gql } from "apollo-boost"
 import Report from "models/Report"
 import moment from "moment"
 import PropTypes from "prop-types"
-import React from "react"
 
 const GET_REPORT_WITH_ATTENDED_REPORTS = gql`
   query($uuid: String, $attendedReportsQuery: ReportSearchQueryInput) {

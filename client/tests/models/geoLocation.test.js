@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom/extend-expect"
 import { render, screen } from "@testing-library/react"
 import { Form, Formik } from "formik"
-import React from "react"
 import { convertLatLngToMGRS } from "../../src/geoUtils"
 import GeoLocation from "../../src/pages/locations/GeoLocation"
 

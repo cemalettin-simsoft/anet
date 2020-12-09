@@ -10,7 +10,7 @@ import {
 import { Person } from "models"
 import moment from "moment"
 import PersonForm from "pages/people/Form"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { connect } from "react-redux"
 
 const GQL_GET_PERSON = gql`

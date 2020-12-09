@@ -5,7 +5,7 @@ import Toolbar from "components/AdvisorReports/Toolbar"
 import { PageDispatchersPropType, useBoilerplate } from "components/Page"
 import _debounce from "lodash/debounce"
 import moment from "moment"
-import React, { useState } from "react"
+import { useState } from "react"
 
 const GQL_GET_ADVISOR_REPORTS_INSIGHT = gql`
   query {

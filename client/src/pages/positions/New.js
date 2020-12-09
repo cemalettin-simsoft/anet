@@ -8,7 +8,6 @@ import {
 } from "components/Page"
 import { Organization, Position } from "models"
 import PropTypes from "prop-types"
-import React from "react"
 import { connect } from "react-redux"
 import { useLocation } from "react-router-dom"
 import utils from "utils"

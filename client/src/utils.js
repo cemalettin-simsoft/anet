@@ -6,7 +6,7 @@ import _isEmpty from "lodash/isEmpty"
 import pluralize from "pluralize"
 import decodeQuery from "querystring/decode"
 import encodeQuery from "querystring/encode"
-import React, { useCallback, useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import Settings from "settings"
 
 const WILDCARD = "*"

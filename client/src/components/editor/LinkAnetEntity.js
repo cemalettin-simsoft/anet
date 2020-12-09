@@ -2,7 +2,7 @@ import LinkTo from "components/LinkTo"
 import { GRAPHQL_ENTITY_FIELDS } from "components/Model"
 import * as Models from "models"
 import PropTypes from "prop-types"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 const LinkAnetEntity = ({ type, uuid, children }) => {
   const [entity, setEntity] = useState()

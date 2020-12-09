@@ -3,7 +3,7 @@ import { OBJECT_TYPE_TO_MODEL } from "components/Model"
 import _isEmpty from "lodash/isEmpty"
 import * as Models from "models"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
+import { Component } from "react"
 import { Link } from "react-router-dom"
 
 export default class LinkTo extends Component {

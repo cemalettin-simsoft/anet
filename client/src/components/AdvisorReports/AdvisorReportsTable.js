@@ -8,7 +8,6 @@ import {
   useBoilerplate
 } from "components/Page"
 import PropTypes from "prop-types"
-import React from "react"
 import { Table } from "react-bootstrap"
 import { connect } from "react-redux"
 import Settings from "settings"

@@ -7,7 +7,7 @@ import _escape from "lodash/escape"
 import _isEmpty from "lodash/isEmpty"
 import { Location } from "models"
 import PropTypes from "prop-types"
-import React, { useMemo } from "react"
+import { useMemo } from "react"
 
 const ReportsMapWidget = ({
   values,

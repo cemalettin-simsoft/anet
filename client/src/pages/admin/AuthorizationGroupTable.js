@@ -1,7 +1,6 @@
 import LinkTo from "components/LinkTo"
 import { AuthorizationGroup } from "models"
 import PropTypes from "prop-types"
-import React from "react"
 import { Table } from "react-bootstrap"
 
 const AuthorizationGroupTable = props => {

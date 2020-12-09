@@ -5,7 +5,6 @@ import {
   useBoilerplate
 } from "components/Page"
 import { AuthorizationGroup } from "models"
-import React from "react"
 import { connect } from "react-redux"
 import AuthorizationGroupForm from "./Form"
 

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
 import AppContext from "components/AppContext"
 import LinkTo from "components/LinkTo"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { Version } from "settings"
 
 const SETTING_KEY_TEXT = "SECURITY_BANNER_TEXT"

@@ -5,7 +5,6 @@ import {
   useBoilerplate
 } from "components/Page"
 import { Location } from "models"
-import React from "react"
 import { connect } from "react-redux"
 import LocationForm from "./Form"
 

@@ -2,7 +2,7 @@ import Checkbox from "components/Checkbox"
 import LoaderHOC from "HOC/LoaderHOC"
 import _isEmpty from "lodash/isEmpty"
 import PropTypes from "prop-types"
-import React from "react"
+import { cloneElement } from "react"
 import { Radio, Table } from "react-bootstrap"
 
 const AdvancedSelectOverlayTable = ({
@@ -32,10 +32,11 @@ const AdvancedSelectOverlayTable = ({
           const isSelected = selectedItemsUuids.includes(item.uuid)
           const handleClick = () =>
             isSelected ? handleRemoveItem(item) : handleAddItem(item)
-          const renderSelectComponent = React.cloneElement(
-            selectItemComponent,
-            { name: fieldName, checked: isSelected, onChange: () => null }
-          )
+          const renderSelectComponent = cloneElement(selectItemComponent, {
+            name: fieldName,
+            checked: isSelected,
+            onChange: () => null
+          })
           return (
             <tr
               key={`${item.uuid}-${pageNum}-${i}`}

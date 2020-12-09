@@ -17,7 +17,6 @@ import Report from "models/Report"
 import moment from "moment"
 import pluralize from "pluralize"
 import PropTypes from "prop-types"
-import React from "react"
 
 const GET_PERSON_WITH_REPORTS = gql`
   query($uuid: String!, $attendedReportsQuery: ReportSearchQueryInput!) {

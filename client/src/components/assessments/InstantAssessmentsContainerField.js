@@ -6,7 +6,7 @@ import LinkTo from "components/LinkTo"
 import Model from "components/Model"
 import _isEmpty from "lodash/isEmpty"
 import PropTypes from "prop-types"
-import React from "react"
+import { Fragment } from "react"
 import { Table } from "react-bootstrap"
 
 const InstantAssessmentsContainerField = ({
@@ -31,7 +31,7 @@ const InstantAssessmentsContainerField = ({
             return null
           }
           return (
-            <React.Fragment key={`assessment-${values.uuid}-${entity.uuid}`}>
+            <Fragment key={`assessment-${values.uuid}-${entity.uuid}`}>
               <tr>
                 <td>
                   <LinkTo modelType={entityType.resourceName} model={entity} />
@@ -54,7 +54,7 @@ const InstantAssessmentsContainerField = ({
                   )}
                 </td>
               </tr>
-            </React.Fragment>
+            </Fragment>
           )
         })}
       </tbody>

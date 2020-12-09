@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useRef } from "react"
+import { forwardRef, useRef } from "react"
 import { Button } from "react-bootstrap"
 import DOWNLOAD_ICON from "resources/download.png"
 
@@ -71,6 +71,6 @@ SVGCanvas.propTypes = {
   children: PropTypes.node
 }
 
-export default React.forwardRef((props, ref) => {
+export default forwardRef((props, ref) => {
   return <SVGCanvas {...props} svgRef={ref} />
 })

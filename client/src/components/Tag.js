@@ -1,4 +1,3 @@
-import React from "react"
 import { Label, OverlayTrigger, Tooltip } from "react-bootstrap"
 
 const Tag = ({ tag }) => {

@@ -4,7 +4,6 @@ import {
   mapPageDispatchersToProps,
   useBoilerplate
 } from "components/Page"
-import React from "react"
 import { Button } from "react-bootstrap"
 import { connect } from "react-redux"
 import { useHistory } from "react-router-dom"

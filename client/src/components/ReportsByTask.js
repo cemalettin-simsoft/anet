@@ -15,7 +15,7 @@ import ReportCollection, {
 import * as d3 from "d3"
 import _isEqual from "lodash/isEqual"
 import PropTypes from "prop-types"
-import React, { useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import ContainerDimensions from "react-container-dimensions"
 import Settings from "settings"
 

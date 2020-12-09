@@ -15,7 +15,7 @@ import {
   periodToString
 } from "periodUtils"
 import PropTypes from "prop-types"
-import React, { useContext, useState } from "react"
+import { useContext, useState } from "react"
 import { Button, Panel } from "react-bootstrap"
 
 const PeriodicAssessment = ({

@@ -16,7 +16,6 @@ import RelatedObjectNotes, {
 } from "components/RelatedObjectNotes"
 import { Person } from "models"
 import moment from "moment"
-import React from "react"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
 import Settings from "settings"

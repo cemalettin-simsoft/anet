@@ -11,7 +11,7 @@ import ReportSummary from "components/ReportSummary"
 import ReportTable from "components/ReportTable"
 import { RECURRENCE_TYPE } from "periodUtils"
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import { useState } from "react"
 import { Button } from "react-bootstrap"
 import { connect } from "react-redux"
 

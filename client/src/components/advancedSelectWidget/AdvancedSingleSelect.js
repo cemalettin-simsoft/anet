@@ -5,7 +5,6 @@ import { AdvancedSingleSelectOverlayTable } from "components/advancedSelectWidge
 import * as FieldHelper from "components/FieldHelper"
 import _isEmpty from "lodash/isEmpty"
 import PropTypes from "prop-types"
-import React from "react"
 import REMOVE_ICON from "resources/delete.png"
 
 const AdvancedSingleSelect = props => {

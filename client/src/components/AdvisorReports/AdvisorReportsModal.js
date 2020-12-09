@@ -1,7 +1,6 @@
 import AdvisorReportsTable from "components/AdvisorReports/AdvisorReportsTable"
 import SimpleModal from "components/SimpleModal"
 import PropTypes from "prop-types"
-import React from "react"
 
 const AdvisorReportsModal = props => (
   <SimpleModal title={props.name} size="large">

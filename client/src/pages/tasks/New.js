@@ -13,7 +13,6 @@ import {
 } from "components/Page"
 import { Organization, Task } from "models"
 import PropTypes from "prop-types"
-import React from "react"
 import { connect } from "react-redux"
 import { useLocation } from "react-router-dom"
 import Settings from "settings"

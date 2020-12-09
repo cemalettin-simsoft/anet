@@ -5,7 +5,7 @@ import Header from "components/Header"
 import NoPositionBanner from "components/NoPositionBanner"
 import SecurityBanner from "components/SecurityBanner"
 import PropTypes from "prop-types"
-import React, { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { connect } from "react-redux"
 
 const GENERAL_BANNER_LEVEL = "GENERAL_BANNER_LEVEL"

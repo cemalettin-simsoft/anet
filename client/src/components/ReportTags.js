@@ -1,7 +1,6 @@
 import "components/reactTags.css"
 import _clone from "lodash/clone"
 import PropTypes from "prop-types"
-import React from "react"
 import { WithContext as ReactTags } from "react-tag-input"
 
 const ReportTags = ({ value, suggestions, onChange }) => {

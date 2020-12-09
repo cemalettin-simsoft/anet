@@ -2,7 +2,6 @@ import Fieldset from "components/Fieldset"
 import LinkTo from "components/LinkTo"
 import { Location, Organization, Task } from "models"
 import PropTypes from "prop-types"
-import React from "react"
 import { Checkbox, Table } from "react-bootstrap"
 
 const Approvals = ({ restrictedApprovalLabel, relatedObject }) => {

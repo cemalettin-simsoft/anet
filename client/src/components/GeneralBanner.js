@@ -1,5 +1,3 @@
-import React from "react"
-
 function bannerClassName(level) {
   let output = "general-banner"
   switch (level) {

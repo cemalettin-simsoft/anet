@@ -18,7 +18,7 @@ import { Form, Formik } from "formik"
 import _cloneDeep from "lodash/cloneDeep"
 import { Organization, Position } from "models"
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import { useState } from "react"
 import {
   Button,
   Col,

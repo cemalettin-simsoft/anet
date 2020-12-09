@@ -10,7 +10,7 @@ import {
 } from "components/Page"
 import { LAST_MONTH } from "dateUtils"
 import PropTypes from "prop-types"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
 import Settings from "settings"

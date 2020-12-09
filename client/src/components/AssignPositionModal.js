@@ -10,13 +10,7 @@ import _isEmpty from "lodash/isEmpty"
 import _isEqualWith from "lodash/isEqualWith"
 import { Person, Position } from "models"
 import PropTypes from "prop-types"
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from "react"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import {
   Button,
   Col,

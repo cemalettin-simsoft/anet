@@ -20,7 +20,7 @@ import _isEqualWith from "lodash/isEqualWith"
 import { Person } from "models"
 import moment from "moment"
 import PropTypes from "prop-types"
-import React, { useContext, useEffect, useRef, useState } from "react"
+import { Fragment, useContext, useEffect, useRef, useState } from "react"
 import { Button, Panel } from "react-bootstrap"
 import ReactDOM from "react-dom"
 import NotificationBadge from "react-notification-badge"
@@ -207,7 +207,7 @@ const RelatedObjectNotes = ({
             </Panel.Heading>
             <Panel.Body>
               {questions.map(question => (
-                <React.Fragment key={question.id}>
+                <Fragment key={question.id}>
                   {question.label}
                   <br />
                   <Pie
@@ -228,18 +228,18 @@ const RelatedObjectNotes = ({
 
                   <br />
                   {question.choice.map(choice => (
-                    <React.Fragment key={choice.value}>
+                    <Fragment key={choice.value}>
                       <span style={{ backgroundColor: choice.color }}>
                         {choice.label} :
                         <b>
                           {partnerAssessmentsSummary[question.id][choice.value]}
                         </b>{" "}
                       </span>
-                    </React.Fragment>
+                    </Fragment>
                   ))}
                   <br />
                   <br />
-                </React.Fragment>
+                </Fragment>
               ))}
             </Panel.Body>
           </Panel>

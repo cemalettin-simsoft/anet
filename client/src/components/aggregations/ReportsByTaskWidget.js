@@ -3,7 +3,6 @@ import {
   aggregationWidgetPropTypes
 } from "components/aggregations/utils"
 import BarChart from "components/BarChart"
-import React from "react"
 
 const ReportsByTaskWidget = ({ widgetId, values, ...otherWidgetProps }) => (
   <div className="non-scrollable">

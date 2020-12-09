@@ -6,7 +6,7 @@ import { PageDispatchersPropType } from "components/Page"
 import _isEqual from "lodash/isEqual"
 import moment from "moment"
 import PropTypes from "prop-types"
-import React, { useRef } from "react"
+import { useRef } from "react"
 import { useHistory } from "react-router-dom"
 
 const GQL_GET_REPORT_LIST = gql`

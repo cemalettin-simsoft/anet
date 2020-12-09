@@ -8,7 +8,6 @@ import FullCalendar from "@fullcalendar/react"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import "@fullcalendar/timegrid/main.css"
 import PropTypes from "prop-types"
-import React from "react"
 import "./Calendar.css"
 
 const Calendar = ({ events, eventClick, calendarComponentRef }) => (

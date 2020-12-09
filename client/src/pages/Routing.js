@@ -40,7 +40,7 @@ import MyTasks from "pages/tasks/MyTasks"
 import TaskNew from "pages/tasks/New"
 import TaskShow from "pages/tasks/Show"
 import { PAGE_URLS } from "pages/util"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { Redirect, Route, Switch } from "react-router-dom"
 const Routing = () => {
   const { currentUser } = useContext(AppContext)

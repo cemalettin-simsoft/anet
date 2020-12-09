@@ -2,7 +2,6 @@ import useSearchFilter from "components/advancedSearch/hooks"
 import _map from "lodash/map"
 import { Report } from "models"
 import PropTypes from "prop-types"
-import React from "react"
 import { FormGroup } from "react-bootstrap"
 
 const CANCELLATION_REASON_LABELS = {

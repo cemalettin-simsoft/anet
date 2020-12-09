@@ -225,7 +225,10 @@
   ],
   "babel": {
     "presets": [
-      "react-app"
+      "react-app",
+      ["@babel/preset-react", {
+        "runtime": "automatic"
+      }]
     ],
     "plugins": [
       [
@@ -342,6 +345,8 @@
         }
       ],
       "react-hooks/exhaustive-deps": "warn",
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off",
       "react-hooks/rules-of-hooks": "error",
       "react/jsx-closing-bracket-location": "warn",
       "react/jsx-closing-tag-location": "warn",

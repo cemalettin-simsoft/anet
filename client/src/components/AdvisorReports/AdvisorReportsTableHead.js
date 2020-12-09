@@ -1,6 +1,5 @@
 import Checkbox from "components/Checkbox"
 import PropTypes from "prop-types"
-import React from "react"
 
 const AdvisorReportsTableHead = props => {
   const weekHeadings = []

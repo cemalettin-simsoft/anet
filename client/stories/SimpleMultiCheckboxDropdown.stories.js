@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import SimpleMultiCheckboxDropdown from "../src/components/SimpleMultiCheckboxDropdown"
 // Generally will be called from wrapper
 const Wrapper = () => {

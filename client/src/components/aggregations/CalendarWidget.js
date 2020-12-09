@@ -9,7 +9,7 @@ import {
 } from "components/aggregations/utils"
 import _isEmpty from "lodash/isEmpty"
 import PropTypes from "prop-types"
-import React, { useRef } from "react"
+import { useRef } from "react"
 import { useHistory } from "react-router-dom"
 
 const DATE_FORMAT = "YYYY-MM-DD"

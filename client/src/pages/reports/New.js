@@ -13,7 +13,7 @@ import {
 } from "components/Page"
 import { Person, Report } from "models"
 import { reportTour } from "pages/HopscotchTour"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { connect } from "react-redux"
 import Settings from "settings"
 import ReportForm from "./Form"

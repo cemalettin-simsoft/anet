@@ -10,7 +10,6 @@ import {
   useBoilerplate
 } from "components/Page"
 import { Person } from "models"
-import React from "react"
 import { connect } from "react-redux"
 import Settings from "settings"
 import PersonForm from "./Form"

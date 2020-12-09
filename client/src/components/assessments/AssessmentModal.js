@@ -14,7 +14,7 @@ import _cloneDeep from "lodash/cloneDeep"
 import _isEmpty from "lodash/isEmpty"
 import { formatPeriodBoundary } from "periodUtils"
 import PropTypes from "prop-types"
-import React, { useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { Button, Modal } from "react-bootstrap"
 
 const AssessmentModal = ({

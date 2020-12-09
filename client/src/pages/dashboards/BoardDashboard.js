@@ -28,7 +28,7 @@ import {
 import FileSaver from "file-saver"
 import * as Models from "models"
 import PropTypes from "prop-types"
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Badge, Button, Modal, Panel } from "react-bootstrap"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"

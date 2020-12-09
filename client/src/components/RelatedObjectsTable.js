@@ -3,7 +3,6 @@ import Model, { MODEL_TO_OBJECT_TYPE } from "components/Model"
 import MultiTypeAdvancedSelectComponent from "components/advancedSelectWidget/MultiTypeAdvancedSelectComponent"
 import RemoveButton from "components/RemoveButton"
 import PropTypes from "prop-types"
-import React from "react"
 import { Table } from "react-bootstrap"
 
 const RelatedObjectsTable = ({

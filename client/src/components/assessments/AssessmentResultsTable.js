@@ -12,7 +12,7 @@ import {
   PeriodsTableHeader
 } from "periodUtils"
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import { useState } from "react"
 import { Table } from "react-bootstrap"
 
 /* The AssessmentResultsTable component displays the results of two types of

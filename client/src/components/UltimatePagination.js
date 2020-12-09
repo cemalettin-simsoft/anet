@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import Pagination from "react-bootstrap/lib/Pagination"
 import { createUltimatePagination, ITEM_TYPES } from "react-ultimate-pagination"
 

@@ -6,7 +6,7 @@ import UltimatePagination from "components/UltimatePagination"
 import _isEmpty from "lodash/isEmpty"
 import _isEqualWith from "lodash/isEqualWith"
 import PropTypes from "prop-types"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import { cloneElement, useCallback, useEffect, useRef, useState } from "react"
 import { Button, Col, FormControl, InputGroup, Row } from "react-bootstrap"
 import { useDebouncedCallback } from "use-debounce"
 import utils from "utils"
@@ -156,7 +156,7 @@ const AdvancedSelect = ({
 
   const selectedFilter = latestFilterDefs.current[filterType]
   const renderSelectedWithDelete = renderSelected
-    ? React.cloneElement(renderSelected, { onDelete: handleRemoveItem })
+    ? cloneElement(renderSelected, { onDelete: handleRemoveItem })
     : null
   const [items, totalCount] =
     results && results[filterType]

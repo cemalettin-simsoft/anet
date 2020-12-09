@@ -39,7 +39,7 @@ import { Comment, Person, Position, Report, Task } from "models"
 import moment from "moment"
 import pluralize from "pluralize"
 import PropTypes from "prop-types"
-import React, { useContext, useState } from "react"
+import { Fragment, useContext, useState } from "react"
 import { Alert, Button, Col, HelpBlock, Modal } from "react-bootstrap"
 import Confirm from "react-confirm-bootstrap"
 import { connect } from "react-redux"
@@ -612,10 +612,10 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
                   name="authors"
                   component={FieldHelper.ReadonlyField}
                   humanValue={report.authors?.map(a => (
-                    <React.Fragment key={a.uuid}>
+                    <Fragment key={a.uuid}>
                       <LinkTo modelType="Person" model={a} />
                       <br />
-                    </React.Fragment>
+                    </Fragment>
                   ))}
                 />
 

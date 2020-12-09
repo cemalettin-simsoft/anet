@@ -1,4 +1,3 @@
-import React from "react"
 import DEFAULT_AVATAR from "resources/default_avatar.svg"
 import PropTypes from "prop-types"
 

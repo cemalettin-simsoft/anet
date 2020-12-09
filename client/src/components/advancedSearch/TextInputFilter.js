@@ -1,6 +1,5 @@
 import useSearchFilter from "components/advancedSearch/hooks"
 import PropTypes from "prop-types"
-import React from "react"
 import { FormControl, FormGroup } from "react-bootstrap"
 import { deserializeSearchFilter } from "searchUtils"
 

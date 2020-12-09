@@ -10,7 +10,6 @@ import RelatedObjectNotes, {
   GRAPHQL_NOTES_FIELDS
 } from "components/RelatedObjectNotes"
 import { Location } from "models"
-import React from "react"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
 import LocationForm from "./Form"

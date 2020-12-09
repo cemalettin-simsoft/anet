@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import { Button, ButtonGroup } from "react-bootstrap"
 
 const ButtonToggleGroup = ({ value, onChange, children, ...otherProps }) => (

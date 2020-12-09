@@ -1,7 +1,6 @@
 // Print friendly table layout for pages
 import styled from "@emotion/styled"
 import PropTypes from "prop-types"
-import React from "react"
 
 const CompactTable = ({ children }) => {
   return (

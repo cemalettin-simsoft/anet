@@ -4,7 +4,6 @@ import AdvancedSelect, {
 import { AdvancedMultiSelectOverlayTable } from "components/advancedSelectWidget/AdvancedSelectOverlayTable"
 import * as FieldHelper from "components/FieldHelper"
 import PropTypes from "prop-types"
-import React from "react"
 
 const AdvancedMultiSelect = props => {
   return (

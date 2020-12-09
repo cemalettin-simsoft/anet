@@ -14,7 +14,7 @@ import {
 import { Field, Form, Formik } from "formik"
 import moment from "moment"
 import UserActivityTable from "pages/admin/UserActivityTable"
-import React, { useContext, useState } from "react"
+import { useContext, useState } from "react"
 import { Button, Col, Grid, Row } from "react-bootstrap"
 import { connect } from "react-redux"
 import { toast } from "react-toastify"

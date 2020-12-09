@@ -13,7 +13,6 @@ import {
   parseCoordinate
 } from "geoUtils"
 import PropTypes from "prop-types"
-import React from "react"
 import { Col, ControlLabel, FormGroup, Table } from "react-bootstrap"
 import Settings from "settings"
 

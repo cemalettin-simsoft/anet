@@ -1,7 +1,6 @@
 import { CompactRow } from "components/Compact"
 import _isEmpty from "lodash/isEmpty"
 import PropTypes from "prop-types"
-import React from "react"
 import { Element } from "react-scroll"
 
 const Fieldset = ({ id, title, action, style, isCompact, ...otherProps }) => {

@@ -7,7 +7,6 @@ import ReportCollection, {
   FORMAT_TABLE
 } from "components/ReportCollection"
 import PropTypes from "prop-types"
-import React from "react"
 import utils from "utils"
 
 const SavedSearchTable = props => {

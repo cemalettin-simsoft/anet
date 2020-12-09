@@ -24,7 +24,7 @@ import _isEmpty from "lodash/isEmpty"
 import { Person, Report } from "models"
 import { superUserTour, userTour } from "pages/HopscotchTour"
 import PropTypes from "prop-types"
-import React, { useContext, useState } from "react"
+import { useContext, useState } from "react"
 import {
   Button,
   ControlLabel,

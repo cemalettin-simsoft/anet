@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 import PropTypes from "prop-types"
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useOutsideClick } from "utils"
 
 /**

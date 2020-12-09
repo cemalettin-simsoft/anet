@@ -11,7 +11,7 @@ import {
 import { getSearchQuery, SearchQueryPropType } from "components/SearchFilters"
 import TaskTable from "components/TaskTable"
 import pluralize from "pluralize"
-import React, { useContext, useMemo } from "react"
+import { useContext, useMemo } from "react"
 import { connect } from "react-redux"
 import { RECURSE_STRATEGY } from "searchUtils"
 import Settings from "settings"

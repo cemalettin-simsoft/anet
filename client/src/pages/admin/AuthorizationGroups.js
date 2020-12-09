@@ -7,7 +7,6 @@ import {
   mapPageDispatchersToProps,
   useBoilerplate
 } from "components/Page"
-import React from "react"
 import { connect } from "react-redux"
 import AuthorizationGroupTable from "./AuthorizationGroupTable"
 

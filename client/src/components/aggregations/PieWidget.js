@@ -4,7 +4,7 @@ import {
 } from "components/aggregations/utils"
 import Pie from "components/graphs/Pie"
 import PropTypes from "prop-types"
-import React from "react"
+import { Fragment } from "react"
 
 const PieWidget = ({
   values,
@@ -26,11 +26,11 @@ const PieWidget = ({
       {showLegend && (
         <div className="pieLegend">
           {Object.map(legend, (key, choice) => (
-            <React.Fragment key={key}>
+            <Fragment key={key}>
               <span style={{ backgroundColor: choice.color }}>
                 {choice.label}{" "}
               </span>
-            </React.Fragment>
+            </Fragment>
           ))}
         </div>
       )}

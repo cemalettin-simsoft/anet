@@ -7,7 +7,7 @@ import {
   useBoilerplate
 } from "components/Page"
 import PositionTable from "components/PositionTable"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { connect } from "react-redux"
 
 const MyCounterparts = ({ pageDispatchers }) => {

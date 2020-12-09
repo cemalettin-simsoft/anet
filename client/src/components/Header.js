@@ -1,7 +1,6 @@
 import CreateButton from "components/CreateButton"
 import SearchBar from "components/SearchBar"
 import PropTypes from "prop-types"
-import React from "react"
 import { Col, Grid, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import menuLogo from "resources/anet-menu.png"

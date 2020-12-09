@@ -5,7 +5,6 @@ import {
 import PieWidget from "components/aggregations/PieWidget"
 import LikertScale from "components/graphs/LikertScale"
 import _isEmpty from "lodash/isEmpty"
-import React from "react"
 
 const LikertScaleAndPieWidget = ({ values, ...otherWidgetProps }) => {
   const { likertScaleValues, pieValues } = values

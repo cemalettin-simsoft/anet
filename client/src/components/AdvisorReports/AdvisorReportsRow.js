@@ -1,6 +1,5 @@
 import Checkbox from "components/Checkbox"
 import PropTypes from "prop-types"
-import React from "react"
 
 const _advisorStats = (columnGroups, statistics) => {
   const stats = []
