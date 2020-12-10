@@ -326,6 +326,7 @@ fields:
     firstName: First name
     lastName: Last name
     domainUsername: Domain username
+    position: Current Position
     emailAddress:
       label: Email
       placeholder: Only the following email domain names are allowed. ( example.com, cmil.mil, mission.ita, nato.int, *.isaf.nato.int )
@@ -496,6 +497,7 @@ fields:
       # number of fields after Avatar in the left column for Person
       numberOfFieldsInLeftColumn: 6
       showPageOrderedFields:
+        - position
         - domainUsername
         - emailAddress
         - multipleButtons
@@ -638,6 +640,7 @@ fields:
       # Select the number so that the two columns are balanced in production
       numberOfFieldsInLeftColumn: 6
       showPageOrderedFields:
+        - position
         - phoneNumber
         - country
         - colourOptions
