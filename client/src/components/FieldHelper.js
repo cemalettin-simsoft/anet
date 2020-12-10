@@ -1,5 +1,4 @@
 import { CompactRow } from "components/Compact"
-import LinkTo from "components/LinkTo"
 import _cloneDeep from "lodash/cloneDeep"
 import _get from "lodash/get"
 import PropTypes from "prop-types"
