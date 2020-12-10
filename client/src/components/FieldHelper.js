@@ -87,8 +87,10 @@ const Field = ({
     label = utils.sentenceCase(field.name) // name is a required prop of field
   }
 
+  // backwards-compatible with main form width before; could be 12 to take up all space
+  const maxWidth = 9
   // setting label explicitly to null will completely remove the label column!
-  const widgetWidth = 12 - (label === null ? 0 : 2)
+  const widgetWidth = maxWidth - (label === null ? 0 : 2)
 
   if (isCompact) {
     return (
