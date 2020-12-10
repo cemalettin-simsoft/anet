@@ -462,7 +462,7 @@ properties:
       person:
         type: object
         additionalProperties: false
-        required: [firstName, lastName, domainUsername, emailAddress, phoneNumber, country, rank, ranks, gender, endOfTourDate, biography, numberOfFieldsInLeftColumn, showPageOrderedFields]
+        required: [firstName, lastName, domainUsername, emailAddress, phoneNumber, country, rank, ranks, gender, endOfTourDate, biography]
         properties:
           firstName:
             type: string
@@ -516,16 +516,6 @@ properties:
             type: object
             additionalProperties:
               "$ref": "#/$defs/customField"
-          showPageOrderedFields:
-            type: array
-            uniqueItems: true
-            minItems: 1
-            items:
-              type: string
-              description: Ordered fields to show in Person Page in the Person info section
-          numberOfFieldsInLeftColumn:
-            type: number
-            description: Used for dividing fields into 2 columns, make sure the columns are balanced
 
 
       location:
@@ -572,7 +562,7 @@ properties:
           person:
             type: object
             additionalProperties: false
-            required: [name, countries]
+            required: [name, countries, numberOfFieldsInLeftColumn, showPageOrderedFields]
             properties:
               name:
                 type: string
@@ -587,7 +577,16 @@ properties:
                   title: The list of possible countries
                   description: Used in the UI where a country can be selected for
                     a person inside an advisor organization.
-
+              showPageOrderedFields:
+                type: array
+                uniqueItems: true
+                minItems: 1
+                items:
+                  type: string
+                  description: Ordered fields to show in Person Page in the Person info section
+              numberOfFieldsInLeftColumn:
+                type: number
+                description: Used for dividing fields into 2 columns, make sure the columns are balanced
           position:
             type: object
             additionalProperties: false
@@ -631,7 +630,7 @@ properties:
           person:
             type: object
             additionalProperties: false
-            required: [name, countries]
+            required: [name, countries, numberOfFieldsInLeftColumn, showPageOrderedFields]
             properties:
               name:
                 type: string
@@ -645,6 +644,16 @@ properties:
                   type: string
                   title: The list of possible countries
                   description: Used in the UI where a country can be selected for a person inside a principal organization.
+              showPageOrderedFields:
+                type: array
+                uniqueItems: true
+                minItems: 1
+                items:
+                  type: string
+                  description: Ordered fields to show in Person Page in the Person info section
+              numberOfFieldsInLeftColumn:
+                type: number
+                description: Used for dividing fields into 2 columns, make sure the columns are balanced
               assessment:
                 type: object
                 additionalProperties: false
