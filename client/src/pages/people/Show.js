@@ -463,6 +463,7 @@ const PersonShow = ({ pageDispatchers }) => {
           <Button
             onClick={() => setShowAssignPositionModal(true)}
             bsStyle="primary"
+            className="change-assigned-position"
           >
             <Icon iconSize={Icon.SIZE_LARGE} icon={IconNames.EXCHANGE} />
           </Button>
