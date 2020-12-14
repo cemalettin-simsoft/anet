@@ -1,6 +1,6 @@
-import { Control, CRS, DivIcon, Icon, Map, Marker, TileLayer } from "leaflet"
 import AppContext from "components/AppContext"
 import { convertLatLngToMGRS } from "geoUtils"
+import { Control, CRS, DivIcon, Icon, Map, Marker, TileLayer } from "leaflet"
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css"
 import {
@@ -279,7 +279,6 @@ const BaseLeaflet = ({
           })
           .bindPopup(popupContent)
           .on("popupopen", e => {
-            // TODO LinkTo component will be utilized here to provide routing
             ReactDOM.render(
               <>
                 <b>{location.name}</b> @{" "}
