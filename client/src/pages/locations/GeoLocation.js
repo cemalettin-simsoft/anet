@@ -2,7 +2,6 @@ import {
   AnchorButton,
   Popover,
   PopoverInteractionKind,
-  Position,
   Tooltip
 } from "@blueprintjs/core"
 import * as FieldHelper from "components/FieldHelper"
@@ -378,8 +377,7 @@ const AllFormatsInfo = ({ coordinates, inForm }) => {
           />
         </Tooltip>
       }
-      position={Position.RIGHT}
-      interactionKind={PopoverInteractionKind.CLICK_TARGET_ONLY}
+      interactionKind={PopoverInteractionKind.CLICK}
       usePortal={false}
     />
   )
