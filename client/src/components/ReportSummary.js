@@ -1,7 +1,7 @@
 import API from "api"
 import { gql } from "apollo-boost"
 import LinkTo from "components/LinkTo"
-import LinkToNotPreviewed from "components/LinkToNotPreviewed"
+import LinkToPreviewed from "components/LinkToPreviewed"
 import { PageDispatchersPropType, useBoilerplate } from "components/Page"
 import { ReportCompactWorkflow } from "components/ReportWorkflow"
 import Tag from "components/Tag"
@@ -255,7 +255,7 @@ const ReportSummaryRow = ({ report }) => {
       </Row>
       <Row>
         <Col md={12}>
-          <LinkTo
+          <LinkToPreviewed
             modelType="Person"
             model={report.primaryAdvisor}
             previewId="rep-sum-person"
@@ -263,7 +263,7 @@ const ReportSummaryRow = ({ report }) => {
           <span>
             {" "}
             (
-            <LinkTo
+            <LinkToPreviewed
               modelType="Organization"
               model={report.advisorOrg}
               previewId="rep-sum-adv-org"
@@ -271,7 +271,7 @@ const ReportSummaryRow = ({ report }) => {
             )
           </span>
           <span className="people-separator">&#x25B6;</span>
-          <LinkTo
+          <LinkToPreviewed
             modelType="Person"
             model={report.primaryPrincipal}
             previewId="rep-sum-prim-pri-org"
@@ -279,7 +279,7 @@ const ReportSummaryRow = ({ report }) => {
           <span>
             {" "}
             (
-            <LinkTo
+            <LinkToPreviewed
               modelType="Organization"
               model={report.principalOrg}
               previewId="rep-sum-pri-org"
@@ -293,7 +293,7 @@ const ReportSummaryRow = ({ report }) => {
           <Col md={12}>
             <span>
               <strong>Location: </strong>
-              <LinkTo
+              <LinkToPreviewed
                 modelType="Location"
                 model={report.location}
                 previewId="rep-sum-loc"
@@ -372,14 +372,14 @@ const ReportSummaryRow = ({ report }) => {
       </Row>
       <Row className="hide-for-print">
         <Col className="read-report-actions" md={12}>
-          <LinkToNotPreviewed
+          <LinkTo
             modelType="Report"
             model={report}
             button
             className="read-report-button"
           >
             Read report
-          </LinkToNotPreviewed>
+          </LinkTo>
         </Col>
       </Row>
     </Grid>

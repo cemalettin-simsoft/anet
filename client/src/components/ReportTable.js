@@ -1,6 +1,6 @@
 import API from "api"
 import { gql } from "apollo-boost"
-import LinkTo from "components/LinkTo"
+import LinkToPreviewed from "components/LinkToPreviewed"
 import { PageDispatchersPropType, useBoilerplate } from "components/Page"
 import UltimatePaginationTopDown from "components/UltimatePaginationTopDown"
 import _get from "lodash/get"
@@ -156,7 +156,7 @@ const ReportTable = ({
                 <td>
                   {report.authors?.map(a => (
                     <React.Fragment key={a.uuid}>
-                      <LinkTo
+                      <LinkToPreviewed
                         modelType="Person"
                         model={a}
                         previewId="rep-table-author"
@@ -166,14 +166,14 @@ const ReportTable = ({
                   ))}
                 </td>
                 <td>
-                  <LinkTo
+                  <LinkToPreviewed
                     modelType="Organization"
                     model={report.advisorOrg}
                     previewId="rep-table-org"
                   />
                 </td>
                 <td>
-                  <LinkTo
+                  <LinkToPreviewed
                     modelType="Report"
                     model={report}
                     className="read-report-button"

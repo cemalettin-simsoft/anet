@@ -14,7 +14,7 @@ import { parseHtmlWithLinkTo } from "components/editor/LinkAnet"
 import * as FieldHelper from "components/FieldHelper"
 import Fieldset from "components/Fieldset"
 import LinkTo from "components/LinkTo"
-import LinkToNotPreviewed from "components/LinkToNotPreviewed"
+import LinkToPreviewed from "components/LinkToPreviewed"
 import Messages from "components/Messages"
 import { DEFAULT_CUSTOM_FIELDS_PARENT } from "components/Model"
 import NoPaginationTaskTable from "components/NoPaginationTaskTable"
@@ -401,14 +401,9 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
               Summary / Print
             </Button>
             {canEdit && (
-              <LinkToNotPreviewed
-                modelType="Report"
-                model={report}
-                edit
-                button="primary"
-              >
+              <LinkTo modelType="Report" model={report} edit button="primary">
                 Edit
-              </LinkToNotPreviewed>
+              </LinkTo>
             )}
             {canSubmit && renderSubmitButton(!isValid)}
           </div>
@@ -574,7 +569,7 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
                   component={FieldHelper.ReadonlyField}
                   humanValue={
                     report.location && (
-                      <LinkTo
+                      <LinkToPreviewed
                         modelType="Location"
                         model={report.location}
                         previewId="rep-show-loc"
@@ -626,7 +621,7 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
                   component={FieldHelper.ReadonlyField}
                   humanValue={report.authors?.map(a => (
                     <React.Fragment key={a.uuid}>
-                      <LinkTo
+                      <LinkToPreviewed
                         modelType="Person"
                         model={a}
                         previewId="rep-show-authors"
@@ -641,7 +636,7 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
                   label={Settings.fields.advisor.org.name}
                   component={FieldHelper.ReadonlyField}
                   humanValue={
-                    <LinkTo
+                    <LinkToPreviewed
                       modelType="Organization"
                       model={report.advisorOrg}
                       previewId="rep-show-adv-org"
@@ -654,7 +649,7 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
                   label={Settings.fields.principal.org.name}
                   component={FieldHelper.ReadonlyField}
                   humanValue={
-                    <LinkTo
+                    <LinkToPreviewed
                       modelType="Organization"
                       model={report.principalOrg}
                       previewId="rep-show-pri-org"
@@ -669,26 +664,30 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
                     : "People involved in this engagement"
                 }
               >
-                <ReportPeople report={report} disabled linkToComp={LinkTo} />
+                <ReportPeople
+                  report={report}
+                  disabled
+                  linkToComp={LinkToPreviewed}
+                />
               </Fieldset>
               <Fieldset title={Settings.fields.task.subLevel.longLabel}>
                 <NoPaginationTaskTable
                   tasks={report.tasks}
                   showParent
                   noTasksMessage={`No ${tasksLabel} selected`}
-                  linkToComp={LinkTo}
+                  linkToComp={LinkToPreviewed}
                 />
               </Fieldset>
               {report.reportText && (
                 <Fieldset title={Settings.fields.report.reportText}>
-                  {parseHtmlWithLinkTo(report.reportText, LinkTo)}
+                  {parseHtmlWithLinkTo(report.reportText, LinkToPreviewed)}
                 </Fieldset>
               )}
               {report.reportSensitiveInformation?.text && (
                 <Fieldset title="Sensitive information">
                   {parseHtmlWithLinkTo(
                     report.reportSensitiveInformation.text,
-                    LinkTo
+                    LinkToPreviewed
                   )}
                   {(hasAuthorizationGroups && (
                     <div>
@@ -705,7 +704,7 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
                   <ReadonlyCustomFields
                     fieldsConfig={Settings.fields.report.customFields}
                     values={values}
-                    linkToComp={LinkTo}
+                    linkToComp={LinkToPreviewed}
                   />
                 </Fieldset>
               )}
@@ -780,7 +779,7 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
                   const createdAt = moment(comment.createdAt)
                   return (
                     <p key={comment.uuid}>
-                      <LinkTo
+                      <LinkToPreviewed
                         modelType="Person"
                         model={comment.author}
                         previewId="rep-show-comment-author"
@@ -925,9 +924,9 @@ const ReportShow = ({ setSearchQuery, pageDispatchers }) => {
           rejectReport(values.approvalComment)
         )}
         <div className="right-button">
-          <LinkToNotPreviewed modelType="Report" model={report} edit button>
+          <LinkTo modelType="Report" model={report} edit button>
             Edit {reportType}
-          </LinkToNotPreviewed>
+          </LinkTo>
           {renderApproveButton(warnApproveOwnReport, disabled, () =>
             approveReport(values.approvalComment)
           )}

@@ -1,12 +1,15 @@
+import { PopoverInteractionKind } from "@blueprintjs/core"
 import AvatarDisplayComponent from "components/AvatarDisplayComponent"
 import { OBJECT_TYPE_TO_MODEL } from "components/Model"
+import ModelPreview from "components/ModelPreview"
+import ModelTooltip from "components/ModelTooltip"
 import _isEmpty from "lodash/isEmpty"
 import * as Models from "models"
 import PropTypes from "prop-types"
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
-export default class LinkToNotPreviewed extends Component {
+export default class LinkToPreviewed extends Component {
   static propTypes = {
     componentClass: PropTypes.oneOfType([
       PropTypes.string,
@@ -17,12 +20,7 @@ export default class LinkToNotPreviewed extends Component {
     className: PropTypes.string,
     showIcon: PropTypes.bool,
     showAvatar: PropTypes.bool,
-    isLink: PropTypes.bool,
-    edit: PropTypes.bool,
-    // Configures this link to look like a button. Set it to true to make it a button,
-    // or pass a string to set a button type
-    button: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-
+    previewId: PropTypes.string, // needed for previewing same pages multiple times
     target: PropTypes.string,
     whenUnspecified: PropTypes.string,
     modelType: PropTypes.string.isRequired,
@@ -34,9 +32,7 @@ export default class LinkToNotPreviewed extends Component {
     componentClass: Link,
     showIcon: true,
     showAvatar: true,
-    isLink: true,
-    edit: false,
-    button: false,
+    previewId: null,
     whenUnspecified: "Unspecified",
     modelType: null,
     model: null
@@ -46,31 +42,18 @@ export default class LinkToNotPreviewed extends Component {
     const {
       componentClass,
       children,
-      edit,
-      button,
       showIcon,
       showAvatar,
-      isLink,
       whenUnspecified,
       className,
       modelType,
       model,
       style,
+      previewId,
       ...componentProps
     } = this.props
-    // remove previewId from this component's props as it will not be used
-    delete componentProps.previewId
 
-    if (button) {
-      componentProps.className = [
-        className,
-        "btn",
-        `btn-${button === true ? "default" : button}`
-      ].join(" ")
-    } else {
-      componentProps.className = className
-    }
-
+    componentProps.className = className
     if (_isEmpty(model)) {
       return <span>{whenUnspecified}</span>
     }
@@ -81,7 +64,7 @@ export default class LinkToNotPreviewed extends Component {
     const modelInstance = new ModelClass(isModel ? model : {})
 
     // Icon
-    const iconComponent = showIcon && !button && modelInstance.iconUrl() && (
+    const iconComponent = showIcon && modelInstance.iconUrl() && (
       <img
         src={modelInstance.iconUrl()}
         alt=""
@@ -91,7 +74,6 @@ export default class LinkToNotPreviewed extends Component {
 
     // Avatar
     const avatarComponent = showAvatar &&
-      !button &&
       Object.prototype.hasOwnProperty.call(model, "avatar") && (
         <AvatarDisplayComponent
           avatar={modelInstance.avatar}
@@ -101,20 +83,9 @@ export default class LinkToNotPreviewed extends Component {
         />
     )
 
-    if (!isLink) {
-      return (
-        <span style={style}>
-          {avatarComponent}
-          {modelInstance.toString()}
-        </span>
-      )
-    }
-
     let to
     if (isModel) {
-      to = edit
-        ? ModelClass.pathForEdit(modelInstance)
-        : ModelClass.pathFor(modelInstance)
+      to = ModelClass.pathFor(modelInstance)
     } else if (model.indexOf("?")) {
       const components = model.split("?")
       to = { pathname: components[0], search: components[1] }
@@ -124,13 +95,29 @@ export default class LinkToNotPreviewed extends Component {
 
     const LinkToComponent = componentClass
     return (
-      <LinkToComponent to={to} style={style} {...componentProps}>
-        <>
-          {iconComponent}
-          {avatarComponent}
-          {children || modelInstance.toString()}
-        </>
-      </LinkToComponent>
+      <ModelTooltip
+        tooltipContent={
+          <ModelPreview
+            modelType={modelType}
+            uuid={modelInstance.uuid}
+            previewId={previewId}
+          />
+        }
+        popoverClassName="bp3-dark"
+        hoverCloseDelay={400}
+        hoverOpenDelay={500}
+        portalClassName="linkto-model-preview-portal"
+        interactionKind={PopoverInteractionKind.HOVER}
+        boundary="viewport"
+      >
+        <LinkToComponent to={to} style={style} {...componentProps}>
+          <>
+            {iconComponent}
+            {avatarComponent}
+            {children || modelInstance.toString()}
+          </>
+        </LinkToComponent>
+      </ModelTooltip>
     )
   }
 }
