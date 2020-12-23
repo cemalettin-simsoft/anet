@@ -123,7 +123,7 @@ describe("For the periodic person assessments", () => {
       ShowPerson.deleteConfirmButton.click()
       ShowPerson.shownAssessmentPanel.waitForExist({
         reverse: true,
-        timeout: 10000
+        timeout: 20000
       })
     })
   })
