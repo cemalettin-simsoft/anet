@@ -17,6 +17,7 @@ import NavigationWarning from "components/NavigationWarning"
 import OptionListModal from "components/OptionListModal"
 import { jumpToTop } from "components/Page"
 import RichTextEditor from "components/RichTextEditor"
+import SimilarityTooltip from "components/SimilarityTooltip"
 import TriggerableConfirm from "components/TriggerableConfirm"
 import { FastField, Field, Form, Formik } from "formik"
 import _isEmpty from "lodash/isEmpty"
@@ -50,7 +51,7 @@ const GQL_UPDATE_PERSON = gql`
   }
 `
 
-const PersonForm = ({ edit, title, saveText, initialValues }) => {
+const PersonForm = ({ edit, title, saveText, initialValues, people }) => {
   const { loadAppData, currentUser } = useContext(AppContext)
   const history = useHistory()
   const confirmHasReplacementButton = useRef(null)
@@ -216,6 +217,14 @@ const PersonForm = ({ edit, title, saveText, initialValues }) => {
                       />
                     </Col>
                   </Col>
+                  {!edit && (
+                    <SimilarityTooltip
+                      entityArray={people}
+                      strToMatch={`${values.lastName}, ${values.firstName}`}
+                      entityType="Person"
+                      getStringFromEntity={person => person.name}
+                    />
+                  )}
 
                   {edit && (
                     <>
@@ -642,7 +651,8 @@ PersonForm.propTypes = {
   initialValues: PropTypes.instanceOf(Person).isRequired,
   title: PropTypes.string,
   edit: PropTypes.bool,
-  saveText: PropTypes.string
+  saveText: PropTypes.string,
+  people: PropTypes.arrayOf(PropTypes.object)
 }
 
 PersonForm.defaultProps = {

@@ -7897,7 +7897,6 @@ extsprintf@^1.2.0:
 
 "faker@https://github.com/Marak/faker.js.git":
   version "5.1.0"
-  uid "91dc8a3372426bc691be56153b33e81a16459f49"
   resolved "https://github.com/Marak/faker.js.git#91dc8a3372426bc691be56153b33e81a16459f49"
 
 fast-deep-equal@^2.0.1:
@@ -10539,6 +10538,11 @@ jest@26.6.3:
     "@jest/core" "^26.6.3"
     import-local "^3.0.2"
     jest-cli "^26.6.3"
+
+js-levenshtein@1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/js-levenshtein/-/js-levenshtein-1.1.6.tgz#c6cee58eb3550372df8deb85fad5ce66ce01d59d"
+  integrity sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==
 
 js-string-escape@^1.0.1:
   version "1.0.1"

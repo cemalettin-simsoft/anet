@@ -962,6 +962,16 @@ header.searchPagination {
   border-bottom: 1px solid white;
 }
 
+.similarity-popover {
+	max-width: 200px;
+	padding: 10px;
+	background-color: white;
+}
+
+.similarity-popover .bp3-popover-content {
+	background-color: inherit;
+}
+
 @keyframes flash {
 	50% {
 		background: #fff;

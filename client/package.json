@@ -135,6 +135,7 @@
     "graphql": "15.4.0",
     "hopscotch": "0.3.1",
     "html-react-parser": "1.1.1",
+    "js-levenshtein": "1.1.6",
     "jsonpath-plus": "4.0.0",
     "leaflet": "1.6.0",
     "leaflet-defaulticon-compatibility": "0.1.1",

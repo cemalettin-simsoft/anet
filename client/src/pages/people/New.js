@@ -1,4 +1,6 @@
 import { DEFAULT_SEARCH_PROPS, PAGE_PROPS_NO_NAV } from "actions"
+import API from "api"
+import { gql } from "apollo-boost"
 import { getInvisibleFields } from "components/CustomFields"
 import {
   DEFAULT_CUSTOM_FIELDS_PARENT,
@@ -15,8 +17,26 @@ import { connect } from "react-redux"
 import Settings from "settings"
 import PersonForm from "./Form"
 
+const GQL_GET_PERSON_LIST = gql`
+  query($personQuery: PersonSearchQueryInput) {
+    personList(query: $personQuery) {
+      list {
+        uuid
+        name
+      }
+    }
+  }
+`
+
+const personQuery = {}
+
 const PersonNew = ({ pageDispatchers }) => {
+  const { loading, error, data } = API.useApiQuery(GQL_GET_PERSON_LIST, {
+    personQuery
+  })
   useBoilerplate({
+    loading,
+    error,
     pageProps: PAGE_PROPS_NO_NAV,
     searchProps: DEFAULT_SEARCH_PROPS,
     pageDispatchers
@@ -34,8 +54,13 @@ const PersonNew = ({ pageDispatchers }) => {
       person
     )
   }
-
-  return <PersonForm initialValues={person} title="Create a new Person" />
+  return (
+    <PersonForm
+      initialValues={person}
+      title="Create a new Person"
+      people={data?.personList?.list || []}
+    />
+  )
 }
 
 PersonNew.propTypes = {
