@@ -567,21 +567,19 @@ const ReportForm = ({
                     />
                   }
                   extraColElem={
-                    <>
-                      <FieldHelper.FieldShortcuts
-                        title="Recent Locations"
-                        shortcuts={recents.locations}
-                        fieldName="location"
-                        objectType={Location}
-                        curValue={values.location}
-                        onChange={value => {
-                          // validation will be done by setFieldValue
-                          setFieldTouched("location", true, false) // onBlur doesn't work when selecting an option
-                          setFieldValue("location", value, true)
-                        }}
-                        handleAddItem={FieldHelper.handleSingleSelectAddItem}
-                      />
-                    </>
+                    <FieldHelper.FieldShortcuts
+                      title="Recent Locations"
+                      shortcuts={recents.locations}
+                      fieldName="location"
+                      objectType={Location}
+                      curValue={values.location}
+                      onChange={value => {
+                        // validation will be done by setFieldValue
+                        setFieldTouched("location", true, false) // onBlur doesn't work when selecting an option
+                        setFieldValue("location", value, true)
+                      }}
+                      handleAddItem={FieldHelper.handleSingleSelectAddItem}
+                    />
                   }
                 />
 
@@ -738,24 +736,22 @@ const ReportForm = ({
                     />
                   }
                   extraColElem={
-                    <>
-                      <FieldHelper.FieldShortcuts
-                        title="Recent attendees"
-                        shortcuts={recents.persons}
-                        fieldName="reportPeople"
-                        objectType={Person}
-                        curValue={values.reportPeople}
-                        onChange={value => {
-                          updateReportPeople(
-                            setFieldValue,
-                            setFieldTouched,
-                            "reportPeople",
-                            value
-                          )
-                        }}
-                        handleAddItem={FieldHelper.handleMultiSelectAddItem}
-                      />
-                    </>
+                    <FieldHelper.FieldShortcuts
+                      title="Recent attendees"
+                      shortcuts={recents.persons}
+                      fieldName="reportPeople"
+                      objectType={Person}
+                      curValue={values.reportPeople}
+                      onChange={value => {
+                        updateReportPeople(
+                          setFieldValue,
+                          setFieldTouched,
+                          "reportPeople",
+                          value
+                        )
+                      }}
+                      handleAddItem={FieldHelper.handleMultiSelectAddItem}
+                    />
                   }
                 />
               </Fieldset>
@@ -803,22 +799,20 @@ const ReportForm = ({
                       />
                     }
                     extraColElem={
-                      <>
-                        <FieldHelper.FieldShortcuts
-                          title={`Recent ${tasksLabel}`}
-                          shortcuts={recents.tasks}
-                          fieldName="tasks"
-                          objectType={Task}
-                          curValue={values.tasks}
-                          onChange={value => {
-                            // validation will be done by setFieldValue
-                            setFieldTouched("tasks", true, false) // onBlur doesn't work when selecting an option
-                            setFieldValue("tasks", value, true)
-                            setReportTasks(value)
-                          }}
-                          handleAddItem={FieldHelper.handleMultiSelectAddItem}
-                        />
-                      </>
+                      <FieldHelper.FieldShortcuts
+                        title={`Recent ${tasksLabel}`}
+                        shortcuts={recents.tasks}
+                        fieldName="tasks"
+                        objectType={Task}
+                        curValue={values.tasks}
+                        onChange={value => {
+                          // validation will be done by setFieldValue
+                          setFieldTouched("tasks", true, false) // onBlur doesn't work when selecting an option
+                          setFieldValue("tasks", value, true)
+                          setReportTasks(value)
+                        }}
+                        handleAddItem={FieldHelper.handleMultiSelectAddItem}
+                      />
                     }
                   />
                 </Fieldset>
@@ -1009,31 +1003,23 @@ const ReportForm = ({
                           />
                         }
                         extraColElem={
-                          <>
-                            <FieldHelper.FieldShortcuts
-                              title="Recent Authorization Groups"
-                              shortcuts={recents.authorizationGroups}
-                              fieldName="authorizationGroups"
-                              objectType={AuthorizationGroup}
-                              curValue={values.authorizationGroups}
-                              onChange={value => {
-                                // validation will be done by setFieldValue
-                                setFieldTouched(
-                                  "authorizationGroups",
-                                  true,
-                                  false
-                                ) // onBlur doesn't work when selecting an option
-                                setFieldValue(
-                                  "authorizationGroups",
-                                  value,
-                                  true
-                                )
-                              }}
-                              handleAddItem={
-                                FieldHelper.handleMultiSelectAddItem
-                              }
-                            />
-                          </>
+                          <FieldHelper.FieldShortcuts
+                            title="Recent Authorization Groups"
+                            shortcuts={recents.authorizationGroups}
+                            fieldName="authorizationGroups"
+                            objectType={AuthorizationGroup}
+                            curValue={values.authorizationGroups}
+                            onChange={value => {
+                              // validation will be done by setFieldValue
+                              setFieldTouched(
+                                "authorizationGroups",
+                                true,
+                                false
+                              ) // onBlur doesn't work when selecting an option
+                              setFieldValue("authorizationGroups", value, true)
+                            }}
+                            handleAddItem={FieldHelper.handleMultiSelectAddItem}
+                          />
                         }
                       />
                     </div>

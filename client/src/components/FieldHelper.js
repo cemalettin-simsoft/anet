@@ -135,7 +135,7 @@ const Field = ({
           </Col>
         </>
       )}
-      {extraColElem && <Col sm={3} {...extraColElem.props} />}
+      {extraColElem && <Col sm={3}>{extraColElem}</Col>}
     </FormGroup>
   )
 }
