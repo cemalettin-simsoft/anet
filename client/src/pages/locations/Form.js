@@ -9,7 +9,8 @@ import Messages from "components/Messages"
 import Model from "components/Model"
 import NavigationWarning from "components/NavigationWarning"
 import { jumpToTop } from "components/Page"
-import { FastField, Form, Formik } from "formik"
+import SimilarityTooltip from "components/SimilarityTooltip"
+import { FastField, Field, Form, Formik } from "formik"
 import { convertLatLngToMGRS, parseCoordinate } from "geoUtils"
 import _escape from "lodash/escape"
 import { Location, Position } from "models"
@@ -32,7 +33,7 @@ const GQL_UPDATE_LOCATION = gql`
   }
 `
 
-const LocationForm = ({ edit, title, initialValues }) => {
+const LocationForm = ({ edit, title, initialValues, locations }) => {
   const { currentUser } = useContext(AppContext)
   const history = useHistory()
   const [error, setError] = useState(null)
@@ -139,10 +140,20 @@ const LocationForm = ({ edit, title, initialValues }) => {
             <Form className="form-horizontal" method="post">
               <Fieldset title={title} action={action} />
               <Fieldset>
-                <FastField
+                <Field
                   name="name"
                   component={FieldHelper.InputField}
                   disabled={!canEditName}
+                  extraColElem={
+                    edit ? undefined : (
+                      <SimilarityTooltip
+                        entityArray={locations}
+                        strToMatch={values.name}
+                        entityType="Location"
+                        getStringFromEntity={loc => loc.name}
+                      />
+                    )
+                  }
                 />
 
                 <FastField
@@ -271,7 +282,8 @@ const LocationForm = ({ edit, title, initialValues }) => {
 LocationForm.propTypes = {
   initialValues: PropTypes.instanceOf(Location).isRequired,
   title: PropTypes.string,
-  edit: PropTypes.bool
+  edit: PropTypes.bool,
+  locations: PropTypes.arrayOf(PropTypes.object)
 }
 
 LocationForm.defaultProps = {
