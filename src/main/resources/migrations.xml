@@ -3655,4 +3655,55 @@
 			<column name="customFields" type="${long_text_type}" />
 		</addColumn>
 	</changeSet>
+
+	<changeSet id="add_custom_sensitive_information_authorization_groups" author="mak">
+		<!-- Add new m2m table -->
+		<createTable tableName="customSensitiveInformationAuthorizationGroups">
+			<column name="authorizationGroupUuid" type="${uuid_type}">
+				<constraints nullable="false" />
+			</column>
+			<column name="customSensitiveInformationUuid" type="${uuid_type}">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="add_custom_sensitive_information_authorization_groups_constraints" author="mak">
+		<!-- Add FK constraints and indexes -->
+		<addForeignKeyConstraint baseTableName="customSensitiveInformationAuthorizationGroups"
+			baseColumnNames="authorizationGroupUuid"
+			constraintName="FK_customSensitiveInformationAuthorizationGroups_authorizationGroup"
+			referencedTableName="authorizationGroups" referencedColumnNames="uuid"
+			onDelete="NO ACTION" onUpdate="NO ACTION" />
+		<addForeignKeyConstraint baseTableName="customSensitiveInformationAuthorizationGroups"
+			baseColumnNames="customSensitiveInformationUuid"
+			constraintName="FK_customSensitiveInformationAuthorizationGroups_customSensitiveInformation"
+			referencedTableName="customSensitiveInformation" referencedColumnNames="uuid"
+			onDelete="NO ACTION" onUpdate="NO ACTION" />
+	</changeSet>
+
+	<changeSet id="add_custom_sensitive_information" author="mak">
+		<!-- Add new m2m table -->
+		<createTable tableName="customSensitiveInformation">
+			<column name="uuid" type="${uuid_type}">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="relatedObjectUuid" type="${uuid_type}">
+				<constraints nullable="false" />
+			</column>
+			<column name="relatedObjectType" type="varchar(100)">
+				<constraints nullable="false" /> <!-- Can be empty ? -->
+			</column>
+			<column name="customFields" type="${long_text_type}" />
+			<column name="createdAt" type="datetime" />
+			<column name="updatedAt" type="datetime" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="add_custom_sensitive_information_constraints" author="mak" dbms="mssql,postgresql">
+		<addForeignKeyConstraint baseTableName="customSensitiveInformation" baseColumnNames="uuid"
+			constraintName="fk_customSensitiveInformation_customSensitiveInformationAuthorizationGroups"
+			referencedTableName="customSensitiveInformationAuthorizationGroups"
+			referencedColumnNames="customSensitiveInformationUuid" onDelete="CASCADE" onUpdate="CASCADE" />
+	</changeSet>
 </databaseChangeLog>

@@ -16,6 +16,7 @@ public enum FkDataLoaderKey {
   REPORT_PEOPLE, // report.reportPeople
   REPORT_REPORT_ACTIONS, // report.reportActions
   REPORT_REPORT_SENSITIVE_INFORMATION, // report.reportSensitiveInformation
+  CUSTOM_SENSITIVE_INFORMATION, // Aciklama yazılacak !!!
   REPORT_TAGS, // report.tags
   REPORT_TASKS, // report.tasks
   TASK_RESPONSIBLE_POSITIONS, // task.responsiblePositions

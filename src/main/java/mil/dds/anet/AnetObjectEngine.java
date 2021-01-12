@@ -27,6 +27,7 @@ import mil.dds.anet.database.AdminDao.AdminSettingKeys;
 import mil.dds.anet.database.ApprovalStepDao;
 import mil.dds.anet.database.AuthorizationGroupDao;
 import mil.dds.anet.database.CommentDao;
+import mil.dds.anet.database.CustomSensitiveInformationDao;
 import mil.dds.anet.database.EmailDao;
 import mil.dds.anet.database.JobHistoryDao;
 import mil.dds.anet.database.LocationDao;
@@ -70,6 +71,7 @@ public class AnetObjectEngine {
   private final NoteDao noteDao;
   private final JobHistoryDao jobHistoryDao;
   private final MetricRegistry metricRegistry;
+  private final CustomSensitiveInformationDao customSensitiveInformationDao;
   private ThreadLocal<Map<String, Object>> context;
 
   ISearcher searcher;
@@ -102,6 +104,7 @@ public class AnetObjectEngine {
     this.metricRegistry = metricRegistry;
     searcher = Searcher.getSearcher(DaoUtils.getDbType(dbUrl), injector);
     instance = this;
+    customSensitiveInformationDao = injector.getInstance(CustomSensitiveInformationDao.class);
   }
 
   public String getDbUrl() {
@@ -186,6 +189,10 @@ public class AnetObjectEngine {
 
   public ISearcher getSearcher() {
     return searcher;
+  }
+
+  public CustomSensitiveInformationDao getCustomSensitiveInformationDao() {
+    return customSensitiveInformationDao;
   }
 
   public String getDefaultOrgUuid() {
