@@ -123,6 +123,8 @@ const AdvancedSearch = ({
 
                 <div
                   style={{
+                    display: "flex",
+                    alignItems: "center",
                     visibility:
                       possibleFilterTypes.length > 1 && objectType
                         ? "visible"
@@ -381,7 +383,6 @@ SearchFilter.propTypes = {
 const ButtonGroupContainerS = styled.div`
   display: flex;
   flex-direction: row;
-  flex-wrap: no-wrap;
   padding: 10px;
 
   & > .btn-group {
@@ -394,7 +395,7 @@ const ButtonGroupContainerS = styled.div`
       display: flex;
       flex-wrap: wrap;
       & > * {
-        max-width: min-content;
+        flex: 1 1 auto;
       }
     }
   }
