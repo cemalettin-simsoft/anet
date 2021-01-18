@@ -5,7 +5,8 @@ import io.leangen.graphql.annotations.GraphQLQuery;
 import java.util.Objects;
 import mil.dds.anet.views.AbstractCustomizableAnetBean;
 
-public class CustomSensitiveInformation extends AbstractCustomizableAnetBean {
+public class CustomSensitiveInformation extends AbstractCustomizableAnetBean
+    implements RelatableObject {
 
   @GraphQLQuery
   @GraphQLInputField
@@ -15,6 +16,9 @@ public class CustomSensitiveInformation extends AbstractCustomizableAnetBean {
   @GraphQLInputField
   private String relatedObjectType;
 
+  @GraphQLQuery
+  @GraphQLInputField
+  private String customField;
 
 
   public String getRelatedObjectUuid() {
@@ -33,6 +37,14 @@ public class CustomSensitiveInformation extends AbstractCustomizableAnetBean {
     this.relatedObjectType = relatedObjectType;
   }
 
+  public String getCustomField() {
+    return customField;
+  }
+
+  public void setCustomField(String customField) {
+    this.customField = customField;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof CustomSensitiveInformation)) {
@@ -40,12 +52,12 @@ public class CustomSensitiveInformation extends AbstractCustomizableAnetBean {
     }
     final CustomSensitiveInformation csi = (CustomSensitiveInformation) o;
     return Objects.equals(csi.getUuid(), uuid)
-        && Objects.equals(csi.getCustomFields(), customFields);
+        && Objects.equals(csi.getCustomFields(), customField);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid, customFields);
+    return Objects.hash(uuid, customField);
   }
 
   @Override

@@ -12,12 +12,11 @@ public class CustomSensitiveInformationMapper implements RowMapper<CustomSensiti
   public CustomSensitiveInformation map(ResultSet rs, StatementContext ctx) throws SQLException {
     final CustomSensitiveInformation csi = new CustomSensitiveInformation();
     MapperUtils.setCommonBeanFields(csi, rs, "customSensitiveInformation");
+    csi.setRelatedObjectUuid(rs.getString("relatedObjectUuid"));
+    csi.setRelatedObjectType(rs.getString("relatedObjectType"));
     csi.setCustomFields(rs.getString("customSensitiveInformation_customField"));
-
-    /**
-     * Diger DB alanlarını da burada set etmem gerekebilir! şimdilik sadece customField alanı set
-     * ettim...
-     **/
+    csi.setCreatedAt(MapperUtils.getInstantAsLocalDateTime(rs, "createdAt"));
+    csi.setUpdatedAt(MapperUtils.getInstantAsLocalDateTime(rs, "updatedAt"));
     return csi;
   }
 

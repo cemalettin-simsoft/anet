@@ -351,16 +351,16 @@ public final class BatchingUtils {
                 () -> engine.getTaskDao().getTaskedOrganizations(foreignKeys), dispatcherService);
           }
         }, dataLoaderOptions));
-    dataLoaderRegistry
-        .register(FkDataLoaderKey.CUSTOM_SENSITIVE_INFORMATION.toString(), new DataLoader<>(
-            new BatchLoader<String, List<CustomSensitiveInformation>>() {
-              @Override
-              public CompletionStage<List<List<CustomSensitiveInformation>>> load(
-                  List<String> foreignKeys) {
-                return CompletableFuture.supplyAsync(() -> engine.getCustomSensitiveInformationDao()
-                    .getCustomSensitiveInformation(foreignKeys), dispatcherService);
-              }
-            }, dataLoaderOptions));
+    dataLoaderRegistry.register(
+        FkDataLoaderKey.RELATED_OBJECT_CUSTOM_SENSITIVE_INFORMATION.toString(),
+        new DataLoader<>(new BatchLoader<String, List<CustomSensitiveInformation>>() {
+          @Override
+          public CompletionStage<List<List<CustomSensitiveInformation>>> load(
+              List<String> foreignKeys) {
+            return CompletableFuture.supplyAsync(() -> engine.getCustomSensitiveInformationDao()
+                .getCustomSensitiveInformation(foreignKeys), dispatcherService);
+          }
+        }, dataLoaderOptions));
   }
 
   public void updateStats(MetricRegistry metricRegistry, DataLoaderRegistry dataLoaderRegistry) {
