@@ -122,6 +122,11 @@ $defs:
                   type: string
                   enum: [sum, avg, min, max]
               required: [aggregationType]
+      authorizationGroups:
+        type: array
+        items:
+          type: string
+          description: List of authorizationGroups that have access to this custom field
 # TODO: The following properties should not be here as these are only dependency fields.
 # When we have proper handling of `unevaluatedProperties` this section can be removed.
       choices:
