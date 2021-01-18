@@ -1281,6 +1281,9 @@
 		<addColumn tableName="comments">
 			<column name="uuid" type="${uuid_type}" />
 		</addColumn>
+		<addColumn tableName="customSensitiveInformation">
+			<column name="uuid" type="${uuid_type}" />
+		</addColumn>
 		<addColumn tableName="locations">
 			<column name="uuid" type="${uuid_type}" />
 		</addColumn>
@@ -1341,6 +1344,12 @@
 		</addColumn>
 		<addColumn tableName="comments">
 			<column name="authorUuid" type="${uuid_type}" />
+		</addColumn>
+		<addColumn tableName="customSensitiveInformationAuthorizationGroups">
+			<column name="customSensitiveInformationUuid" type="${uuid_type}" />
+		</addColumn>
+		<addColumn tableName="customSensitiveInformationAuthorizationGroups">
+			<column name="authorizationGroupUuid" type="${uuid_type}" />
 		</addColumn>
 		<addColumn tableName="comments">
 			<column name="reportUuid" type="${uuid_type}" />
@@ -1433,6 +1442,7 @@
 			UPDATE "approvalSteps" SET uuid = ${uuid_function};
 			UPDATE "authorizationGroups" SET uuid = ${uuid_function};
 			UPDATE comments SET uuid = ${uuid_function};
+			UPDATE "customSensitiveInformation" SET uuid = ${uuid_function};
 			UPDATE locations SET uuid = ${uuid_function};
 			UPDATE organizations SET uuid = ${uuid_function};
 			UPDATE people SET uuid = ${uuid_function};
@@ -1499,6 +1509,14 @@
 			UPDATE comments SET "reportUuid" = (
 				SELECT uuid FROM reports
 				WHERE reports.id = comments."reportId"
+			);
+			UPDATE "customSensitiveInformationAuthorizationGroups" SET "customSensitiveInformationUuid" = (
+			SELECT uuid FROM customSensitiveInformation
+			WHERE customSensitiveInformation.uuid = "customSensitiveInformationAuthorizationGroups"."customSensitiveInformationUuid"
+			);
+			UPDATE "customSensitiveInformationAuthorizationGroups" SET "authorizationGroupUuid" = (
+			SELECT uuid FROM "authorizationGroups"
+			WHERE "authorizationGroups".id = "customSensitiveInformationAuthorizationGroups"."authorizationGroupUuid"
 			);
 			UPDATE organizations SET "parentOrgUuid" = (
 				SELECT o2.uuid FROM organizations o2
@@ -1650,6 +1668,11 @@
 			baseTableName="comments" constraintName="fk_comments_report" />
 
 		<dropForeignKeyConstraint
+			baseTableName="customSensitiveInformationAuthorizationGroups" constraintName="fk_customSensitiveInformationAuthorizationGroups_customSensitiveInformation" />
+		<dropForeignKeyConstraint
+			baseTableName="customSensitiveInformationAuthorizationGroups" constraintName="fk_customSensitiveInformationAuthorizationGroups_authorizationGroup" />
+
+		<dropForeignKeyConstraint
 			baseTableName="organizations" constraintName="fk_organizations_parentOrg" />
 
 		<dropForeignKeyConstraint
@@ -1739,6 +1762,8 @@
 		<dropPrimaryKey
 			tableName="comments" />
 		<dropPrimaryKey
+			tableName="customSensitiveInformation" />
+		<dropPrimaryKey
 			tableName="locations" />
 		<dropPrimaryKey
 			tableName="organizations" />
@@ -1768,6 +1793,16 @@
 		<dropNotNullConstraint
 			tableName="authorizationGroupPositions" columnName="positionId" columnDataType="int" />
 		<dropNotNullConstraint
+			tableName="customSensitiveInformation" columnName="relatedObjectUuid" columnDataType="int" />
+		<dropNotNullConstraint
+			tableName="customSensitiveInformation" columnName="relatedObjectType" columnDataType="varchar(100)" /> <!--I'm not sure. -->
+		<dropNotNullConstraint
+			tableName="customSensitiveInformation" columnName="customFields" columnDataType="longText" /> <!--I'm not sure. -->
+		<dropNotNullConstraint
+			tableName="customSensitiveInformationAuthorizationGroups" columnName="customSensitiveInformationUuid" columnDataType="int" />
+		<dropNotNullConstraint
+			tableName="customSensitiveInformationAuthorizationGroups" columnName="authorizationGroupUuid" columnDataType="int" />
+		<dropNotNullConstraint
 			tableName="reportAuthorizationGroups" columnName="reportId" columnDataType="int" />
 		<dropNotNullConstraint
 			tableName="reportAuthorizationGroups" columnName="authorizationGroupId" columnDataType="int" />
@@ -1790,6 +1825,14 @@
 			tableName="authorizationGroups" columnName="uuid" columnDataType="${uuid_type}" />
 		<addNotNullConstraint
 			tableName="comments" columnName="uuid" columnDataType="${uuid_type}" />
+		<addNotNullConstraint
+			tableName="customSensitiveInformation" columnName="uuid" columnDataType="${uuid_type}" />
+		<addNotNullConstraint
+			tableName="customSensitiveInformation" columnName="relatedObjectUuid" columnDataType="${uuid_type}" />
+		<addNotNullConstraint
+			tableName="customSensitiveInformationAuthorizationGroups" columnName="customSensitiveInformationUuid" columnDataType="${uuid_type}" />
+		<addNotNullConstraint
+			tableName="customSensitiveInformationAuthorizationGroups" columnName="authorizationGroupUuid" columnDataType="${uuid_type}" />
 		<addNotNullConstraint
 			tableName="locations" columnName="uuid" columnDataType="${uuid_type}" />
 		<addNotNullConstraint
@@ -1837,6 +1880,8 @@
 			tableName="authorizationGroups" constraintName="PK_authorizationGroups" columnNames="uuid" />
 		<addPrimaryKey
 			tableName="comments" constraintName="PK_comments" columnNames="uuid" />
+		<addPrimaryKey
+			tableName="customSensitiveInformation" constraintName="PK_customSensitiveInformation" columnNames="uuid" />
 		<addPrimaryKey
 			tableName="locations" constraintName="PK_locations" columnNames="uuid" />
 		<addPrimaryKey
@@ -1926,6 +1971,15 @@
 		<addForeignKeyConstraint
 			baseTableName="comments" constraintName="FK_comments_report" baseColumnNames="reportUuid"
 			referencedTableName="reports" referencedColumnNames="uuid"
+			onDelete="NO ACTION" onUpdate="NO ACTION" />
+
+		<addForeignKeyConstraint
+			baseTableName="customSensitiveInformationAuthorizationGroups" constraintName="fk_customSensitiveInformationAuthorizationGroups_customSensitiveInformation" baseColumnNames="customSensitiveInformationUuid"
+			referencedTableName="customSensitiveInformation" referencedColumnNames="uuid"
+			onDelete="NO ACTION" onUpdate="NO ACTION" />
+		<addForeignKeyConstraint
+			baseTableName="customSensitiveInformationAuthorizationGroups" constraintName="fk_customSensitiveInformationAuthorizationGroups_authorizationGroup" baseColumnNames="authorizationGroupUuid"
+			referencedTableName="authorizationGroups" referencedColumnNames="uuid"
 			onDelete="NO ACTION" onUpdate="NO ACTION" />
 
 		<addForeignKeyConstraint
@@ -2086,6 +2140,8 @@
 		<dropColumn tableName="authorizationGroupPositions" columnName="positionId" />
 		<dropColumn tableName="comments" columnName="authorId" />
 		<dropColumn tableName="comments" columnName="reportId" />
+		<dropColumn tableName="customSensitiveInformationAuthorizationGroups" columnName="customSensitiveInformationUuid" />
+		<dropColumn tableName="customSensitiveInformationAuthorizationGroups" columnName="authorizationGroupUuid" />
 		<dropColumn tableName="organizations" columnName="parentOrgId" />
 		<dropColumn tableName="peoplePositions" columnName="personId" />
 		<dropColumn tableName="peoplePositions" columnName="positionId" />
@@ -2205,6 +2261,7 @@
 		<dropColumn tableName="approvalSteps" columnName="id" />
 		<dropColumn tableName="authorizationGroups" columnName="id" />
 		<dropColumn tableName="comments" columnName="id" />
+		<dropColumn tableName="customSensitiveInformation" columnName="uuid" />
 		<dropColumn tableName="locations" columnName="id" />
 		<dropColumn tableName="organizations" columnName="id" />
 		<dropColumn tableName="people" columnName="id" />
@@ -3769,54 +3826,47 @@
 		</sql>
 	</changeSet>
 
-	<changeSet id="add_custom_sensitive_information_authorization_groups" author="mak">
-		<!-- Add new m2m table -->
-		<createTable tableName="customSensitiveInformationAuthorizationGroups">
-			<column name="authorizationGroupUuid" type="${uuid_type}">
-				<constraints nullable="false" />
-			</column>
-			<column name="customSensitiveInformationUuid" type="${uuid_type}">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-	</changeSet>
-
-	<changeSet id="add_custom_sensitive_information_authorization_groups_constraints" author="mak">
-		<!-- Add FK constraints and indexes -->
-		<addForeignKeyConstraint baseTableName="customSensitiveInformationAuthorizationGroups"
-			baseColumnNames="authorizationGroupUuid"
-			constraintName="FK_customSensitiveInformationAuthorizationGroups_authorizationGroup"
-			referencedTableName="authorizationGroups" referencedColumnNames="uuid"
-			onDelete="NO ACTION" onUpdate="NO ACTION" />
-		<addForeignKeyConstraint baseTableName="customSensitiveInformationAuthorizationGroups"
-			baseColumnNames="customSensitiveInformationUuid"
-			constraintName="FK_customSensitiveInformationAuthorizationGroups_customSensitiveInformation"
-			referencedTableName="customSensitiveInformation" referencedColumnNames="uuid"
-			onDelete="NO ACTION" onUpdate="NO ACTION" />
-	</changeSet>
-
 	<changeSet id="add_custom_sensitive_information" author="mak">
-		<!-- Add new m2m table -->
 		<createTable tableName="customSensitiveInformation">
-			<column name="uuid" type="${uuid_type}">
+			<column name="uuid" type="${uuid_type}" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="relatedObjectUuid" type="${uuid_type}">
 				<constraints nullable="false" />
 			</column>
 			<column name="relatedObjectType" type="varchar(100)">
-				<constraints nullable="false" /> <!-- Can be empty ? -->
+				<constraints nullable="false" />
 			</column>
-			<column name="customFields" type="${long_text_type}" />
+			<column name="customFields" type="${long_text_type}">
+				<constraints nullable="false" />
+			</column>
 			<column name="createdAt" type="datetime" />
 			<column name="updatedAt" type="datetime" />
 		</createTable>
 	</changeSet>
 
-	<changeSet id="add_custom_sensitive_information_constraints" author="mak" dbms="mssql,postgresql">
-		<addForeignKeyConstraint baseTableName="customSensitiveInformation" baseColumnNames="uuid"
-			constraintName="fk_customSensitiveInformation_customSensitiveInformationAuthorizationGroups"
-			referencedTableName="customSensitiveInformationAuthorizationGroups"
-			referencedColumnNames="customSensitiveInformationUuid" onDelete="CASCADE" onUpdate="CASCADE" />
+	<changeSet id="add_custom_sensitive_information_authorization_groups" author="mak">
+		<createTable tableName="customSensitiveInformationAuthorizationGroups">
+			<column name="customSensitiveInformationUuid" type="${uuid_type}">
+				<constraints nullable="false" />
+			</column>
+			<column name="authorizationGroupUuid" type="${uuid_type}">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
 	</changeSet>
+
+	<changeSet id="add_custom_sensitive_information_authorization_groups_constraints" author="mak">
+		<addForeignKeyConstraint baseTableName="customSensitiveInformationAuthorizationGroups"
+			baseColumnNames="customSensitiveInformationUuid"
+			constraintName="fk_customSensitiveInformationAuthorizationGroups_customSensitiveInformation"
+			referencedTableName="customSensitiveInformation" referencedColumnNames="uuid"
+			onDelete="NO ACTION" onUpdate="NO ACTION" />
+		<addForeignKeyConstraint baseTableName="customSensitiveInformationAuthorizationGroups"
+			baseColumnNames="authorizationGroupUuid"
+			constraintName="fk_customSensitiveInformationAuthorizationGroups_authorizationGroup"
+			referencedTableName="authorizationGroups" referencedColumnNames="uuid"
+			onDelete="NO ACTION" onUpdate="NO ACTION" />
+	</changeSet>
+
 </databaseChangeLog>

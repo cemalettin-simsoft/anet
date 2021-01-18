@@ -1,6 +1,7 @@
 package mil.dds.anet.database;
 
 import com.codahale.metrics.MetricRegistry;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.ObjectArrays;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.InvocationTargetException;
@@ -19,6 +20,8 @@ import javax.cache.CacheManager;
 import javax.cache.Caching;
 import javax.cache.spi.CachingProvider;
 import mil.dds.anet.AnetObjectEngine;
+import mil.dds.anet.beans.AuthorizationGroup;
+import mil.dds.anet.beans.CustomSensitiveInformation;
 import mil.dds.anet.beans.Person;
 import mil.dds.anet.beans.PersonPositionHistory;
 import mil.dds.anet.beans.Position;
@@ -33,6 +36,9 @@ import mil.dds.anet.utils.FkDataLoaderKey;
 import mil.dds.anet.utils.Utils;
 import mil.dds.anet.views.ForeignKeyFetcher;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.vyarus.guicey.jdbi3.tx.InTransaction;
@@ -89,6 +95,7 @@ public class PersonDao extends AnetBaseDao<Person, PersonSearchQuery> {
   }
 
   static class SelfIdBatcher extends IdBatcher<Person> {
+
     private static final String sql = "/* batch.getPeopleByUuids */ SELECT " + PERSON_FIELDS
         + " FROM people WHERE uuid IN ( <uuids> )";
 
@@ -98,6 +105,7 @@ public class PersonDao extends AnetBaseDao<Person, PersonSearchQuery> {
   }
 
   static class AvatarBatcher extends IdBatcher<Person> {
+
     private static final String sql = "/* batch.getPeopleAvatars */ SELECT " + PERSON_AVATAR_FIELDS
         + " FROM people WHERE uuid IN ( <uuids> )";
 
@@ -120,6 +128,7 @@ public class PersonDao extends AnetBaseDao<Person, PersonSearchQuery> {
   }
 
   static class PersonPositionHistoryBatcher extends ForeignKeyBatcher<PersonPositionHistory> {
+
     private static final String sql =
         "/* batch.getPersonPositionHistory */ SELECT * FROM \"peoplePositions\" "
             + "WHERE \"personUuid\" IN ( <foreignKeys> ) ORDER BY \"createdAt\" ASC";
@@ -157,6 +166,25 @@ public class PersonDao extends AnetBaseDao<Person, PersonSearchQuery> {
         .bind("endOfTourDate", DaoUtils.asLocalDateTime(p.getEndOfTourDate()))
         .bind("status", DaoUtils.getEnumId(p.getStatus()))
         .bind("role", DaoUtils.getEnumId(p.getRole())).execute();
+
+    // Write sensitive information
+    CustomSensitiveInformation csi = p.getCustomSensitiveInformation();
+    if (csi != null) {
+      try {
+        csi.setCustomField(Utils.sanitizeJson(csi.getCustomField()));
+      } catch (JsonProcessingException e) {
+        csi.setCustomField(null);
+        logger.error("", e);
+      }
+      csi = AnetObjectEngine.getInstance().getCustomSensitiveInformationDao().insert(p,
+          csi); /* I'm not sure MAK */
+      p.setCustomSensitiveInformation(csi);
+    }
+
+    final PeopleBatch pb = getDbHandle().attach(PeopleBatch.class);
+    // pb.insertCustomSensitiveInformationAuthorizationGroups(p.getUuid(), );
+
+
     evictFromCache(p);
     return p;
   }
@@ -463,6 +491,14 @@ public class PersonDao extends AnetBaseDao<Person, PersonSearchQuery> {
     }
     logger.warn(AnetConstants.USERCACHE_EMPTY_MESSAGE);
     return AnetConstants.USERCACHE_EMPTY_MESSAGE;
+  }
+
+  public interface PeopleBatch {
+
+    @SqlBatch("INSERT INTO \"customSensitiveInformationAuthorizationGroups\" (\"customSensitiveInformationUuid\", \"authorizationGroupUuid\") VALUES (:customSensitiveInformationUuid, :uuid)")
+    void insertCustomSensitiveInformationAuthorizationGroups(
+        @Bind("customSensitiveInformationUuid") String customSensitiveInformationUuid,
+        @BindBean List<AuthorizationGroup> authorizationGroups);
   }
 
 }

@@ -77,6 +77,8 @@ public class Person extends AbstractCustomizableAnetBean
   @GraphQLQuery
   @GraphQLInputField
   private String code;
+  // annotated below
+  private CustomSensitiveInformation customSensitiveInformation;
 
   private LinkedList<Map<String, Object>> userActivities;
 
@@ -337,13 +339,15 @@ public class Person extends AbstractCustomizableAnetBean
         && (createdAt != null ? createdAt.equals(other.getCreatedAt())
             : (other.getCreatedAt() == null && updatedAt != null)
                 ? updatedAt.equals(other.getUpdatedAt())
-                : other.getUpdatedAt() == null);
+                : other.getUpdatedAt() == null)
+        && Objects.equals(other.getCustomSensitiveInformation(), customSensitiveInformation);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), uuid, name, status, role, emailAddress, phoneNumber, rank,
-        biography, pendingVerification, avatar, code, createdAt, updatedAt);
+        biography, pendingVerification, avatar, code, createdAt, updatedAt,
+        customSensitiveInformation);
   }
 
   @Override
@@ -359,6 +363,30 @@ public class Person extends AbstractCustomizableAnetBean
     final Person p = new Person();
     p.setUuid(uuid);
     return p;
+  }
+
+  @GraphQLQuery(name = "customSensitiveInformation")
+  public CompletableFuture<CustomSensitiveInformation> loadCustomSensitiveInformation(
+      @GraphQLRootContext Map<String, Object> context) {
+    if (customSensitiveInformation != null) {
+      return CompletableFuture.completedFuture(customSensitiveInformation);
+    }
+    return AnetObjectEngine.getInstance().getCustomSensitiveInformationDao()
+        .getForRelatedObject(context, this.customSensitiveInformation,
+            DaoUtils.getUserFromContext(context))
+        .thenApply(o -> {
+          customSensitiveInformation = o;
+          return o;
+        });
+  }
+
+  public CustomSensitiveInformation getCustomSensitiveInformation() {
+    return customSensitiveInformation;
+  }
+
+  @GraphQLInputField(name = "customSensitiveInformation")
+  public void setCustomSensitiveInformation(CustomSensitiveInformation customSensitiveInformation) {
+    this.customSensitiveInformation = customSensitiveInformation;
   }
 
 }

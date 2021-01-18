@@ -44,6 +44,8 @@ TRUNCATE TABLE reportAuthorizationGroups;
 TRUNCATE TABLE noteRelatedObjects;
 TRUNCATE TABLE taskTaskedOrganizations;
 TRUNCATE TABLE taskResponsiblePositions;
+TRUNCATE TABLE customSensitiveInformation;
+TRUNCATE TABLE customSensitiveInformationAuthorizationGroups;
 DELETE FROM positions;
 DELETE FROM tasks WHERE customFieldRef1Uuid IS NOT NULL;
 DELETE FROM tasks WHERE customFieldRef1Uuid IS NULL;
@@ -903,6 +905,18 @@ INSERT INTO reportAuthorizationGroups (reportUuid, authorizationGroupUuid)
     AND rap.authorizationGroupUuid = agp.authorizationGroupUuid
   );
 
+-- Custom sensitive information authorization groups
+INSERT INTO customSensitiveInformationAuthorizationGroups (customSensitiveInformationUuid, authorizationGroupUuid)
+  SELECT DISTINCT csi.customSensitiveInformationUuid, agp.authorizationGroupUuid
+  FROM customSensitiveInformation csi, authorizationGroups ag,
+  WHERE csi.authorizationGroupUuid = ag.authorizationGroupUuid
+  AND NOT EXISTS (
+    SELECT *
+    FROM reportAuthorizationGroups rap
+    WHERE rap.reportUuid = rp.reportUuid
+    AND rap.authorizationGroupUuid = agp.authorizationGroupUuid
+  );
+
 -- Add some notes and link them to the objects they relate to
 DECLARE @authorUuid varchar(36);
 DECLARE @noteUuid varchar(36);
@@ -1035,3 +1049,51 @@ UPDATE notes SET
     createdAt=cast(createdAt as datetime2(3)),
     updatedAt=cast(updatedAt as datetime2(3))
   ;
+
+-- Create CustomSensitiveInformation
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+jack@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+liz@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+selena@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+erin@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+reina@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+aDvisor@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+noPosition@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+steve@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+roger@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+christopf@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+bob@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+henry@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+jacob@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+rebecca@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+andrew@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+arthur@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+hunter@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+nick@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+shardul@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+arthur@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+arthur@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+arthur@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO customSensitiveInformation (uuid, relatedObjectUuid, relatedObjectType, customFields, createdAt, updatedAt)
+    VALUES (lower(newid()), (SELECT uuid FROM people where emailAddress='hunter+arthur@example.com'), 'Person', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
