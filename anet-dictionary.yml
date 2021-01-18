@@ -414,6 +414,7 @@ fields:
         label: Text field
         placeholder: Placeholder text for input field
         helpText: Help text for text field
+        authorizationGroups: [490fb3fe-0358-42d1-bb18-a5bceea0907a]
       colourOptions:
         type: enum
         label: Choose one of the colours
@@ -454,10 +455,12 @@ fields:
         type: date
         label: Not later than date
         helpText: Help text for date field
+        authorizationGroups: [2d06366b-a544-4085-830a-8870f17bdb3a]
       nlt_dt:
         type: datetime
         label: Not later than datetime
         helpText: Help text for datetime field
+        authorizationGroups: [1b1c716b-ca79-4acd-b373-6592d2aa27b3]
       arrayFieldName:
         type: array_of_objects
         label: Array of objects

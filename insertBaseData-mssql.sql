@@ -863,11 +863,11 @@ INSERT INTO reportPeople (personUuid, reportUuid, isPrimary, isAuthor)
 
 -- Authorization groups
 INSERT INTO authorizationGroups (uuid, name, description, status, createdAt, updatedAt)
-	VALUES (lower(newid()), 'EF 1.1 positions', 'All positions related to EF 1.1', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	VALUES ('490fb3fe-0358-42d1-bb18-a5bceea0907a', 'EF 1.1 positions', 'All positions related to EF 1.1', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO authorizationGroups (uuid, name, description, status, createdAt, updatedAt)
-	VALUES (lower(newid()), 'EF 2.1 positions', 'All positions related to EF 2.1', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	VALUES ('2d06366b-a544-4085-830a-8870f17bdb3a', 'EF 2.1 positions', 'All positions related to EF 2.1', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO authorizationGroups (uuid, name, description, status, createdAt, updatedAt)
-	VALUES (lower(newid()), 'EF 2.2 positions', 'All positions related to EF 2.2', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	VALUES ('1b1c716b-ca79-4acd-b373-6592d2aa27b3', 'EF 2.2 positions', 'All positions related to EF 2.2', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO authorizationGroups (uuid, name, description, status, createdAt, updatedAt)
 	VALUES (lower(newid()), 'Inactive positions', 'Inactive positions', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
