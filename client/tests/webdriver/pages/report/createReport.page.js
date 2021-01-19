@@ -1,10 +1,9 @@
 import moment from "moment"
-import Page from "../page"
+import * as cr from "../createReport.page"
 
-const PAGE_URL = "/reports/new"
 const SHORT_WAIT_MS = 1000
 
-class CreateReport extends Page {
+class CreateReport extends cr.CreateReport {
   get form() {
     return browser.$("form")
   }
@@ -30,10 +29,6 @@ class CreateReport extends Page {
     return browser.$(`div[aria-label="${tomorrow}"]`)
   }
 
-  get duration() {
-    return browser.$("#duration")
-  }
-
   get reportPeople() {
     return browser.$("#reportPeople")
   }
@@ -56,10 +51,6 @@ class CreateReport extends Page {
     return browser.$("#formBottomSubmit")
   }
 
-  open() {
-    super.open(PAGE_URL)
-  }
-
   getPersonByName(name) {
     const personRow = browser.$$(
       `//div[@id="reportPeopleContainer"]//tr[td[@class="reportPeopleName" and ./a[text()="${name}"]]]/td[@class="conflictButton" or @class="reportPeopleName"]`
@@ -74,14 +65,18 @@ class CreateReport extends Page {
 
   selectAttendeeByName(name, filterIndex) {
     this.reportPeople.click()
-    // wait for attendees table loader to disappear
+    // wait for reportPeople table loader to disappear
     this.reportPeopleTable.waitForDisplayed()
     if (filterIndex) {
       // select filter
       this.selectAttendeesFilter(filterIndex)
     }
     let searchTerm = name
-    if (searchTerm.startsWith("CIV") || searchTerm.startsWith("Maj")) {
+    if (
+      searchTerm.startsWith("CIV") ||
+      searchTerm.startsWith("LtCol") ||
+      searchTerm.startsWith("Maj")
+    ) {
       searchTerm = name.substr(name.indexOf(" ") + 1)
     }
     browser.keys(searchTerm)
@@ -96,14 +91,37 @@ class CreateReport extends Page {
     this.reportPeopleTable.waitForExist({ reverse: true, timeout: 3000 })
   }
 
+  get tasks() {
+    return browser.$("#tasks")
+  }
+
+  get tasksTable() {
+    return browser.$("#tasks-popover .table-responsive table")
+  }
+
+  selectTaskByName(name) {
+    this.tasks.click()
+    // wait for tasks table loader to disappear
+    this.tasksTable.waitForDisplayed()
+    browser.keys(name)
+    this.tasksTable.waitForDisplayed()
+    const checkBox = this.tasksTable.$(
+      "tbody tr:first-child td:first-child input.checkbox"
+    )
+    if (!checkBox.isSelected()) {
+      checkBox.click()
+    }
+    this.title.click()
+    this.tasksTable.waitForExist({ reverse: true, timeout: 3000 })
+  }
+
   fillForm(fields) {
     this.form.waitForClickable()
 
     if (fields.intent !== undefined) {
       this.intent.setValue(fields.intent)
+      this.intentHelpBlock.waitForExist({ reverse: true })
     }
-
-    this.intentHelpBlock.waitForExist({ reverse: true })
 
     if (moment.isMoment(fields.engagementDate)) {
       this.engagementDate.waitForClickable()
@@ -126,12 +144,10 @@ class CreateReport extends Page {
     if (Array.isArray(fields.principals) && fields.principals.length) {
       fields.principals.forEach(at => this.selectAttendeeByName(at, 2))
     }
-  }
 
-  submitForm() {
-    this.submitButton.waitForClickable()
-    this.submitButton.click()
-    this.submitButton.waitForExist({ reverse: true })
+    if (Array.isArray(fields.tasks) && fields.tasks.length) {
+      fields.tasks.forEach(t => this.selectTaskByName(t))
+    }
   }
 }
 

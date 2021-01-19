@@ -411,6 +411,11 @@ const ReportForm = ({
         )
         const isFutureEngagement = Report.isFuture(values.engagementDate)
         const hasAssessments = values.engagementDate && !isFutureEngagement
+        let relatedObject
+        if (hasAssessments) {
+          relatedObject = Report.getCleanReport(values)
+        }
+
         return (
           <div className="report-form">
             <NavigationWarning isBlocking={dirty} />
@@ -944,9 +949,7 @@ const ReportForm = ({
                     <InstantAssessmentsContainerField
                       entityType={Person}
                       entities={values.reportPeople?.filter(rp => rp.attendee)}
-                      entitiesInstantAssessmentsConfig={
-                        attendeesInstantAssessmentsConfig
-                      }
+                      relatedObject={relatedObject}
                       parentFieldName={
                         Report.ATTENDEES_ASSESSMENTS_PARENT_FIELD
                       }
@@ -966,9 +969,7 @@ const ReportForm = ({
                     <InstantAssessmentsContainerField
                       entityType={Task}
                       entities={values.tasks}
-                      entitiesInstantAssessmentsConfig={
-                        tasksInstantAssessmentsConfig
-                      }
+                      relatedObject={relatedObject}
                       parentFieldName={Report.TASKS_ASSESSMENTS_PARENT_FIELD}
                       formikProps={{
                         setFieldTouched,
@@ -1245,20 +1246,11 @@ const ReportForm = ({
 
   function save(values, sendEmail) {
     const report = Object.without(
-      new Report(values),
-      "notes",
+      Report.getCleanReport(values),
       "cancelled",
-      "reportTags",
-      "showSensitiveInfo",
-      "authors",
       "reportPeople",
       "tasks",
-      "customFields", // initial JSON from the db
-      DEFAULT_CUSTOM_FIELDS_PARENT,
-      Report.TASKS_ASSESSMENTS_PARENT_FIELD,
-      Report.ATTENDEES_ASSESSMENTS_PARENT_FIELD,
-      Report.TASKS_ASSESSMENTS_UUIDS_FIELD,
-      Report.ATTENDEES_ASSESSMENTS_UUIDS_FIELD
+      "customFields" // initial JSON from the db
     )
     if (Report.isFuture(values.engagementDate)) {
       // Empty fields which should not be set for future reports.
