@@ -33,13 +33,17 @@ class CreateReport extends cr.CreateReport {
     return browser.$("#reportPeople")
   }
 
+  get reportPeopleFilters() {
+    return browser.$("#reportPeople-popover .advanced-select-filters")
+  }
+
   get reportPeopleTable() {
     return browser.$("#reportPeople-popover .table-responsive table")
   }
 
-  selectAttendeesFilter(filterIndex) {
-    const filter = browser.$(
-      `#reportPeople-popover .advanced-select-filters li:nth-child(${filterIndex}) button`
+  selectReportPeopleFilter(filterIndex) {
+    const filter = this.reportPeopleFilters.$(
+      `li:nth-child(${filterIndex}) button`
     )
     filter.waitForClickable()
     filter.click()
@@ -66,10 +70,10 @@ class CreateReport extends cr.CreateReport {
   selectAttendeeByName(name, filterIndex) {
     this.reportPeople.click()
     // wait for reportPeople table loader to disappear
-    this.reportPeopleTable.waitForDisplayed()
+    this.reportPeopleFilters.waitForDisplayed()
     if (filterIndex) {
       // select filter
-      this.selectAttendeesFilter(filterIndex)
+      this.selectReportPeopleFilter(filterIndex)
     }
     let searchTerm = name
     if (
@@ -95,14 +99,30 @@ class CreateReport extends cr.CreateReport {
     return browser.$("#tasks")
   }
 
+  get tasksFilters() {
+    return browser.$("#tasks-popover .advanced-select-filters")
+  }
+
   get tasksTable() {
     return browser.$("#tasks-popover .table-responsive table")
   }
 
-  selectTaskByName(name) {
+  selectTasksFilter(filterIndex) {
+    const filter = this.tasksFilters.$(`li:nth-child(${filterIndex}) button`)
+    filter.waitForClickable()
+    filter.click()
+    browser.pause(SHORT_WAIT_MS) // give the advanced select some time to apply the filter
+    this.tasks.click()
+  }
+
+  selectTaskByName(name, filterIndex) {
     this.tasks.click()
     // wait for tasks table loader to disappear
-    this.tasksTable.waitForDisplayed()
+    this.tasksFilters.waitForDisplayed()
+    if (filterIndex) {
+      // select filter
+      this.selectTasksFilter(filterIndex)
+    }
     browser.keys(name)
     this.tasksTable.waitForDisplayed()
     const checkBox = this.tasksTable.$(
@@ -146,7 +166,7 @@ class CreateReport extends cr.CreateReport {
     }
 
     if (Array.isArray(fields.tasks) && fields.tasks.length) {
-      fields.tasks.forEach(t => this.selectTaskByName(t))
+      fields.tasks.forEach(t => this.selectTaskByName(t, 2))
     }
   }
 }
