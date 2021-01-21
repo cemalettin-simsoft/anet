@@ -310,6 +310,18 @@ export default class Person extends Model {
     return r
   }
 
+  // allAuthGroups is all the authorization groups, an object in {uuid1: [posUuid1, posUuid2...], uuid2: ...}
+  // theAuthGroups is the authorized groups, an array of authorizationGroup uuids
+  static isSpecificallyAuthorized(person, theAuthGroups, allAuthGroups) {
+    if (theAuthGroups && allAuthGroups && theAuthGroups.length > 0) {
+      const authed = theAuthGroups.some(ag => {
+        return allAuthGroups[ag]?.includes(person.position.uuid)
+      })
+      return authed
+    }
+    return false
+  }
+
   static parseFullName(name) {
     const delimiter = name.indexOf(Person.nameDelimiter)
     let lastName = name

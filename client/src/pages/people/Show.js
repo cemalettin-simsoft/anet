@@ -1,3 +1,5 @@
+import { Icon, Intent, Tooltip } from "@blueprintjs/core"
+import { IconNames } from "@blueprintjs/icons"
 import { DEFAULT_PAGE_PROPS, DEFAULT_SEARCH_PROPS } from "actions"
 import API from "api"
 import { gql } from "apollo-boost"
@@ -34,6 +36,7 @@ import { connect } from "react-redux"
 import { useLocation, useParams } from "react-router-dom"
 import Settings from "settings"
 import utils from "utils"
+import { useAuthorizationGroupQuery } from "../PageCommonQueries"
 
 const GQL_GET_PERSON = gql`
   query($uuid: String!) {
@@ -105,9 +108,11 @@ const PersonShow = ({ pageDispatchers }) => {
   const { loading, error, data, refetch } = API.useApiQuery(GQL_GET_PERSON, {
     uuid
   })
+  const { loadingAuth, errorAuth, authGroups } = useAuthorizationGroupQuery()
+
   const { done, result } = useBoilerplate({
-    loading,
-    error,
+    loading: loading || loadingAuth,
+    error: error || errorAuth,
     modelName: "User",
     uuid,
     pageProps: DEFAULT_PAGE_PROPS,
@@ -410,6 +415,26 @@ const PersonShow = ({ pageDispatchers }) => {
                   <ReadonlyCustomFields
                     fieldsConfig={Settings.fields.person.customFields}
                     values={values}
+                    getExtraColElem={fieldConfig => {
+                      return Person.isSpecificallyAuthorized(
+                        currentUser,
+                        fieldConfig.authorizationGroups,
+                        authGroups
+                      ) ? (
+                        <div>
+                          <Tooltip
+                            content="You are authorized to see this field"
+                            intent={Intent.WARNING}
+                          >
+                            <Icon
+                              icon={IconNames.ERROR}
+                              intent={Intent.WARNING}
+                              usePortal={true}
+                            />
+                          </Tooltip>
+                        </div>
+                        ) : undefined
+                    }}
                   />
                 </Fieldset>
               )}

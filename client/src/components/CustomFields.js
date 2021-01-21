@@ -136,11 +136,12 @@ const NumberField = fieldProps => {
 }
 
 const ReadonlyTextField = fieldProps => {
-  const { name, label, vertical, isCompact } = fieldProps
+  const { name, label, vertical, isCompact, extraColElem } = fieldProps
   return (
     <FastField
       name={name}
       label={label}
+      extraColElem={extraColElem}
       vertical={vertical}
       isCompact={isCompact}
       component={FieldHelper.ReadonlyField}
@@ -161,12 +162,20 @@ const DateField = fieldProps => {
 }
 
 const ReadonlyDateField = fieldProps => {
-  const { name, label, vertical, isCompact, withTime } = fieldProps
+  const {
+    name,
+    label,
+    vertical,
+    isCompact,
+    withTime,
+    extraColElem
+  } = fieldProps
   return (
     <FastField
       name={name}
       label={label}
       vertical={vertical}
+      extraColElem={extraColElem}
       isCompact={isCompact}
       component={FieldHelper.ReadonlyField}
       humanValue={fieldVal =>
@@ -215,12 +224,13 @@ const JsonField = fieldProps => {
   )
 }
 
-const ReadonlyJsonField = ({ name, label, values }) => {
+const ReadonlyJsonField = ({ name, label, values, extraColElem }) => {
   const value = Object.get(values, name) || {}
   return (
     <FastField
       name={name}
       label={label}
+      extraColElem={extraColElem}
       component={FieldHelper.ReadonlyField}
       humanValue={JSON.stringify(value)}
     />
@@ -229,7 +239,8 @@ const ReadonlyJsonField = ({ name, label, values }) => {
 ReadonlyJsonField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  values: PropTypes.object.isRequired
+  values: PropTypes.object.isRequired,
+  extraColElem: PropTypes.node
 }
 
 const EnumField = fieldProps => {
@@ -252,12 +263,21 @@ const enumHumanValue = (choices, fieldVal) => {
 }
 
 const ReadonlyEnumField = fieldProps => {
-  const { name, label, vertical, values, isCompact, choices } = fieldProps
+  const {
+    name,
+    label,
+    vertical,
+    values,
+    isCompact,
+    choices,
+    extraColElem
+  } = fieldProps
   return (
     <FastField
       name={name}
       label={label}
       vertical={vertical}
+      extraColElem={extraColElem}
       values={values}
       isCompact={isCompact}
       component={FieldHelper.ReadonlyField}
@@ -383,7 +403,14 @@ const addObject = (objDefault, arrayHelpers) => {
 }
 
 const ReadonlyArrayOfObjectsField = fieldProps => {
-  const { name, fieldConfig, values, isCompact, vertical } = fieldProps
+  const {
+    name,
+    fieldConfig,
+    values,
+    isCompact,
+    vertical,
+    extraColElem
+  } = fieldProps
   const value = useMemo(() => getArrayObjectValue(values, name), [values, name])
   const fieldsetTitle = fieldConfig.label || ""
 
@@ -393,6 +420,7 @@ const ReadonlyArrayOfObjectsField = fieldProps => {
       fieldName={name}
       fieldConfig={fieldConfig}
       values={values}
+      extraColElem={extraColElem}
       isCompact={isCompact}
       index={index}
       vertical={vertical}
@@ -418,7 +446,8 @@ const ReadonlyArrayObject = ({
   values,
   vertical,
   index,
-  isCompact
+  isCompact,
+  extraColElem
 }) => {
   const objLabel = _upperFirst(fieldConfig.objectLabel || "item")
   return (
@@ -428,6 +457,7 @@ const ReadonlyArrayObject = ({
         parentFieldName={`${fieldName}.${index}`}
         values={values}
         isCompact={isCompact}
+        extraColElem={extraColElem}
         vertical={vertical}
       />
     </Fieldset>
@@ -439,7 +469,8 @@ ReadonlyArrayObject.propTypes = {
   values: PropTypes.object.isRequired,
   vertical: PropTypes.bool,
   index: PropTypes.number.isRequired,
-  isCompact: PropTypes.bool
+  isCompact: PropTypes.bool,
+  extraColElem: PropTypes.node
 }
 
 const AnetObjectField = ({
@@ -499,7 +530,13 @@ AnetObjectField.propTypes = {
   children: PropTypes.node
 }
 
-const ReadonlyAnetObjectField = ({ name, label, values, isCompact }) => {
+const ReadonlyAnetObjectField = ({
+  name,
+  label,
+  values,
+  isCompact,
+  extraColElem
+}) => {
   const { type, uuid } = Object.get(values, name) || {}
   return (
     <FastField
@@ -528,7 +565,8 @@ ReadonlyAnetObjectField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   values: PropTypes.object.isRequired,
-  isCompact: PropTypes.bool
+  isCompact: PropTypes.bool,
+  extraColElem: PropTypes.node
 }
 
 const ArrayOfAnetObjectsField = ({
@@ -612,7 +650,8 @@ const ReadonlyArrayOfAnetObjectsField = ({
   name,
   label,
   values,
-  isCompact
+  isCompact,
+  extraColElem
 }) => {
   const fieldValue = Object.get(values, name) || []
   return (
@@ -620,6 +659,7 @@ const ReadonlyArrayOfAnetObjectsField = ({
       name={name}
       label={label}
       component={FieldHelper.ReadonlyField}
+      extraColElem={extraColElem}
       isCompact={isCompact}
       humanValue={
         !_isEmpty(fieldValue) && (
@@ -643,7 +683,8 @@ ReadonlyArrayOfAnetObjectsField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   values: PropTypes.object.isRequired,
-  isCompact: PropTypes.bool
+  isCompact: PropTypes.bool,
+  extraColElem: PropTypes.node
 }
 
 const FIELD_COMPONENTS = {
@@ -767,6 +808,7 @@ export const getFieldPropsFromFieldConfig = fieldConfig => {
     helpText,
     validations,
     visibleWhen,
+    authorizationGroups,
     test,
     objectFields,
     ...fieldProps
@@ -915,7 +957,8 @@ export const ReadonlyCustomFields = ({
   parentFieldName, // key path in the values object to get to the level of fields given by the fieldsConfig
   values,
   vertical,
-  isCompact
+  isCompact,
+  getExtraColElem // function to generate extra column element
 }) => {
   return (
     <>
@@ -937,6 +980,7 @@ export const ReadonlyCustomFields = ({
             values={values}
             vertical={vertical}
             isCompact={isCompact}
+            extraColElem={getExtraColElem(fieldConfig)}
             {...fieldProps}
             {...extraProps}
           />
@@ -960,11 +1004,13 @@ ReadonlyCustomFields.propTypes = {
   parentFieldName: PropTypes.string.isRequired,
   values: PropTypes.object.isRequired,
   vertical: PropTypes.bool,
-  isCompact: PropTypes.bool
+  isCompact: PropTypes.bool,
+  getExtraColElem: PropTypes.func
 }
 ReadonlyCustomFields.defaultProps = {
   parentFieldName: DEFAULT_CUSTOM_FIELDS_PARENT,
-  vertical: false
+  vertical: false,
+  getExtraColElem: () => undefined
 }
 
 // customFields should contain the JSON of all the visible custom fields.
