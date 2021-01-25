@@ -1,3 +1,5 @@
+import { Icon, Intent, Tooltip } from "@blueprintjs/core"
+import { IconNames } from "@blueprintjs/icons"
 import API from "api"
 import { gql } from "apollo-boost"
 import AppContext from "components/AppContext"
@@ -50,7 +52,7 @@ const GQL_UPDATE_PERSON = gql`
   }
 `
 
-const PersonForm = ({ edit, title, saveText, initialValues }) => {
+const PersonForm = ({ edit, title, saveText, initialValues, authGroups }) => {
   const { loadAppData, currentUser } = useContext(AppContext)
   const history = useHistory()
   const confirmHasReplacementButton = useRef(null)
@@ -494,6 +496,26 @@ const PersonForm = ({ edit, title, saveText, initialValues }) => {
                 <Fieldset title="Person information" id="custom-fields">
                   <CustomFieldsContainer
                     fieldsConfig={Settings.fields.person.customFields}
+                    getExtraColElem={fieldConfig => {
+                      return Person.isSpecificallyAuthorized(
+                        currentUser,
+                        fieldConfig.authorizationGroups,
+                        authGroups
+                      ) ? (
+                        <div>
+                          <Tooltip
+                            content="You are authorized to edit this field"
+                            intent={Intent.WARNING}
+                          >
+                            <Icon
+                              icon={IconNames.ERROR}
+                              intent={Intent.WARNING}
+                              usePortal={true}
+                            />
+                          </Tooltip>
+                        </div>
+                        ) : undefined
+                    }}
                     formikProps={{
                       setFieldTouched,
                       setFieldValue,
@@ -642,7 +664,8 @@ PersonForm.propTypes = {
   initialValues: PropTypes.instanceOf(Person).isRequired,
   title: PropTypes.string,
   edit: PropTypes.bool,
-  saveText: PropTypes.string
+  saveText: PropTypes.string,
+  authGroups: PropTypes.object
 }
 
 PersonForm.defaultProps = {

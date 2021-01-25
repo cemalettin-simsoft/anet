@@ -9,21 +9,35 @@ import { Person } from "models"
 import React from "react"
 import { connect } from "react-redux"
 import Settings from "settings"
+import { useAuthorizationGroupQuery } from "../PageCommonQueries"
 import PersonForm from "./Form"
 
 const PersonNew = ({ pageDispatchers }) => {
-  useBoilerplate({
+  const { loadingAuth, errorAuth, authGroups } = useAuthorizationGroupQuery()
+  const { done, result } = useBoilerplate({
+    loading: loadingAuth,
+    error: errorAuth,
     pageProps: PAGE_PROPS_NO_NAV,
     searchProps: DEFAULT_SEARCH_PROPS,
     pageDispatchers
   })
+
+  if (done) {
+    return result
+  }
 
   const person = new Person()
 
   // mutates the object
   initInvisibleFields(person, Settings.fields.person.customFields)
 
-  return <PersonForm initialValues={person} title="Create a new Person" />
+  return (
+    <PersonForm
+      initialValues={person}
+      title="Create a new Person"
+      authGroups={authGroups || {}}
+    />
+  )
 }
 
 PersonNew.propTypes = {

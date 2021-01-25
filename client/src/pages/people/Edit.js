@@ -18,6 +18,7 @@ import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
 import Settings from "settings"
 import utils from "utils"
+import { useAuthorizationGroupQuery } from "../PageCommonQueries"
 import PersonForm from "./Form"
 
 const GQL_GET_PERSON = gql`
@@ -59,9 +60,11 @@ const PersonEdit = ({ pageDispatchers }) => {
   const { loading, error, data } = API.useApiQuery(GQL_GET_PERSON, {
     uuid
   })
+  const { loadingAuth, errorAuth, authGroups } = useAuthorizationGroupQuery()
+
   const { done, result } = useBoilerplate({
-    loading,
-    error,
+    loading: loading || loadingAuth,
+    error: error || errorAuth,
     modelName: "User",
     uuid,
     pageProps: PAGE_PROPS_NO_NAV,
@@ -111,6 +114,7 @@ const PersonEdit = ({ pageDispatchers }) => {
         edit
         title={legendText}
         saveText={saveText}
+        authGroups={authGroups || {}}
       />
     </div>
   )

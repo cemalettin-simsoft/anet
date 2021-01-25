@@ -821,6 +821,7 @@ const CustomField = ({
   fieldName,
   formikProps,
   invisibleFields,
+  extraColElem,
   vertical
 }) => {
   const { type, helpText } = fieldConfig
@@ -878,6 +879,7 @@ const CustomField = ({
       name={fieldName}
       onChange={handleChange}
       vertical={vertical}
+      extraColElem={extraColElem}
       {...fieldProps}
       {...extraProps}
     >
@@ -898,7 +900,8 @@ CustomField.propTypes = {
   fieldName: PropTypes.string.isRequired,
   formikProps: PropTypes.object,
   invisibleFields: PropTypes.array,
-  vertical: PropTypes.bool
+  vertical: PropTypes.bool,
+  extraColElem: PropTypes.node
 }
 
 const CustomFields = ({
@@ -906,6 +909,7 @@ const CustomFields = ({
   formikProps,
   parentFieldName,
   invisibleFields,
+  getExtraColElem,
   vertical
 }) => {
   return (
@@ -919,6 +923,7 @@ const CustomFields = ({
             fieldName={fieldName}
             formikProps={formikProps}
             invisibleFields={invisibleFields}
+            extraColElem={getExtraColElem(fieldConfig)}
             vertical={vertical}
           />
         )
@@ -931,7 +936,8 @@ CustomFields.propTypes = {
   formikProps: PropTypes.object,
   parentFieldName: PropTypes.string.isRequired,
   invisibleFields: PropTypes.array,
-  vertical: PropTypes.bool
+  vertical: PropTypes.bool,
+  getExtraColElem: PropTypes.func
 }
 CustomFields.defaultProps = {
   parentFieldName: DEFAULT_CUSTOM_FIELDS_PARENT,
