@@ -941,7 +941,8 @@ CustomFields.propTypes = {
 }
 CustomFields.defaultProps = {
   parentFieldName: DEFAULT_CUSTOM_FIELDS_PARENT,
-  vertical: false
+  vertical: false,
+  getExtraColElem: () => undefined
 }
 
 const READONLY_FIELD_COMPONENTS = {
