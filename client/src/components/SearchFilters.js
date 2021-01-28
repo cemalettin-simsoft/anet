@@ -525,6 +525,14 @@ export const searchFilters = function() {
           options: ["true", "false"],
           labels: ["Yes", "No"]
         }
+      },
+      "Has Pending Assessments": {
+        component: CheckboxFilter,
+        deserializer: deserializeCheckboxFilter,
+        props: {
+          queryKey: "hasPendingAssessments",
+          msg: "Yes"
+        }
       }
     }
   }

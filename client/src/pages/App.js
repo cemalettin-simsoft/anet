@@ -207,7 +207,7 @@ const App = ({ pageDispatchers, pageProps }) => {
     )
 
     const currentUser = new Person(data.me)
-    const notifications = getNotifications(currentUser)
+    const notifications = getNotifications(currentUser.position)
     return {
       currentUser,
       settings,
