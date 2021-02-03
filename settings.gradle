@@ -10,3 +10,5 @@
  */
 
 rootProject.name = 'anet'
+include 'anet-private'
+include 'anet-public'

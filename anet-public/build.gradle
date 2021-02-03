@@ -1,0 +1,98 @@
+plugins {
+	id 'java'
+  id 'application'
+}
+
+application {
+    mainClass = 'mil.dds.anet.Hello'
+}
+
+// // In this section you declare where to find the dependencies of your project
+// repositories {
+// 	mavenCentral()
+// 	maven { url 'https://jitpack.io' }
+// 	maven { url "https://repo.spring.io/plugins-release" }
+// 	jcenter()
+// }
+
+// dependencies {
+//   // Get the same versions from other project
+//   // TODO: remove unnecessary
+//   api platform(project(':anet-private'))
+//   api 'io.dropwizard:dropwizard-core'
+//   api 'io.dropwizard:dropwizard-auth'
+//   api 'io.dropwizard:dropwizard-views-freemarker'
+//   api 'io.dropwizard-bundles:dropwizard-configurable-assets-bundle'
+//   api 'commons-collections:commons-collections'
+//   api 'org.ehcache:ehcache'
+//   api 'javax.cache:cache-api'
+//   api 'commons-beanutils:commons-beanutils'
+//   api 'org.simplejavamail:simple-java-mail'
+// 	api 'ch.qos.logback:logback-classic'
+// 	api 'ch.qos.logback:logback-core'
+// 	api 'ch.qos.logback:logback-access'
+// 	api 'com.graphql-java:java-dataloader'
+// 	api 'io.leangen.graphql:spqr'
+// 	api 'com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer'
+// 	api 'com.mikesamuel:json-sanitizer'
+// 	// Authentication
+// 	api 'de.ahus1.keycloak.dropwizard:keycloak-dropwizard'
+// 	api "org.keycloak:keycloak-jetty94-adapter"
+// 	api "org.keycloak:keycloak-jaxrs-oauth-client"
+
+// 	// Used for converting GraphQL request output to XML:
+// 	api 'com.github.javadev:underscore-lodash'
+// 	// For JSON schema validation
+// 	api 'com.qindesign:snowy-json'
+
+// 	// used for writing Excel documents
+// 	api 'org.apache.poi:poi'
+// 	api 'org.apache.poi:poi-ooxml'
+
+// 	// For Java 9+
+// 	api 'javax.xml.bind:jaxb-api'
+
+// 	// For parsing HTML to check for 'empty' input
+// 	api 'org.jsoup:jsoup'
+
+// 	// For fast and simple image scaling
+// 	api 'net.coobird:thumbnailator'
+
+// 	api 'io.dropwizard:dropwizard-testing'
+// 	api 'io.dropwizard:dropwizard-client'
+// 	api 'org.apache.commons:commons-io'
+
+// 	api 'org.assertj:assertj-core'
+
+// 	api 'org.powermock:powermock-api-mockito2'
+// 	api 'org.powermock:powermock-module-junit4'
+// 	api 'org.powermock:powermock-module-junit4-rule'
+
+// 	api 'org.junit.jupiter:junit-jupiter-api'
+// 	api 'org.junit.jupiter:junit-jupiter-engine'
+// }
+
+// configurations {
+// 	// Exclude transitive dependency Apache Xalan (e.g. through poi-ooxml), so we use the TransformerFactoryImpl from the JVM
+// 	compile.exclude module: 'xalan'
+// }
+
+// test {
+//     useJUnitPlatform()
+// }
+
+// jacoco {
+//     toolVersion = "0.8.6"
+// }
+
+// jacocoTestReport {
+//     reports {
+//         xml.enabled true
+// 		html.enabled false
+// 	}
+// }
+
+// //Set project version to git tag
+// def proc = "git describe".execute(null, projectDir);
+// proc.waitFor();
+// project.version = proc.text.trim();

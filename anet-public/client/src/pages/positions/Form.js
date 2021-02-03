@@ -1,0 +1,409 @@
+import API from "api"
+import { gql } from "apollo-boost"
+import {
+  LocationOverlayRow,
+  OrganizationOverlayRow
+} from "components/advancedSelectWidget/AdvancedSelectOverlayRow"
+import AdvancedSingleSelect from "components/advancedSelectWidget/AdvancedSingleSelect"
+import AppContext from "components/AppContext"
+import {
+  CustomFieldsContainer,
+  customFieldsJSONString
+} from "components/CustomFields"
+import * as FieldHelper from "components/FieldHelper"
+import Fieldset from "components/Fieldset"
+import LinkTo from "components/LinkTo"
+import Messages from "components/Messages"
+import Model, { DEFAULT_CUSTOM_FIELDS_PARENT } from "components/Model"
+import NavigationWarning from "components/NavigationWarning"
+import { jumpToTop } from "components/Page"
+import { FastField, Field, Form, Formik } from "formik"
+import DictionaryField from "HOC/DictionaryField"
+import { Location, Organization, Position } from "models"
+import PropTypes from "prop-types"
+import React, { useContext, useState } from "react"
+import { Button, HelpBlock } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
+import LOCATIONS_ICON from "resources/locations.png"
+import ORGANIZATIONS_ICON from "resources/organizations.png"
+import { RECURSE_STRATEGY } from "searchUtils"
+import Settings from "settings"
+import utils from "utils"
+
+const GQL_CREATE_POSITION = gql`
+  mutation($position: PositionInput!) {
+    createPosition(position: $position) {
+      uuid
+    }
+  }
+`
+const GQL_UPDATE_POSITION = gql`
+  mutation($position: PositionInput!) {
+    updatePosition(position: $position)
+  }
+`
+
+const PositionForm = ({ edit, title, initialValues }) => {
+  const { currentUser } = useContext(AppContext)
+  const history = useHistory()
+  const [error, setError] = useState(null)
+  const statusButtons = [
+    {
+      id: "statusActiveButton",
+      value: Model.STATUS.ACTIVE,
+      label: "Active"
+    },
+    {
+      id: "statusInactiveButton",
+      value: Model.STATUS.INACTIVE,
+      label: "Inactive"
+    }
+  ]
+  const typeButtons = [
+    {
+      id: "typeAdvisorButton",
+      value: Position.TYPE.ADVISOR,
+      label: Settings.fields.advisor.position.name
+    },
+    {
+      id: "typePrincipalButton",
+      value: Position.TYPE.PRINCIPAL,
+      label: Settings.fields.principal.position.name
+    }
+  ]
+  const nonAdminPermissionsButtons = [
+    {
+      id: "permsAdvisorButton",
+      value: Position.TYPE.ADVISOR,
+      label: Settings.fields.advisor.position.type
+    }
+  ]
+  const adminPermissionsButtons = nonAdminPermissionsButtons.concat([
+    {
+      id: "permsSuperUserButton",
+      value: Position.TYPE.SUPER_USER,
+      label: Settings.fields.superUser.position.type
+    },
+    {
+      id: "permsAdminButton",
+      value: Position.TYPE.ADMINISTRATOR,
+      label: Settings.fields.administrator.position.type
+    }
+  ])
+
+  const CodeFieldWithLabel = DictionaryField(Field)
+
+  // For advisor types of positions, add permissions property.
+  // The permissions property allows selecting a
+  // specific advisor type and is removed in the onSubmit method.
+  if (
+    [
+      Position.TYPE.ADVISOR,
+      Position.TYPE.SUPER_USER,
+      Position.TYPE.ADMINISTRATOR
+    ].includes(initialValues.type)
+  ) {
+    initialValues.permissions = initialValues.type
+  }
+
+  return (
+    <Formik
+      enableReinitialize
+      onSubmit={onSubmit}
+      validationSchema={Position.yupSchema}
+      initialValues={initialValues}
+    >
+      {({
+        isSubmitting,
+        dirty,
+        setFieldValue,
+        setFieldTouched,
+        values,
+        validateForm,
+        submitForm
+      }) => {
+        const isPrincipal = values.type === Position.TYPE.PRINCIPAL
+        const positionSettings = isPrincipal
+          ? Settings.fields.principal.position
+          : Settings.fields.advisor.position
+
+        const isAdmin = currentUser && currentUser.isAdmin()
+        const permissionsButtons = isAdmin
+          ? adminPermissionsButtons
+          : nonAdminPermissionsButtons
+
+        const orgSearchQuery = { status: Model.STATUS.ACTIVE }
+        if (isPrincipal) {
+          orgSearchQuery.type = Organization.TYPE.PRINCIPAL_ORG
+        } else {
+          orgSearchQuery.type = Organization.TYPE.ADVISOR_ORG
+          if (
+            currentUser &&
+            currentUser.position &&
+            currentUser.position.type === Position.TYPE.SUPER_USER
+          ) {
+            orgSearchQuery.parentOrgUuid = [
+              currentUser.position.organization.uuid
+            ]
+            orgSearchQuery.orgRecurseStrategy = RECURSE_STRATEGY.CHILDREN
+          }
+        }
+        // Reset the organization property when changing the organization type
+        if (
+          values.organization &&
+          values.organization.type &&
+          values.organization.type !== orgSearchQuery.type
+        ) {
+          setFieldValue("organization", null)
+        }
+        const willAutoKickPerson =
+          values.status === Model.STATUS.INACTIVE &&
+          values.person &&
+          values.person.uuid
+        const action = (
+          <div>
+            <Button
+              key="submit"
+              bsStyle="primary"
+              type="button"
+              onClick={submitForm}
+              disabled={isSubmitting}
+            >
+              Save Position
+            </Button>
+          </div>
+        )
+        const organizationFilters = {
+          allOrganizations: {
+            label: "All organizations",
+            queryVars: {}
+          }
+        }
+        const locationFilters = {
+          activeLocations: {
+            label: "All locations",
+            queryVars: { status: Model.STATUS.ACTIVE }
+          }
+        }
+        return (
+          <div>
+            <NavigationWarning isBlocking={dirty} />
+            <Messages error={error} />
+            <Form className="form-horizontal" method="post">
+              <Fieldset title={title} action={action} />
+              <Fieldset>
+                {edit ? (
+                  <FastField
+                    name="type"
+                    component={FieldHelper.ReadonlyField}
+                    humanValue={Position.humanNameOfType}
+                  />
+                ) : (
+                  <FastField
+                    name="type"
+                    component={FieldHelper.RadioButtonToggleGroupField}
+                    buttons={typeButtons}
+                    onChange={value => setFieldValue("type", value)}
+                  />
+                )}
+
+                <FastField
+                  name="status"
+                  component={FieldHelper.RadioButtonToggleGroupField}
+                  buttons={statusButtons}
+                  onChange={value => setFieldValue("status", value)}
+                >
+                  {willAutoKickPerson && (
+                    <HelpBlock>
+                      <span className="text-danger">
+                        Setting this position to inactive will automatically
+                        remove{" "}
+                        <LinkTo modelType="Person" model={values.person} /> from
+                        this position.
+                      </span>
+                    </HelpBlock>
+                  )}
+                </FastField>
+
+                <Field
+                  name="organization"
+                  label="Organization"
+                  component={FieldHelper.SpecialField}
+                  onChange={value => {
+                    // validation will be done by setFieldValue
+                    setFieldTouched("organization", true, false) // onBlur doesn't work when selecting an option
+                    setFieldValue("organization", value)
+                  }}
+                  widget={
+                    <AdvancedSingleSelect
+                      fieldName="organization"
+                      placeholder="Search the organization for this position..."
+                      value={values.organization}
+                      overlayColumns={["Name"]}
+                      overlayRenderRow={OrganizationOverlayRow}
+                      filterDefs={organizationFilters}
+                      objectType={Organization}
+                      fields={Organization.autocompleteQuery}
+                      queryParams={orgSearchQuery}
+                      valueKey="shortName"
+                      addon={ORGANIZATIONS_ICON}
+                    />
+                  }
+                />
+
+                <CodeFieldWithLabel
+                  dictProps={positionSettings.code}
+                  name="code"
+                  component={FieldHelper.InputField}
+                />
+
+                <FastField
+                  name="name"
+                  component={FieldHelper.InputField}
+                  label={Settings.fields.position.name}
+                  placeholder="Name/Description of Position"
+                />
+
+                {!isPrincipal && (
+                  <FastField
+                    name="permissions"
+                    component={FieldHelper.RadioButtonToggleGroupField}
+                    buttons={permissionsButtons}
+                    onChange={value => setFieldValue("permissions", value)}
+                  />
+                )}
+              </Fieldset>
+
+              <Fieldset title="Additional information">
+                <FastField
+                  name="location"
+                  label="Location"
+                  component={FieldHelper.SpecialField}
+                  onChange={value => {
+                    // validation will be done by setFieldValue
+                    setFieldTouched("location", true, false) // onBlur doesn't work when selecting an option
+                    setFieldValue("location", value)
+                  }}
+                  widget={
+                    <AdvancedSingleSelect
+                      fieldName="location"
+                      placeholder="Search for the location where this Position will operate from..."
+                      value={values.location}
+                      overlayColumns={["Name"]}
+                      overlayRenderRow={LocationOverlayRow}
+                      filterDefs={locationFilters}
+                      objectType={Location}
+                      fields={Location.autocompleteQuery}
+                      queryParams={{ status: Model.STATUS.ACTIVE }}
+                      valueKey="name"
+                      addon={LOCATIONS_ICON}
+                    />
+                  }
+                />
+              </Fieldset>
+              {Settings.fields.position.customFields && (
+                <Fieldset title="Position information" id="custom-fields">
+                  <CustomFieldsContainer
+                    fieldsConfig={Settings.fields.position.customFields}
+                    formikProps={{
+                      setFieldTouched,
+                      setFieldValue,
+                      values,
+                      validateForm
+                    }}
+                  />
+                </Fieldset>
+              )}
+              <div className="submit-buttons">
+                <div>
+                  <Button onClick={onCancel}>Cancel</Button>
+                </div>
+                <div>
+                  <Button
+                    id="formBottomSubmit"
+                    bsStyle="primary"
+                    type="button"
+                    onClick={submitForm}
+                    disabled={isSubmitting}
+                  >
+                    Save Position
+                  </Button>
+                </div>
+              </div>
+            </Form>
+          </div>
+        )
+      }}
+    </Formik>
+  )
+
+  function onCancel() {
+    history.goBack()
+  }
+
+  function onSubmit(values, form) {
+    return save(values, form)
+      .then(response => onSubmitSuccess(response, values, form))
+      .catch(error => {
+        setError(error)
+        form.setSubmitting(false)
+        jumpToTop()
+      })
+  }
+
+  function onSubmitSuccess(response, values, form) {
+    const operation = edit ? "updatePosition" : "createPosition"
+    const position = new Position({
+      uuid: response[operation].uuid
+        ? response[operation].uuid
+        : initialValues.uuid
+    })
+    // reset the form to latest values
+    // to avoid unsaved changes propmt if it somehow becomes dirty
+    form.resetForm({ values, isSubmitting: true })
+    if (!edit) {
+      history.replace(Position.pathForEdit(position))
+    }
+    history.push(Position.pathFor(position), {
+      success: "Position saved"
+    })
+  }
+
+  function save(values, form) {
+    const position = Object.without(
+      new Position(values),
+      "notes",
+      "customFields", // initial JSON from the db
+      "responsibleTasks", // Only for querying
+      DEFAULT_CUSTOM_FIELDS_PARENT
+    )
+    if (position.type !== Position.TYPE.PRINCIPAL) {
+      position.type = position.permissions || Position.TYPE.ADVISOR
+    }
+    // Remove permissions property, was added temporarily in order to be able
+    // to select a specific advisor type.
+    delete position.permissions
+    position.location = utils.getReference(position.location)
+    position.organization = utils.getReference(position.organization)
+    position.person = utils.getReference(position.person)
+    position.code = position.code || null // Need to null out empty position codes
+    position.customFields = customFieldsJSONString(values)
+
+    return API.mutation(edit ? GQL_UPDATE_POSITION : GQL_CREATE_POSITION, {
+      position
+    })
+  }
+}
+
+PositionForm.propTypes = {
+  initialValues: PropTypes.instanceOf(Position).isRequired,
+  title: PropTypes.string,
+  edit: PropTypes.bool
+}
+
+PositionForm.defaultProps = {
+  title: "",
+  edit: false
+}
+
+export default PositionForm

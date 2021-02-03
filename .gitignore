@@ -1,8 +1,9 @@
 *.class
 development.db
-logs/*
+logs
 *.sqp
 *.swp
+node_modules
 # ignore personal ide settings folders
 .vscode/
 

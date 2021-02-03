@@ -46,10 +46,10 @@ jobs:
         key: ${{ runner.os }}-node
         restore-keys: |
           ${{ runner.os }}-node
-    - run: ./gradlew yarnSetup
+    - run: ./gradlew anet-private:yarnSetup
     - name: get yarn cache directory path
       id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(./gradlew -q yarn_cache_dir)"
+      run: echo "::set-output name=dir::$(./gradlew -q anet-private:yarn_cache_dir)"
     - name: cache yarn
       uses: actions/cache@v2
       with:
@@ -57,8 +57,8 @@ jobs:
         key: ${{ runner.os }}-yarn-${{ hashFiles('client/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
-    - run: ./gradlew jar
-    - run: ./gradlew yarn_run_lint
+    - run: ./gradlew anet-private:jar
+    - run: ./gradlew anet-private:yarn_run_lint
     - name: Notify slack success
       if: success()
       env:
@@ -132,10 +132,10 @@ jobs:
         key: ${{ runner.os }}-node
         restore-keys: |
           ${{ runner.os }}-node
-    - run: ./gradlew yarnSetup
+    - run: ./gradlew anet-private:yarnSetup
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(./gradlew -q yarn_cache_dir)"
+      run: echo "::set-output name=dir::$(./gradlew -q anet-private:yarn_cache_dir)"
     - name: cache yarn
       uses: actions/cache@v2
       with:
@@ -143,14 +143,14 @@ jobs:
         key: ${{ runner.os }}-yarn-${{ hashFiles('client/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
-    - run: ./gradlew -PtestEnv dockerCreateDB dockerStartDB
-    - run: ./gradlew -PtestEnv dockerCreateKeycloak dockerStartKeycloak
-    - run: ./gradlew -PtestEnv dockerCreateFakeSmtpServer dockerStartFakeSmtpServer
-    - run: ./gradlew -PtestEnv jar
-    - run: ./gradlew -PtestEnv dbWait dbMigrate dbLoad
-    - run: ./gradlew -PtestEnv check test jacocoTestReport
+    - run: ./gradlew -PtestEnv anet-private:dockerCreateDB anet-private:dockerStartDB
+    - run: ./gradlew -PtestEnv anet-private:dockerCreateKeycloak anet-private:dockerStartKeycloak
+    - run: ./gradlew -PtestEnv anet-private:dockerCreateFakeSmtpServer anet-private:dockerStartFakeSmtpServer
+    - run: ./gradlew -PtestEnv anet-private:jar
+    - run: ./gradlew -PtestEnv anet-private:dbWait anet-private:dbMigrate anet-private:dbLoad
+    - run: ./gradlew -PtestEnv anet-private:check anet-private:test anet-private:jacocoTestReport
     - run: |
-        ./gradlew -PtestEnv run &
+        ./gradlew -PtestEnv anet-private:run &
         sleep 15
     - uses: olegtarasov/get-tag@v2
       id: tagName
@@ -163,7 +163,7 @@ jobs:
         unzip -q bsl.zip
         ./BrowserStackLocal --local-identifier ${{ steps.browserstack-local.outputs.identifier }} --key ${{ secrets.BROWSERSTACK_ACCESS_KEY }} &
       if: steps.tagName.outputs.tag != ''
-    - run: ./gradlew yarn_run_${CLIENT_TESTS}
+    - run: ./gradlew anet-private:yarn_run_${CLIENT_TESTS}
       env:
         GIT_TAG_NAME: ${{ steps.tagName.outputs.tag }}
         BROWSERSTACK_LOCAL_IDENTIFIER: ${{ steps.browserstack-local.outputs.identifier }}
@@ -174,11 +174,11 @@ jobs:
       if: always()
     # check if build process stdout and stderr outputs have 'error:'
     - run: |
-        ./gradlew yarn_run_start --console=plain &> dev_error.log &
+        ./gradlew anet-private:yarn_run_start --console=plain &> dev_error.log &
         sleep 30
         ! grep -i -C 2 "error:" dev_error.log
     - run: |
-        ./gradlew yarn_run_storybook --console=plain &> storybook_error.log &
+        ./gradlew anet-private:yarn_run_storybook --console=plain &> storybook_error.log &
         sleep 60
         ! grep -i -C 2 "error:" storybook_error.log
     - name: Notify slack success
