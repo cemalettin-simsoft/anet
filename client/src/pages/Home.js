@@ -1,12 +1,11 @@
 import { deleteAllReportsAction } from "actions"
 import AppContext from "components/AppContext"
-import ConfirmDelete from "components/ConfirmDelete"
 import Messages from "components/Messages"
 import ReportList from "components/ReportList"
 import Report from "models/Report"
-import React, { useContext } from "react"
+import { useContext } from "react"
+import { Button } from "react-bootstrap"
 import { Link, useLocation } from "react-router-dom"
-
 const Home = () => {
   const { reports, dispatch } = useContext(AppContext)
   const routerLocation = useLocation()
@@ -25,14 +24,13 @@ const Home = () => {
         title="My Submitted Reports"
       />
       <div className="submit-buttons">
-        <ConfirmDelete
-          onConfirmDelete={() => dispatch(deleteAllReportsAction())}
-          objectType="report"
-          objectDisplay="All reports"
-          bsStyle="warning"
-          buttonLabel="Delete All Reports"
-          className="pull-right"
-        />
+        {/* TODO: Add confirmation modal */}
+        <Button
+          variant="danger"
+          onClick={() => dispatch(deleteAllReportsAction())}
+        >
+          Delete All Reports
+        </Button>
       </div>
       <footer style={{ marginTop: "20px" }}>
         <p>

@@ -1,13 +1,12 @@
 import { deleteReportAction, updateReportAction } from "actions"
 import AppContext from "components/AppContext"
 import ConfirmDelete from "components/ConfirmDelete"
-import * as FieldHelper from "components/FieldHelper"
-import Fieldset from "components/Fieldset"
+import { ReadonlyField } from "components/FormFields"
 import Messages from "components/Messages"
 import { Field, Form, Formik } from "formik"
 import _isEmpty from "lodash/isEmpty"
 import Report from "models/Report"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { Alert, Button } from "react-bootstrap"
 import { useHistory, useLocation, useParams } from "react-router-dom"
 
@@ -48,7 +47,11 @@ const ShowReport = () => {
     >
       {({ isSubmitting, isValid, values }) => {
         const action = report.isDraft() ? (
-          <Button bsStyle="primary" onClick={onEditClick}>
+          <Button
+            variant="primary"
+            onClick={onEditClick}
+            style={{ float: "right" }}
+          >
             Edit
           </Button>
         ) : null
@@ -57,89 +60,79 @@ const ShowReport = () => {
           <div className="report-show">
             <Messages success={stateSuccess} error={stateError} />
             {!_isEmpty(validationErrors) && (
-              <Fieldset style={{ textAlign: "center" }}>
+              <fieldset style={{ textAlign: "center" }}>
                 <div style={{ textAlign: "left" }}>
                   {renderValidationErrors(validationErrors)}
                 </div>
-              </Fieldset>
+              </fieldset>
             )}
             {reportHeader}
             <Form className="form-horizontal" method="post">
-              <Fieldset
-                title={`Report #${uuid.slice(0, 8)}...`}
-                action={action}
+              <fieldset>
+                {`Report #${uuid.slice(0, 8)}...`}
+                {action}
+              </fieldset>
+              <Field
+                name="reportingTeam"
+                label="Reporting Team"
+                component={ReadonlyField}
               />
-              <Fieldset>
-                <Field
-                  name="reportingTeam"
-                  label={"Reporting Team"}
-                  component={FieldHelper.ReadonlyField}
-                />
-                <Field name="location" component={FieldHelper.ReadonlyField} />
-                <Field
-                  name="grid"
-                  component={FieldHelper.ReadonlyField}
-                  label="Grid"
-                />
+              <Field
+                name="location"
+                label="Location"
+                component={ReadonlyField}
+              />
+              <Field name="grid" label="Grid" component={ReadonlyField} />
 
-                <Field
-                  name="dtg"
-                  label="DTG"
-                  component={FieldHelper.ReadonlyField}
-                />
+              <Field name="dtg" label="DTG" component={ReadonlyField} />
 
+              <Field
+                name="eventHeadline"
+                label="Event Headline"
+                component={ReadonlyField}
+              />
+              {values.eventHeadline === "Domain" && (
                 <Field
-                  name="eventHeadline"
-                  component={FieldHelper.ReadonlyField}
-                  label="Event Headline"
+                  name="domain"
+                  label="Domain"
+                  component={ReadonlyField}
+                  widget={renderMultipleItemsWithCommas(values.domain)}
                 />
-                {values.eventHeadline === "Domain" && (
-                  <Field
-                    name="domain"
-                    component={FieldHelper.SpecialField}
-                    label="Domain"
-                    widget={renderMultipleItemsWithCommas(values.domain)}
-                  />
-                )}
-                {values.eventHeadline === "Factor" && (
-                  <Field
-                    name="factor"
-                    component={FieldHelper.ReadonlyField}
-                    label="Factor"
-                    widget={renderMultipleItemsWithCommas(values.factor)}
-                  />
-                )}
+              )}
+              {values.eventHeadline === "Factor" && (
                 <Field
-                  name="topics"
-                  label={"Topics"}
-                  component={FieldHelper.ReadonlyField}
+                  name="factor"
+                  label="Factor"
+                  component={ReadonlyField}
+                  widget={renderMultipleItemsWithCommas(values.factor)}
                 />
-                <Field
-                  name="contacts"
-                  label="Contacts/Sources"
-                  component={FieldHelper.ReadonlyField}
-                />
-                <Field
-                  name="description"
-                  label="Description"
-                  component={FieldHelper.ReadonlyField}
-                />
-                <Field
-                  name="attitude"
-                  label="Attitude/Behavior of the Contact"
-                  component={FieldHelper.ReadonlyField}
-                />
-                <Field
-                  name="comments"
-                  label="LMT Comments"
-                  component={FieldHelper.ReadonlyField}
-                />
-                <Field
-                  name="recommendations"
-                  label="RC TEC assessment and recommendations"
-                  component={FieldHelper.ReadonlyField}
-                />
-              </Fieldset>
+              )}
+              <Field name="topics" label={"Topics"} component={ReadonlyField} />
+              <Field
+                name="contacts"
+                label="Contacts/Sources"
+                component={ReadonlyField}
+              />
+              <Field
+                name="description"
+                label="Description"
+                component={ReadonlyField}
+              />
+              <Field
+                name="attitude"
+                label="Attitude/Behavior of the Contact"
+                component={ReadonlyField}
+              />
+              <Field
+                name="comments"
+                label="LMT Comments"
+                component={ReadonlyField}
+              />
+              <Field
+                name="recommendations"
+                label="RC TEC assessment and recommendations"
+                component={ReadonlyField}
+              />
             </Form>
 
             <div className="submit-buttons">
@@ -148,7 +141,7 @@ const ShowReport = () => {
                   onConfirmDelete={onConfirmDelete}
                   objectType="report"
                   objectDisplay={"#" + uuid}
-                  bsStyle="warning"
+                  variant="warning"
                   buttonLabel="Delete report"
                   className="pull-right"
                 />
@@ -157,7 +150,7 @@ const ShowReport = () => {
                 <div>
                   <Button
                     id="formBottomSubmit"
-                    bsStyle="primary"
+                    variant="primary"
                     type="button"
                     onClick={() => onSubmit()}
                     disabled={isSubmitting || !isValid}
@@ -196,21 +189,21 @@ const ShowReport = () => {
 export default ShowReport
 
 const DraftReportHeader = () => (
-  <Fieldset style={{ textAlign: "center" }}>
+  <fieldset style={{ textAlign: "center" }}>
     <h4 className="text-danger">
       This is a DRAFT report and hasn't been submitted.
     </h4>
     <p>
       You can review the draft below to make sure all the details are correct.
     </p>
-  </Fieldset>
+  </fieldset>
 )
 
 const SubmittedReportHeader = () => (
-  <Fieldset style={{ textAlign: "center" }}>
+  <fieldset style={{ textAlign: "center" }}>
     <h4 className="text-danger">This is a SUBMITTED report.</h4>
     <p>You can review the report below</p>
-  </Fieldset>
+  </fieldset>
 )
 
 const renderMultipleItemsWithCommas = items => {
@@ -232,7 +225,7 @@ function renderValidationErrors(validationErrors) {
   const warning =
     "You'll need to fill out these required fields before you can submit your final Report:"
   return (
-    <Alert bsStyle="danger">
+    <Alert variant="danger">
       {warning}
       <ul>
         {validationErrors.map((error, idx) => (

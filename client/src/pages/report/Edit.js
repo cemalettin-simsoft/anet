@@ -1,7 +1,7 @@
 import AppContext from "components/AppContext"
 import Report from "models/Report"
 import ReportForm from "pages/report/Form"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { useParams } from "react-router-dom"
 
 const EditReport = () => {

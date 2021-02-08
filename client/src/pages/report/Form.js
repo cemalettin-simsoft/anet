@@ -1,11 +1,10 @@
 import { addNewReportAction, updateReportAction } from "actions"
 import AppContext from "components/AppContext"
-import * as FieldHelper from "components/FieldHelper"
-import Fieldset from "components/Fieldset"
+import { InputField } from "components/FormFields"
 import { FastField, Form, Formik } from "formik"
 import Report from "models/Report"
 import PropTypes from "prop-types"
-import React, { useContext } from "react"
+import { useContext } from "react"
 import { Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 
@@ -25,134 +24,113 @@ const ReportForm = ({ isEdit, initialValues, title }) => {
       >
         {({ isSubmitting, values }) => {
           const action = (
-            <div>
+            <span style={{ float: "right" }} className="submit-buttons">
               <Button
-                bsStyle="primary"
+                variant="primary"
                 type="button"
                 onClick={onSubmit}
                 disabled={isSubmitting}
               >
                 {submitText}
               </Button>
-            </div>
+            </span>
           )
+
+          console.log("values---------------")
+          console.log(values)
           return (
             <div className="report-form">
               <Form className="form-horizontal" method="post">
-                <Fieldset title={title} action={action} />
-                <Fieldset>
+                <h2>
+                  {title} {action}
+                </h2>
+                <fieldset>
                   <FastField
                     name="reportingTeam"
                     label={"Reporting Team"}
-                    component={FieldHelper.InputField}
+                    component={InputField}
                   />
-                  <FastField
-                    name="location"
-                    component={FieldHelper.InputField}
-                  />
-                  <FastField
-                    name="grid"
-                    component={FieldHelper.InputField}
-                    label="Grid"
-                  />
+                  <FastField name="location" component={InputField} />
+                  <FastField name="grid" component={InputField} label="Grid" />
 
-                  <FastField
-                    name="dtg"
-                    label="DTG"
-                    component={FieldHelper.InputField}
-                  />
+                  <FastField name="dtg" label="DTG" component={InputField} />
 
                   <FastField
                     name="eventHeadline"
-                    component={FieldHelper.SpecialField}
+                    component={InputField}
                     label="Event Headline"
-                    widget={
-                      <FastField component="select" className="form-control">
-                        {Report.eventHeadlines.map(headLine => (
-                          <option key={headLine} value={headLine}>
-                            {headLine}
-                          </option>
-                        ))}
-                      </FastField>
-                    }
+                    asA="select"
+                    children={Report.eventHeadlines.map(headLine => (
+                      <option key={headLine} value={headLine}>
+                        {headLine}
+                      </option>
+                    ))}
                   />
                   {values.eventHeadline === "Domain" && (
                     <FastField
                       name="domain"
-                      component={FieldHelper.SpecialField}
+                      component={InputField}
                       label="Domain"
-                      widget={
-                        <FastField
-                          multiple
-                          component="select"
-                          className="form-control"
-                        >
-                          {domains.map(headLine => (
-                            <option key={headLine} value={headLine}>
-                              {headLine}
-                            </option>
-                          ))}
-                        </FastField>
-                      }
+                      asA="select"
+                      multiple
+                      children={domains.map(headLine => (
+                        <option key={headLine} value={headLine}>
+                          {headLine}
+                        </option>
+                      ))}
                     />
                   )}
                   {values.eventHeadline === "Factor" && (
                     <FastField
                       name="factor"
-                      component={FieldHelper.SpecialField}
+                      component={InputField}
                       label="Factor"
-                      widget={
-                        <FastField
-                          component="select"
-                          multiple
-                          className="form-control"
-                        >
-                          {factors.map(headLine => (
-                            <option key={headLine} value={headLine}>
-                              {headLine}
-                            </option>
-                          ))}
-                        </FastField>
-                      }
+                      asA="select"
+                      multiple
+                      children={factors.map(headLine => (
+                        <option key={headLine} value={headLine}>
+                          {headLine}
+                        </option>
+                      ))}
                     />
                   )}
                   <FastField
                     name="topics"
                     label={"Topics"}
-                    component={FieldHelper.InputField}
-                    componentClass="textarea"
+                    component={InputField}
+                    asA="textarea"
                   />
                   <FastField
                     name="contacts"
                     label="Contacts/Sources"
-                    component={FieldHelper.InputField}
-                    componentClass="textarea"
+                    component={InputField}
+                    asA="textarea"
                   />
                   <FastField
                     name="description"
                     label="Description"
-                    component={FieldHelper.InputField}
-                    componentClass="textarea"
+                    component={InputField}
+                    asA="textarea"
                   />
                   <FastField
                     name="attitude"
                     label="Attitude/Behavior of the Contact"
-                    component={FieldHelper.InputField}
-                    componentClass="textarea"
+                    component={InputField}
+                    asA="textarea"
                   />
                   <FastField
                     name="comments"
                     label="LMT Comments"
-                    component={FieldHelper.InputField}
-                    componentClass="textarea"
+                    component={InputField}
+                    asA="textarea"
                   />
                   <FastField
                     name="recommendations"
                     label="RC TEC assessment and recommendations"
-                    component={FieldHelper.InputField}
-                    componentClass="textarea"
+                    component={InputField}
+                    asA="textarea"
                   />
-                </Fieldset>
+                </fieldset>
 
                 <div className="submit-buttons">
                   <div>
@@ -162,7 +140,7 @@ const ReportForm = ({ isEdit, initialValues, title }) => {
                     {/* Skip validation on save! */}
                     <Button
                       id="formBottomSubmit"
-                      bsStyle="primary"
+                      variant="primary"
                       type="button"
                       onClick={onSubmit}
                       disabled={isSubmitting}

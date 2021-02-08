@@ -42,3 +42,35 @@ InputField.propTypes = {
   field: PropTypes.object,
   form: PropTypes.object
 }
+
+export const ReadonlyField = ({ field, form, ...others }) => {
+  const { name } = field
+  const { id, type, label, asA, children, ...additionals } = others
+
+  return (
+    <FormGroup controlId={id || name}>
+      <Container>
+        <Row>
+          <Col sm={3}>
+            <FormLabel>{label}</FormLabel>
+          </Col>
+          <Col sm={9}>
+            <FormControl
+              plaintext
+              readOnly
+              defaultValue={field.value}
+              {...additionals}
+            >
+              {children}
+            </FormControl>
+          </Col>
+        </Row>
+      </Container>
+    </FormGroup>
+  )
+}
+
+ReadonlyField.propTypes = {
+  field: PropTypes.object,
+  form: PropTypes.object
+}

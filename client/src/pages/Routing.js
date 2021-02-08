@@ -4,7 +4,6 @@ import EditReport from "pages/report/Edit"
 import NewReport from "pages/report/New"
 import ShowReport from "pages/report/Show"
 import { PAGE_URLS } from "pages/utils"
-import React from "react"
 import { Route, Switch } from "react-router-dom"
 
 const Routing = () => {
