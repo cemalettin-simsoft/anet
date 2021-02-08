@@ -113,6 +113,12 @@ div.scroll-anchor-container {
   white-space: wrap;
 }
 
+.fieldset-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media screen and (max-width: 768px) {
   .react-confirm-bootstrap-modal .modal-footer {
     flex-direction: column;

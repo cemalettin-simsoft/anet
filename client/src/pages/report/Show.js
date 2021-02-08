@@ -1,6 +1,7 @@
 import { deleteReportAction, updateReportAction } from "actions"
 import AppContext from "components/AppContext"
 import ConfirmDelete from "components/ConfirmDelete"
+import Fieldset from "components/Fieldset"
 import { ReadonlyField } from "components/FormFields"
 import Messages from "components/Messages"
 import { Field, Form, Formik } from "formik"
@@ -60,18 +61,18 @@ const ShowReport = () => {
           <div className="report-show">
             <Messages success={stateSuccess} error={stateError} />
             {!_isEmpty(validationErrors) && (
-              <fieldset style={{ textAlign: "center" }}>
+              <Fieldset style={{ textAlign: "center" }}>
                 <div style={{ textAlign: "left" }}>
                   {renderValidationErrors(validationErrors)}
                 </div>
-              </fieldset>
+              </Fieldset>
             )}
             {reportHeader}
             <Form className="form-horizontal" method="post">
-              <fieldset>
-                {`Report #${uuid.slice(0, 8)}...`}
-                {action}
-              </fieldset>
+              <Fieldset
+                title={`Report #${uuid.slice(0, 8)}...`}
+                action={action}
+              />
               <Field
                 name="reportingTeam"
                 label="Reporting Team"
@@ -189,21 +190,21 @@ const ShowReport = () => {
 export default ShowReport
 
 const DraftReportHeader = () => (
-  <fieldset style={{ textAlign: "center" }}>
+  <Fieldset style={{ textAlign: "center" }}>
     <h4 className="text-danger">
       This is a DRAFT report and hasn't been submitted.
     </h4>
     <p>
       You can review the draft below to make sure all the details are correct.
     </p>
-  </fieldset>
+  </Fieldset>
 )
 
 const SubmittedReportHeader = () => (
-  <fieldset style={{ textAlign: "center" }}>
+  <Fieldset style={{ textAlign: "center" }}>
     <h4 className="text-danger">This is a SUBMITTED report.</h4>
     <p>You can review the report below</p>
-  </fieldset>
+  </Fieldset>
 )
 
 const renderMultipleItemsWithCommas = items => {

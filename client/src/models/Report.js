@@ -13,6 +13,25 @@ class Report {
     FACTOR: "Factor"
   }
 
+  static DOMAINS = [
+    "Political",
+    "Military/security",
+    "Economy",
+    "Social",
+    "Infrastructure",
+    "Information"
+  ]
+
+  static FACTORS = [
+    "None",
+    "Weak institutions",
+    "Inter-ethnic tensions",
+    "Unilateralism",
+    "Corruption and Organized Crime",
+    "Radicalism",
+    "Migration"
+  ]
+
   static eventHeadlines = Object.values(Report.EVENT_HEADLINES)
 
   static yupSchema = yup.object().shape({

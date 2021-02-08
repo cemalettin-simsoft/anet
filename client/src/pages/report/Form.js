@@ -1,5 +1,6 @@
 import { addNewReportAction, updateReportAction } from "actions"
 import AppContext from "components/AppContext"
+import Fieldset from "components/Fieldset"
 import { InputField } from "components/FormFields"
 import { FastField, Form, Formik } from "formik"
 import Report from "models/Report"
@@ -24,7 +25,7 @@ const ReportForm = ({ isEdit, initialValues, title }) => {
       >
         {({ isSubmitting, values }) => {
           const action = (
-            <span style={{ float: "right" }} className="submit-buttons">
+            <span className="submit-buttons">
               <Button
                 variant="primary"
                 type="button"
@@ -36,25 +37,22 @@ const ReportForm = ({ isEdit, initialValues, title }) => {
             </span>
           )
 
-          console.log("values---------------")
-          console.log(values)
           return (
             <div className="report-form">
               <Form className="form-horizontal" method="post">
-                <h2>
-                  {title} {action}
-                </h2>
-                <fieldset>
+                <Fieldset title={title} action={action}>
                   <FastField
                     name="reportingTeam"
                     label={"Reporting Team"}
                     component={InputField}
                   />
-                  <FastField name="location" component={InputField} />
-                  <FastField name="grid" component={InputField} label="Grid" />
-
+                  <FastField
+                    name="location"
+                    label="Location"
+                    component={InputField}
+                  />
+                  <FastField name="grid" label="Grid" component={InputField} />
                   <FastField name="dtg" label="DTG" component={InputField} />
-
                   <FastField
                     name="eventHeadline"
                     component={InputField}
@@ -73,7 +71,7 @@ const ReportForm = ({ isEdit, initialValues, title }) => {
                       label="Domain"
                       asA="select"
                       multiple
-                      children={domains.map(headLine => (
+                      children={Report.DOMAINS.map(headLine => (
                         <option key={headLine} value={headLine}>
                           {headLine}
                         </option>
@@ -87,7 +85,7 @@ const ReportForm = ({ isEdit, initialValues, title }) => {
                       label="Factor"
                       asA="select"
                       multiple
-                      children={factors.map(headLine => (
+                      children={Report.FACTORS.map(headLine => (
                         <option key={headLine} value={headLine}>
                           {headLine}
                         </option>
@@ -130,7 +128,7 @@ const ReportForm = ({ isEdit, initialValues, title }) => {
                     component={InputField}
                     asA="textarea"
                   />
-                </fieldset>
+                </Fieldset>
 
                 <div className="submit-buttons">
                   <div>
@@ -185,22 +183,3 @@ ReportForm.propTypes = {
   title: PropTypes.string
 }
 export default ReportForm
-
-const domains = [
-  "Political",
-  "Military/security",
-  "Economy",
-  "Social",
-  "Infrastructure",
-  "Information"
-]
-
-const factors = [
-  "None",
-  "Weak institutions",
-  "Inter-ethnic tensions",
-  "Unilateralism",
-  "Corruption and Organized Crime",
-  "Radicalism",
-  "Migration"
-]

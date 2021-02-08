@@ -1,3 +1,4 @@
+import Fieldset from "components/Fieldset"
 import Report from "models/Report"
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
@@ -6,9 +7,7 @@ const ReportList = ({ reports, title }) => {
   // sort reports, latest created at the top
   const sorted = reports.sort((a, b) => b.createdAt - a.createdAt)
   return (
-    <fieldset>
-      {title}
-      <br />
+    <Fieldset title={title}>
       {sorted.map((r, idx) => (
         <div key={r.uuid}>
           {idx + 1}){" "}
@@ -17,7 +16,7 @@ const ReportList = ({ reports, title }) => {
           </Link>
         </div>
       ))}
-    </fieldset>
+    </Fieldset>
   )
 }
 ReportList.propTypes = {
