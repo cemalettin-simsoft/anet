@@ -1,6 +1,0 @@
-locationList(query: {pageSize: ${maxResults}, status: ACTIVE, inMyReports: true, sortBy: RECENT, sortOrder: DESC}) {
-  list {
-    uuid
-    name
-  }
-}

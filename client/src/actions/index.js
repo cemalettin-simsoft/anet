@@ -1,97 +1,74 @@
-import pluralize from "pluralize"
-import Settings from "settings"
-import Model from "components/Model"
-import * as types from "../constants/ActionTypes"
+import {
+  addNewReportData,
+  deleteAllReports,
+  deleteReportData,
+  deleteTimedOutReports,
+  updateReport
+} from "clientStorage"
 
-export const DEFAULT_PAGE_PROPS = {
-  useNavigation: true,
-  minimalHeader: false
-}
-export const PAGE_PROPS_NO_NAV = {
-  useNavigation: false,
-  minimalHeader: false
-}
-export const PAGE_PROPS_MIN_HEAD = {
-  useNavigation: false,
-  minimalHeader: true
-}
-
-// Map the object types enum as it comes from the server one-to-one to the types we use client-side
-export const SEARCH_OBJECT_TYPES = {
-  REPORTS: "REPORTS",
-  PEOPLE: "PEOPLE",
-  ORGANIZATIONS: "ORGANIZATIONS",
-  POSITIONS: "POSITIONS",
-  LOCATIONS: "LOCATIONS",
-  TASKS: "TASKS"
+export const ACTION_TYPES = {
+  ADD_NEW_REPORT: 0,
+  UPDATE_REPORT: 1,
+  DELETE_REPORT: 2,
+  DELETE_TIMED_OUT_REPORTS: 3,
+  DELETE_ALL_REPORTS: 4,
+  noop: 99
 }
 
-export const SEARCH_OBJECT_LABELS = {
-  [SEARCH_OBJECT_TYPES.REPORTS]: "Reports",
-  [SEARCH_OBJECT_TYPES.PEOPLE]: "People",
-  [SEARCH_OBJECT_TYPES.ORGANIZATIONS]: "Organizations",
-  [SEARCH_OBJECT_TYPES.POSITIONS]: "Positions",
-  [SEARCH_OBJECT_TYPES.LOCATIONS]: "Locations",
-  [SEARCH_OBJECT_TYPES.TASKS]: pluralize(Settings.fields.task.shortLabel)
-}
-
-export const DEFAULT_SEARCH_PROPS = {
-  onSearchGoToSearchPage: true,
-  searchObjectTypes: [
-    SEARCH_OBJECT_TYPES.REPORTS,
-    SEARCH_OBJECT_TYPES.PEOPLE,
-    SEARCH_OBJECT_TYPES.ORGANIZATIONS,
-    SEARCH_OBJECT_TYPES.POSITIONS,
-    SEARCH_OBJECT_TYPES.LOCATIONS,
-    SEARCH_OBJECT_TYPES.TASKS
-  ]
-}
-export const DEFAULT_SEARCH_QUERY = {
-  objectType: "",
-  text: "",
-  filters: [
-    {
-      key: "Status",
-      value: { value: Model.STATUS.ACTIVE, toQuery: { status: "ACTIVE" } }
+export function addNewReportAction(payload) {
+  if (addNewReportData(payload)) {
+    return {
+      type: ACTION_TYPES.ADD_NEW_REPORT,
+      payload
     }
-  ]
+  }
+  return {
+    type: ACTION_TYPES.noop
+  }
 }
 
-/*
- *  action constructors
- */
-
-export const setPageProps = pageProps => ({
-  type: "SET_PAGE_PROPS",
-  pageProps
-})
-
-export const setSearchProps = searchProps => ({
-  type: "SET_SEARCH_PROPS",
-  searchProps
-})
-
-export const setSearchQuery = searchQuery => ({
-  type: "SET_SEARCH_QUERY",
-  searchQuery
-})
-
-export const clearSearchQuery = () => ({
-  type: "CLEAR_SEARCH_QUERY"
-})
-
-export const setPagination = (paginationKey, pageNum) => ({
-  type: types.SET_PAGINATION,
-  payload: {
-    paginationKey,
-    pageNum
+export function updateReportAction(payload) {
+  if (updateReport(payload)) {
+    return {
+      type: ACTION_TYPES.UPDATE_REPORT,
+      payload
+    }
   }
-})
+  return {
+    type: ACTION_TYPES.noop
+  }
+}
 
-export const resetPagination = () => ({
-  type: types.RESET_PAGINATION
-})
+export function deleteReportAction(uuid) {
+  if (deleteReportData(uuid)) {
+    console.log("Deleted reducer")
 
-export const resetPages = () => ({
-  type: types.RESET_PAGES
-})
+    return {
+      type: ACTION_TYPES.DELETE_REPORT,
+      payload: uuid
+    }
+  }
+  return {
+    type: ACTION_TYPES.noop
+  }
+}
+
+export function deleteTimedOutReportsAction() {
+  const deletedUuids = deleteTimedOutReports()
+  if (deletedUuids) {
+    return {
+      type: ACTION_TYPES.DELETE_TIMED_OUT_REPORTS,
+      payload: deletedUuids
+    }
+  }
+  return {
+    type: ACTION_TYPES.noop
+  }
+}
+
+export function deleteAllReportsAction() {
+  deleteAllReports()
+  return {
+    type: ACTION_TYPES.DELETE_ALL_REPORTS
+  }
+}

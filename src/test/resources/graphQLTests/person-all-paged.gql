@@ -1,6 +1,0 @@
-personList(query:{pageNum:${pageNum}, pageSize:${pageSize}}) {
-  list {
-    uuid, name, rank, role, emailAddress, avatar(size: 32), position { uuid, name, type, code, location { uuid, name }, organization { uuid, shortName} }
-    customFields
-  }
-}

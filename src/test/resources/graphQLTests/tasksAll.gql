@@ -1,9 +1,0 @@
-taskList(query: {pageSize: 0}) {
-  totalCount
-  list {
-    uuid
-    shortName
-    longName
-    customFields
-  }
-}
