@@ -1,4 +1,4 @@
-import { deleteAllReportsAction } from "actions"
+import { deleteAllReportsAction } from "actions/actionCreators"
 import AppContext from "components/AppContext"
 import Messages from "components/Messages"
 import ReportList from "components/ReportList"

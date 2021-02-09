@@ -1,9 +1,6 @@
-import { ACTION_TYPES } from "actions"
-import { getSavedReports } from "clientStorage"
+import ACTION_TYPES from "./actions"
 
-export const INITIAL_REPORTS = getSavedReports()
-
-export const reducer = (state = INITIAL_REPORTS, action) => {
+export const reducer = (state, action) => {
   switch (action.type) {
     case ACTION_TYPES.ADD_NEW_REPORT:
       return [...state, action.payload]
@@ -26,8 +23,8 @@ export const reducer = (state = INITIAL_REPORTS, action) => {
     }
     case ACTION_TYPES.DELETE_TIMED_OUT_REPORTS: {
       // filter the deleted reports by checking deletedUuids array
-      const newState = state.filter(r =>
-        action.payload.find(uuid => uuid === r.uuid)
+      const newState = state.filter(
+        r => !action.payload.find(uuid => uuid === r.uuid)
       )
       return newState
     }

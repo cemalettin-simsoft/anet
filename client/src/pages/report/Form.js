@@ -1,4 +1,4 @@
-import { addNewReportAction, updateReportAction } from "actions"
+import { addNewReportAction, updateReportAction } from "actions/actionCreators"
 import AppContext from "components/AppContext"
 import Fieldset from "components/Fieldset"
 import { InputField } from "components/FormFields"

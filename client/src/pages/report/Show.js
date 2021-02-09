@@ -1,4 +1,4 @@
-import { deleteReportAction, updateReportAction } from "actions"
+import { deleteReportAction, updateReportAction } from "actions/actionCreators"
 import AppContext from "components/AppContext"
 import ButtonWithModalTrigger from "components/ButtonWithModalTrigger"
 import Fieldset from "components/Fieldset"

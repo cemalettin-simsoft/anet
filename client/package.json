@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "NODE_ENV=development webpack --config config/webpack.dev.js",
     "start": "NODE_ENV=development webpack serve --config config/webpack.dev.js",
-    "lint-fix": "prettier --write 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js' && NODE_ENV=development eslint --fix 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js'"
+    "lint-fix": "prettier --write 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js' && NODE_ENV=development eslint --fix 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js'",
+    "test-unit": "NODE_ENV=test jest"
   },
   "dependencies": {
     "bootstrap": "4.6.0",
@@ -100,8 +101,8 @@
   },
   "jest": {
     "moduleDirectories": [
-      "src",
-      "platform/node",
+      "./src",
+      "./platform/node",
       "node_modules"
     ],
     "moduleFileExtensions": [
@@ -169,7 +170,8 @@
       "browser": true,
       "commonjs": true,
       "es6": true,
-      "jquery": true
+      "jquery": true,
+      "jest": true
     },
     "extends": [
       "react-app",

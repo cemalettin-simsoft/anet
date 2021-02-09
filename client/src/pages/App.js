@@ -1,12 +1,15 @@
-import { deleteTimedOutReportsAction } from "actions"
+import { deleteTimedOutReportsAction } from "actions/actionCreators"
+import { getSavedReports } from "clientStorage"
 import AppContext from "components/AppContext"
 import Routing from "pages/Routing"
 import { useEffect, useReducer } from "react"
 import { Button } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom"
-import { INITIAL_REPORTS, reducer } from "reducer"
+import { reducer } from "reducer"
 import logo from "resources/logo.png"
 import { REPORT_CONTROL_PERIOD_IN_MS } from "utils"
+
+export const INITIAL_REPORTS = getSavedReports()
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, INITIAL_REPORTS)
