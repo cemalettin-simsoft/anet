@@ -1,6 +1,6 @@
 import { deleteReportAction, updateReportAction } from "actions"
 import AppContext from "components/AppContext"
-import ConfirmDelete from "components/ConfirmDelete"
+import ButtonWithModalTrigger from "components/ButtonWithModalTrigger"
 import Fieldset from "components/Fieldset"
 import { ReadonlyField } from "components/FormFields"
 import Messages from "components/Messages"
@@ -138,13 +138,18 @@ const ShowReport = () => {
 
             <div className="submit-buttons">
               <div>
-                <ConfirmDelete
-                  onConfirmDelete={onConfirmDelete}
-                  objectType="report"
-                  objectDisplay={"#" + uuid}
-                  variant="warning"
+                <ButtonWithModalTrigger
                   buttonLabel="Delete report"
-                  className="pull-right"
+                  onConfirm={onConfirm}
+                  modalTitle="Delete Report"
+                  modalBody="Are you sure you want to delete this report?"
+                  confirmButtonLabel="Yes"
+                  otherButtonProps={{
+                    variant: "warning"
+                  }}
+                  confirmButtonProps={{
+                    variant: "warning"
+                  }}
                 />
               </div>
               {values.isDraft() && (
@@ -172,7 +177,7 @@ const ShowReport = () => {
           )
         }
 
-        function onConfirmDelete() {
+        function onConfirm() {
           dispatch(deleteReportAction(values.uuid))
           history.push("/", {
             success: "Successfuly deleted"

@@ -118,6 +118,11 @@ div.scroll-anchor-container {
   justify-content: space-between;
   align-items: center;
 }
+.fieldset-content {
+  background-color: white;
+  padding: 0.4rem;
+  border-radius: 5px;
+}
 
 @media screen and (max-width: 768px) {
   .react-confirm-bootstrap-modal .modal-footer {

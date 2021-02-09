@@ -4,8 +4,8 @@ import Messages from "components/Messages"
 import ReportList from "components/ReportList"
 import Report from "models/Report"
 import { useContext } from "react"
-import { Button } from "react-bootstrap"
 import { Link, useLocation } from "react-router-dom"
+import ButtonWithModalTrigger from "../components/ButtonWithModalTrigger"
 const Home = () => {
   const { reports, dispatch } = useContext(AppContext)
   const routerLocation = useLocation()
@@ -25,12 +25,19 @@ const Home = () => {
       />
       <div className="submit-buttons">
         {/* TODO: Add confirmation modal */}
-        <Button
-          variant="danger"
-          onClick={() => dispatch(deleteAllReportsAction())}
-        >
-          Delete All Reports
-        </Button>
+        <ButtonWithModalTrigger
+          buttonLabel="Delete all reports"
+          onConfirm={() => dispatch(deleteAllReportsAction())}
+          modalTitle="Delete All Reports"
+          modalBody="Are you sure you want to delete all reports?"
+          confirmButtonLabel="Yes"
+          otherButtonProps={{
+            variant: "danger"
+          }}
+          confirmButtonProps={{
+            variant: "danger"
+          }}
+        />
       </div>
       <footer style={{ marginTop: "20px" }}>
         <p>

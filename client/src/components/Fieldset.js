@@ -7,7 +7,7 @@ function Fieldset({ title, action, children, ...otherProps }) {
         <h4>{title}</h4>
         {action}
       </div>
-      {children}
+      <div className="fieldset-content">{children}</div>
     </fieldset>
   )
 }

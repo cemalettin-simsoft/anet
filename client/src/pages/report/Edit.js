@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom"
 const EditReport = () => {
   const { uuid } = useParams()
   const reportData = useContext(AppContext).reports.find(r => r.uuid === uuid)
+  // TODO: do something better if no reportData
   if (!reportData) {
     return null
   }
