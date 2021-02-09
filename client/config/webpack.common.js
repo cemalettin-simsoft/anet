@@ -3,6 +3,7 @@ const CircularDependencyPlugin = require("circular-dependency-plugin")
 const webpack = require("webpack")
 const ESLintPlugin = require("eslint-webpack-plugin")
 const paths = require("./paths")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 const commonConfig = {
   module: {
@@ -89,6 +90,9 @@ module.exports = {
         xmlhttprequest: "{XMLHttpRequest:XMLHttpRequest}"
       }
     ],
+    output: {
+      path: paths.appBuild
+    },
     plugins: [
       new webpack.DefinePlugin({
         "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
@@ -104,10 +108,10 @@ module.exports = {
         allowAsyncCycles: false,
         // set the current working directory for displaying module paths
         cwd: process.cwd()
-      }) /* ,
+      }),
       new CopyWebpackPlugin({
-        patterns: [{ from: "public", globOptions: { ignore: ["index.html"] } }]
-      }) */
+        patterns: [{ from: "public", globOptions: { ignore: ["**/*.html"] } }]
+      })
     ],
     cache: {
       type: "filesystem",

@@ -2,6 +2,7 @@
   "name": "client",
   "scripts": {
     "dev": "NODE_ENV=development webpack --config config/webpack.dev.js",
+    "prod": "NODE_ENV=production webpack --config config/webpack.prod.js",
     "start": "NODE_ENV=development webpack serve --config config/webpack.dev.js",
     "lint-fix": "prettier --write 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js' && NODE_ENV=development eslint --fix 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js'",
     "test-unit": "NODE_ENV=test jest"
@@ -91,6 +92,7 @@
     "react-test-renderer": "17.0.1",
     "selenium-webdriver": "4.0.0-alpha.8",
     "style-loader": "2.0.0",
+    "terser-webpack-plugin": "5.1.1",
     "thread-loader": "3.0.1",
     "wdio-chromedriver-service": "6.0.4",
     "webdriverio": "6.12.1",
