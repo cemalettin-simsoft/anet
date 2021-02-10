@@ -1,11 +1,15 @@
 {
   "name": "client",
+  "version": "0.1.0",
+  "private": "true",
+  "homepage": "/assets/client",
+
   "scripts": {
     "dev": "NODE_ENV=development webpack --config config/webpack.dev.js",
     "prod": "NODE_ENV=production webpack --config config/webpack.prod.js",
     "start": "NODE_ENV=development webpack serve --config config/webpack.dev.js",
     "lint-fix": "prettier --write 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js' && NODE_ENV=development eslint --fix 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js'",
-    "test-unit": "NODE_ENV=test jest"
+    "test-unit": "NODE_ENV=test jest --testPathPattern='tests/unitTests'"
   },
   "dependencies": {
     "bootstrap": "4.6.0",

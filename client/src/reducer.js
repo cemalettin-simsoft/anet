@@ -1,4 +1,4 @@
-import ACTION_TYPES from "./actions"
+import ACTION_TYPES from "actions"
 
 export const reducer = (state, action) => {
   switch (action.type) {
