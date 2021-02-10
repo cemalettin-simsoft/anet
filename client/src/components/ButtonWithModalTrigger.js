@@ -43,6 +43,7 @@ function ButtonWithModalTrigger({
 
   function handlePrimary() {
     onConfirm()
+    handleClose()
   }
 }
 
