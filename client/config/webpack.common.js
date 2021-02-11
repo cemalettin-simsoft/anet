@@ -74,12 +74,14 @@ const commonConfig = {
 
 module.exports = {
   clientConfig: merge.merge(commonConfig, {
-    target: ["web", "es5"],
     resolve: {
       alias: { vm: "vm-browserify" }
     },
     entry: {
       anet: [require.resolve("./polyfills"), "./src/index.js"]
+    },
+    output: {
+      path: paths.devBuild
     },
     // A strange workaround for a strange compile-time bug:   Error in
     // ./~/xmlhttprequest/lib/XMLHttpRequest.js   Module not found: 'child_process'
@@ -90,9 +92,6 @@ module.exports = {
         xmlhttprequest: "{XMLHttpRequest:XMLHttpRequest}"
       }
     ],
-    output: {
-      path: paths.appBuild
-    },
     plugins: [
       new webpack.DefinePlugin({
         "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)

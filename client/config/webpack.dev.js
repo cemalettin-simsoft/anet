@@ -6,6 +6,7 @@ const paths = require("./paths")
 
 module.exports = merge.merge(common.clientConfig, {
   mode: "development",
+  target: ["web"],
   resolve: {
     modules: [paths.appSrc, "node_modules"]
   },
@@ -20,6 +21,7 @@ module.exports = merge.merge(common.clientConfig, {
   },
   devServer: {
     hot: true,
+    open: true,
     historyApiFallback: true,
     contentBase: "public",
     port: 3000

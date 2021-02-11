@@ -27,6 +27,7 @@ const nodePaths = (process.env.NODE_PATH || "")
 // config after eject: we're in ./config/
 module.exports = {
   appBuild: resolveApp("../build/resources/main/assets/client"),
+  devBuild: resolveApp("./dist"),
   appHtml: resolveApp("public/index.html"),
   appIndexJs: resolveApp("src/index.js"),
   appPackageJson: resolveApp("package.json"),

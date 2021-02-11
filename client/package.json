@@ -9,7 +9,7 @@
     "prod": "NODE_ENV=production webpack --config config/webpack.prod.js",
     "start": "NODE_ENV=development webpack serve --config config/webpack.dev.js",
     "lint-fix": "prettier --write 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js' && NODE_ENV=development eslint --fix 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js'",
-    "test-unit": "NODE_ENV=test jest --testPathPattern='tests/unitTests'"
+    "jest": "NODE_ENV=test jest --testPathPattern='tests/unitTests'"
   },
   "dependencies": {
     "bootstrap": "4.6.0",
@@ -199,6 +199,7 @@
       "react-hooks",
       "standard"
     ],
+    "ignorePatterns": ["**/build/*.js", "**/dist/*.js"],
     "rules": {
       "react/jsx-uses-react": "off",
       "react/react-in-jsx-scope": "off",

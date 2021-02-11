@@ -11,10 +11,12 @@ const clientConfig = merge.merge(common.clientConfig, {
   mode: "production",
   bail: true,
   devtool: "source-map",
+  target: ["web", "es5"],
   resolve: {
     modules: [paths.appSrc, "node_modules", "platform/web"]
   },
   output: {
+    path: paths.appBuild,
     publicPath: "/assets/client/",
     filename: "static/js/[name].[chunkhash:8].js",
     chunkFilename: "static/js/[name].[chunkhash:8].chunk.js"
