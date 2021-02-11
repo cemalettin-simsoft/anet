@@ -1,0 +1,58 @@
+name: Test Public Client
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    name: Test with Node
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max-old-space-size=8192"
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - name: Notify slack start
+        id: slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: anet-notifications
+          status: STARTED
+          color: warning
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - run: yarn install
+      - run: |
+          yarn run start &
+          sleep 30
+      - run: yarn test-all
+      - name: Notify slack success
+        if: success()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: anet-notifications
+          status: SUCCEEDED
+          color: good
+      - name: Notify slack failure
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: anet-notifications
+          status: FAILED
+          color: danger
