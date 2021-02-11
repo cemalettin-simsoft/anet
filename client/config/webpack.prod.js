@@ -8,10 +8,12 @@ const paths = require("./paths")
 const common = require("./webpack.common.js")
 
 const clientConfig = merge.merge(common.clientConfig, {
+  entry: {
+    anet: [require.resolve("./polyfills"), "./src/index.js"]
+  },
   mode: "production",
   bail: true,
   devtool: "source-map",
-  target: ["web", "es5"],
   resolve: {
     modules: [paths.appSrc, "node_modules", "platform/web"]
   },
@@ -183,7 +185,7 @@ const clientConfig = merge.merge(common.clientConfig, {
       publicUrl: "/assets/client/",
       inject: true,
       template: "public/index.html",
-      filename: path.resolve(paths.appBuild, "../../views/index.ftl"),
+      filename: path.resolve(paths.appBuild, "../../views/index.html"),
       minify: {
         removeComments: true,
         collapseWhitespace: true,

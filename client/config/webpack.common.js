@@ -77,9 +77,6 @@ module.exports = {
     resolve: {
       alias: { vm: "vm-browserify" }
     },
-    entry: {
-      anet: [require.resolve("./polyfills"), "./src/index.js"]
-    },
     output: {
       path: paths.devBuild
     },

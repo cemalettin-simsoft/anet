@@ -5,8 +5,10 @@ const common = require("./webpack.common.js")
 const paths = require("./paths")
 
 module.exports = merge.merge(common.clientConfig, {
+  entry: {
+    anet: ["./src/index.js"]
+  },
   mode: "development",
-  target: ["web"],
   resolve: {
     modules: [paths.appSrc, "node_modules"]
   },
@@ -21,9 +23,12 @@ module.exports = merge.merge(common.clientConfig, {
   },
   devServer: {
     hot: true,
-    open: true,
+    open: {
+      app: [process.env.BROWSER, process.env.BROWSER_FLAG]
+    },
     historyApiFallback: true,
     contentBase: "public",
+    writeToDisk: true,
     port: 3000
   },
   plugins: [

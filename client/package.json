@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "NODE_ENV=development webpack --config config/webpack.dev.js",
     "prod": "NODE_ENV=production webpack --config config/webpack.prod.js",
-    "start": "NODE_ENV=development webpack serve --config config/webpack.dev.js",
+    "start": "export BROWSER=${BROWSER:-'google-chrome'}; export BROWSER_FLAG=${BROWSER_FLAG:-'--incognito'}; NODE_ENV=development webpack serve --config config/webpack.dev.js",
+    "startF": "export BROWSER=firefox; export BROWSER_FLAG='-private'; yarn run start",
     "lint-fix": "prettier --write 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js' && NODE_ENV=development eslint --fix 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js'",
     "jest": "NODE_ENV=test jest --testPathPattern='tests/unitTests'",
     "wdio": "SERVER_URL='http://localhost:3000' wdio ./config/wdio.config.js",
@@ -129,10 +130,16 @@
     ],
     "testEnvironment": "jsdom"
   },
-  "browserslist": [
-    "> 1%",
-    "IE 11"
-  ],
+  "browserslist": {
+    "production": [
+      "> 1%",
+      "ie 11"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version"
+    ]
+  },
   "babel": {
     "presets": [
       "react-app",
