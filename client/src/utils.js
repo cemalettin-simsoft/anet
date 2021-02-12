@@ -22,17 +22,12 @@ Object.without = function(source, ...keys) {
 const IN_MINS = 2
 const REPORT_TIME_OUT_IN_MS = IN_MINS * 60 * 1000
 
-export function reportTimedOut(reportData) {
+export function reportTimedOut(reportData, timeOutDur = REPORT_TIME_OUT_IN_MS) {
   if (!reportData?.createdAt) {
-    console.warn("Timeout calculation without a report or timestamp!")
-    console.dir("reportData")
-    console.dir(reportData)
-    console.dir("reportData.createdAt")
-    console.dir(reportData.createdAt)
-    return
+    throw new Error("INVALID REPORT DATA")
   }
   const diff = Date.now() - reportData.createdAt
-  return diff > REPORT_TIME_OUT_IN_MS
+  return diff > timeOutDur
 }
 
 export default {

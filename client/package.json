@@ -9,7 +9,7 @@
     "start": "export BROWSER=${BROWSER:-'google-chrome'}; export BROWSER_FLAG=${BROWSER_FLAG:-'--incognito'}; NODE_ENV=development webpack serve --config config/webpack.dev.js",
     "startF": "export BROWSER=firefox; export BROWSER_FLAG='-private'; yarn run start",
     "lint-fix": "prettier --write 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js' && NODE_ENV=development eslint --fix 'config/**/*.js' 'platform/**/*.js' 'src/**/*.js'",
-    "jest": "NODE_ENV=test jest --testPathPattern='tests/unitTests'",
+    "jest": "NODE_ENV=test jest --testPathPattern='tests/unitTests' --verbose",
     "wdio": "SERVER_URL='http://localhost:3000' wdio ./config/wdio.config.js",
     "test-all": "yarn run jest && yarn run wdio"
   },

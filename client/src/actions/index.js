@@ -4,7 +4,7 @@ const ACTION_TYPES = {
   DELETE_REPORT: 2,
   DELETE_TIMED_OUT_REPORTS: 3,
   DELETE_ALL_REPORTS: 4,
-  noop: 99
+  NOOP: 99
 }
 
 export default ACTION_TYPES

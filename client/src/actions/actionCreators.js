@@ -15,7 +15,7 @@ export function addNewReportAction(payload) {
     }
   }
   return {
-    type: ACTION_TYPES.noop
+    type: ACTION_TYPES.NOOP
   }
 }
 
@@ -27,7 +27,7 @@ export function updateReportAction(payload) {
     }
   }
   return {
-    type: ACTION_TYPES.noop
+    type: ACTION_TYPES.NOOP
   }
 }
 
@@ -41,7 +41,7 @@ export function deleteReportAction(uuid) {
     }
   }
   return {
-    type: ACTION_TYPES.noop
+    type: ACTION_TYPES.NOOP
   }
 }
 
@@ -54,7 +54,7 @@ export function deleteTimedOutReportsAction() {
     }
   }
   return {
-    type: ACTION_TYPES.noop
+    type: ACTION_TYPES.NOOP
   }
 }
 

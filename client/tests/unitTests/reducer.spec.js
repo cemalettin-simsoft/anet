@@ -10,9 +10,9 @@ const TEST_INITIAL_STATE = [
   { uuid: 5, description: "five" }
 ]
 
-const ADDITION_RESULT = [...TEST_INITIAL_STATE, { uuid: 6, description: "six" }]
+const AFTER_ADDITION = [...TEST_INITIAL_STATE, { uuid: 6, description: "six" }]
 
-const UPDATE_RESULT = [
+const AFTER_UPDATE = [
   { uuid: 1, description: "one" },
   { uuid: 2, description: "two" },
   { uuid: 3, description: "three" },
@@ -20,27 +20,27 @@ const UPDATE_RESULT = [
   { uuid: 5, description: "five" }
 ]
 
-const DELETE_REPORT_RESULT = [
+const AFTER_DELETE_REPORT = [
   { uuid: 1, description: "one" },
   { uuid: 2, description: "two" },
   { uuid: 3, description: "three" },
   { uuid: 5, description: "five" }
 ]
 // Assume all even numbered are timed out
-const DELETE_TIMED_OUT_REPORT_RESULT = [
+const AFTER_DELETE_TIMED_OUT_REPORTS = [
   { uuid: 1, description: "one" },
   { uuid: 3, description: "three" },
   { uuid: 5, description: "five" }
 ]
 
-describe("In our reducer function", () => {
+describe("In reducer function", () => {
   it("Should correctly return new state with ADD_NEW_REPORT action", () => {
     const newState = reducer(TEST_INITIAL_STATE, {
       type: ACTION_TYPES.ADD_NEW_REPORT,
       payload: { uuid: 6, description: "six" }
     })
 
-    expect(isEqual(newState, ADDITION_RESULT)).toBe(true)
+    expect(isEqual(newState, AFTER_ADDITION)).toBe(true)
   })
   it("Should correctly return new state with UPDATE_REPORT action", () => {
     const newState = reducer(TEST_INITIAL_STATE, {
@@ -48,7 +48,7 @@ describe("In our reducer function", () => {
       payload: { uuid: 4, description: "FOUR" }
     })
 
-    expect(isEqual(newState, UPDATE_RESULT)).toBe(true)
+    expect(isEqual(newState, AFTER_UPDATE)).toBe(true)
   })
   it("Should correctly return new state with DELETE_REPORT action", () => {
     const newState = reducer(TEST_INITIAL_STATE, {
@@ -56,15 +56,16 @@ describe("In our reducer function", () => {
       payload: 4
     })
 
-    expect(isEqual(newState, DELETE_REPORT_RESULT)).toBe(true)
+    expect(isEqual(newState, AFTER_DELETE_REPORT)).toBe(true)
   })
   it("Should correctly return new state with DELETE_TIMED_OUT_REPORTS action", () => {
     const newState = reducer(TEST_INITIAL_STATE, {
       type: ACTION_TYPES.DELETE_TIMED_OUT_REPORTS,
       // Payload is deleted uuid array
+      // Assume all even numbered are timed out
       payload: [2, 4]
     })
-    expect(isEqual(newState, DELETE_TIMED_OUT_REPORT_RESULT)).toBe(true)
+    expect(isEqual(newState, AFTER_DELETE_TIMED_OUT_REPORTS)).toBe(true)
   })
   it("Should correctly return new state with DELETE_ALL_REPORTS action", () => {
     const newState = reducer(TEST_INITIAL_STATE, {
