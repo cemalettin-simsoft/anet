@@ -33,8 +33,10 @@ const AFTER_DELETE_TIMED_OUT_REPORTS = [
   { uuid: 5, description: "five" }
 ]
 
+const ACTION_NAMES = Object.keys(ACTION_TYPES)
+
 describe("In reducer function", () => {
-  it("Should correctly return new state with ADD_NEW_REPORT action", () => {
+  it(`Should correctly return new state with ${ACTION_NAMES[0]} action`, () => {
     const newState = reducer(TEST_INITIAL_STATE, {
       type: ACTION_TYPES.ADD_NEW_REPORT,
       payload: { uuid: 6, description: "six" }
@@ -42,7 +44,7 @@ describe("In reducer function", () => {
 
     expect(isEqual(newState, AFTER_ADDITION)).toBe(true)
   })
-  it("Should correctly return new state with UPDATE_REPORT action", () => {
+  it(`Should correctly return new state with ${ACTION_NAMES[1]} action`, () => {
     const newState = reducer(TEST_INITIAL_STATE, {
       type: ACTION_TYPES.UPDATE_REPORT,
       payload: { uuid: 4, description: "FOUR" }
@@ -50,7 +52,7 @@ describe("In reducer function", () => {
 
     expect(isEqual(newState, AFTER_UPDATE)).toBe(true)
   })
-  it("Should correctly return new state with DELETE_REPORT action", () => {
+  it(`Should correctly return new state with ${ACTION_NAMES[2]} action`, () => {
     const newState = reducer(TEST_INITIAL_STATE, {
       type: ACTION_TYPES.DELETE_REPORT,
       payload: 4
@@ -58,7 +60,7 @@ describe("In reducer function", () => {
 
     expect(isEqual(newState, AFTER_DELETE_REPORT)).toBe(true)
   })
-  it("Should correctly return new state with DELETE_TIMED_OUT_REPORTS action", () => {
+  it(`Should correctly return new state with ${ACTION_NAMES[3]} action`, () => {
     const newState = reducer(TEST_INITIAL_STATE, {
       type: ACTION_TYPES.DELETE_TIMED_OUT_REPORTS,
       // Payload is deleted uuid array
@@ -67,12 +69,21 @@ describe("In reducer function", () => {
     })
     expect(isEqual(newState, AFTER_DELETE_TIMED_OUT_REPORTS)).toBe(true)
   })
-  it("Should correctly return new state with DELETE_ALL_REPORTS action", () => {
+
+  it(`Should correctly return new state with ${ACTION_NAMES[4]} action`, () => {
     const newState = reducer(TEST_INITIAL_STATE, {
       type: ACTION_TYPES.DELETE_ALL_REPORTS
       // No payload required to delete all
     })
 
     expect(isEqual(newState, [])).toBe(true)
+  })
+
+  it(`Should correctly return same state as new state with ${ACTION_NAMES[5]} action`, () => {
+    const newState = reducer(TEST_INITIAL_STATE, {
+      type: ACTION_TYPES.NOOP
+    })
+
+    expect(isEqual(newState, TEST_INITIAL_STATE)).toBe(true)
   })
 })

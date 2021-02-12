@@ -1,4 +1,4 @@
-import { reportTimedOut } from "utils"
+import { reportTimedOut } from "../../src/utils"
 
 const TIMED_OUT_CASE = {
   reportData: {
