@@ -1,30 +1,22 @@
-import { deleteTimedOutReportsAction } from "actions/actionCreators"
-import { getSavedReports } from "clientStorage"
-import AppContext from "components/AppContext"
-import Routing from "pages/Routing"
-import { useEffect, useReducer } from "react"
+import { useReducer } from "react"
 import { Button } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom"
-import { reducer } from "reducer"
-import logo from "resources/logo.png"
-import { REPORT_CONTROL_PERIOD_IN_MS } from "utils"
+import { getSavedReports } from "../clientStorage"
+import AppContext from "../components/AppContext"
+import { reducer } from "../reducer"
+import logo from "../resources/logo.png"
+import { usePeriodicReportDelete } from "./customHooks/usePeriodReportDelete"
+import { useScrollTop } from "./customHooks/useScrollTop"
+// import Loading from "../components/Loading"
+import Routing from "./Routing"
 
 export const INITIAL_REPORTS = getSavedReports()
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, INITIAL_REPORTS)
   const history = useHistory()
-
-  useEffect(() => {
-    // on mount deletion of old reports
-    dispatch(deleteTimedOutReportsAction())
-    const timeoutId = setInterval(() => {
-      // Periodically checking and deleting
-      dispatch(deleteTimedOutReportsAction())
-    }, REPORT_CONTROL_PERIOD_IN_MS)
-
-    return () => clearInterval(timeoutId)
-  }, [])
+  useScrollTop()
+  usePeriodicReportDelete(dispatch)
 
   return (
     <AppContext.Provider value={{ reports: state, dispatch }}>
@@ -42,6 +34,7 @@ const App = () => {
           </Button>
         </div>
         <Routing />
+        {/* <Loading /> */}
       </div>
     </AppContext.Provider>
   )

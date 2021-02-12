@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "module": "es6",
-    "target": "esnext"
+    "module": "esnext",
+    "target": "esnext",
+    "baseUrl": "./src"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "build", "dist"]
+  "include": ["src/**/*", "tests/**/*", "config/**/*"],
+  "exclude": ["**/*/node_modules", "build", "dist"]
 }

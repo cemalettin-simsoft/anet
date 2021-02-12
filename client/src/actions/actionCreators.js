@@ -4,7 +4,7 @@ import {
   deleteReportData,
   deleteTimedOutReports,
   updateReport
-} from "clientStorage"
+} from "../clientStorage"
 import ACTION_TYPES from "./index"
 
 export function addNewReportAction(payload) {

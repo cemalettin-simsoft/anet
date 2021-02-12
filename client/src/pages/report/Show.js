@@ -1,15 +1,18 @@
-import { deleteReportAction, updateReportAction } from "actions/actionCreators"
-import AppContext from "components/AppContext"
-import ButtonWithModalTrigger from "components/ButtonWithModalTrigger"
-import Fieldset from "components/Fieldset"
-import { ReadonlyField } from "components/FormFields"
-import Messages from "components/Messages"
 import { Field, Form, Formik } from "formik"
 import _isEmpty from "lodash/isEmpty"
-import Report from "models/Report"
 import { useContext } from "react"
 import { Alert, Button } from "react-bootstrap"
 import { useHistory, useLocation, useParams } from "react-router-dom"
+import {
+  deleteReportAction,
+  updateReportAction
+} from "../../actions/actionCreators"
+import AppContext from "../../components/AppContext"
+import ButtonWithModalTrigger from "../../components/ButtonWithModalTrigger"
+import Fieldset from "../../components/Fieldset"
+import { ReadonlyField } from "../../components/FormFields"
+import Messages from "../../components/Messages"
+import Report from "../../models/Report"
 
 const ShowReport = () => {
   const routerLocation = useLocation()

@@ -1,8 +1,8 @@
-import AppContext from "components/AppContext"
-import Report from "models/Report"
-import ReportForm from "pages/report/Form"
 import { useContext } from "react"
 import { useParams } from "react-router-dom"
+import AppContext from "../../components/AppContext"
+import Report from "../../models/Report"
+import ReportForm from "./Form"
 
 const EditReport = () => {
   const { uuid } = useParams()

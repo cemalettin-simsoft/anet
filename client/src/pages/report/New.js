@@ -1,6 +1,6 @@
-import Report from "models/Report"
-import ReportForm from "pages/report/Form"
 import { v4 as uuidv4 } from "uuid"
+import Report from "../../models/Report"
+import ReportForm from "./Form"
 
 const NewReport = () => {
   const report = new Report({ uuid: uuidv4() })

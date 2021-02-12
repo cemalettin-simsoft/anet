@@ -1,13 +1,16 @@
-import { addNewReportAction, updateReportAction } from "actions/actionCreators"
-import AppContext from "components/AppContext"
-import Fieldset from "components/Fieldset"
-import { InputField } from "components/FormFields"
 import { FastField, Form, Formik } from "formik"
-import Report from "models/Report"
 import PropTypes from "prop-types"
 import { useContext } from "react"
 import { Button } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
+import {
+  addNewReportAction,
+  updateReportAction
+} from "../../actions/actionCreators"
+import AppContext from "../../components/AppContext"
+import Fieldset from "../../components/Fieldset"
+import { InputField } from "../../components/FormFields"
+import Report from "../../models/Report"
 
 const ReportForm = ({ isEdit, initialValues, title }) => {
   const history = useHistory()

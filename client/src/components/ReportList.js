@@ -1,7 +1,7 @@
-import Fieldset from "components/Fieldset"
-import Report from "models/Report"
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
+import Report from "../models/Report"
+import Fieldset from "./Fieldset"
 
 const ReportList = ({ reports, title }) => {
   // sort reports, latest created at the top

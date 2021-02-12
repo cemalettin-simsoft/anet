@@ -1,8 +1,8 @@
 // Implement client side storage for drafted reports
 // Should be available for maximum 2 hours
 
-import Report from "models/Report"
-import { reportTimedOut } from "utils"
+import Report from "./models/Report"
+import { reportTimedOut } from "./utils"
 
 export function deleteTimedOutReports() {
   const deletedUuids = []

@@ -1,6 +1,6 @@
 import _forEach from "lodash/forEach"
-import utils from "utils"
 import * as yup from "yup"
+import utils from "../utils"
 
 class Report {
   static STATES = {

@@ -1,10 +1,10 @@
-import Help from "pages/Help"
-import Home from "pages/Home"
-import EditReport from "pages/report/Edit"
-import NewReport from "pages/report/New"
-import ShowReport from "pages/report/Show"
-import { PAGE_URLS } from "pages/utils"
 import { Route, Switch } from "react-router-dom"
+import Help from "./Help"
+import Home from "./Home"
+import EditReport from "./report/Edit"
+import NewReport from "./report/New"
+import ShowReport from "./report/Show"
+import { PAGE_URLS } from "./utils"
 
 const Routing = () => {
   return (

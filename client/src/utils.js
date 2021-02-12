@@ -19,9 +19,8 @@ Object.without = function(source, ...keys) {
   return copy
 }
 
-const REPORT_TIME_OUT_IN_MS = 1000 * 60 * 2
-
-export const REPORT_CONTROL_PERIOD_IN_MS = 30_000
+const IN_MINS = 2
+const REPORT_TIME_OUT_IN_MS = IN_MINS * 60 * 1000
 
 export function reportTimedOut(reportData) {
   if (!reportData?.createdAt) {
@@ -38,4 +37,8 @@ export function reportTimedOut(reportData) {
 
 export default {
   isNullOrUndefined
+}
+
+export function jumpToTop() {
+  window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
 }

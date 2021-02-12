@@ -1,10 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import "index.css"
-import "locale-compare-polyfill"
-import App from "pages/App"
 import React from "react"
 import { render } from "react-dom"
 import { BrowserRouter, Route } from "react-router-dom"
+import "./index.css"
+import App from "./pages/App"
 
 const RootApp = () => {
   return (

@@ -1,11 +1,11 @@
-import { deleteAllReportsAction } from "actions/actionCreators"
-import AppContext from "components/AppContext"
-import Messages from "components/Messages"
-import ReportList from "components/ReportList"
-import Report from "models/Report"
 import { useContext } from "react"
 import { Link, useLocation } from "react-router-dom"
+import { deleteAllReportsAction } from "../actions/actionCreators"
+import AppContext from "../components/AppContext"
 import ButtonWithModalTrigger from "../components/ButtonWithModalTrigger"
+import Messages from "../components/Messages"
+import ReportList from "../components/ReportList"
+import Report from "../models/Report"
 const Home = () => {
   const { reports, dispatch } = useContext(AppContext)
   const routerLocation = useLocation()
