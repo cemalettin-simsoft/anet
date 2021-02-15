@@ -33,8 +33,6 @@ export function updateReportAction(payload) {
 
 export function deleteReportAction(uuid) {
   if (deleteReportData(uuid)) {
-    console.log("Deleted reducer")
-
     return {
       type: ACTION_TYPES.DELETE_REPORT,
       payload: uuid
